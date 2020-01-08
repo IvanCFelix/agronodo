@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -47,6 +48,8 @@ public class Login extends AppCompatActivity {
 
     Animation aparece, desaparece;
 
+    ProgressDialog iniciando;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,8 +66,7 @@ public class Login extends AppCompatActivity {
 
         btnOlvido.setText(subrayarTexto("¿Olvidó su Contraseña?"));
 
-
-        if(SQLITE.obtenerTamañoTabla(Login.this, SQLITE.tablaPerfil)==1){
+        if (SQLITE.obtenerTamañoTabla(Login.this, SQLITE.tablaPerfil) == 1) {
             startActivity(new Intent(Login.this, Menu_Agronomo.class));
             finish();
         }
@@ -72,50 +74,81 @@ public class Login extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(txtUsuario.getText().toString().isEmpty() || txtContraseña.getText().toString().isEmpty()){
+                if (txtUsuario.getText().toString().isEmpty() || txtContraseña.getText().toString().isEmpty()) {
                     Toast.makeText(Login.this, "Complete los datos", Toast.LENGTH_LONG).show();
-                }else {
-                    if(Datos.existeInternet(Login.this)) {
-                        JSONObject postData = new JSONObject();
-                        try {
-                            postData.put("username", txtUsuario.getText().toString().trim());
-                            postData.put("password", txtContraseña.getText().toString().trim());
-                            String resultado = new Authentification.IniciarSesion().execute(postData.toString()).get();
-                            JSONObject datos = new JSONObject(resultado);
-                            try {
-                                if (datos.getBoolean("status") == true) {
-                                    SQLITE.ingresarSesion(Login.this, resultado, new Datos.imagendeWEB().execute("http://159.65.69.22:8000" + datos.getJSONObject("data").getJSONObject("profile").get("pic")).get());
-                                    Toast.makeText(Login.this, "Sesión Iniciada", Toast.LENGTH_LONG).show();
-                                    startActivity(new Intent(Login.this, Menu_Agronomo.class));
-                                    finish();
+                } else {
+                    if (Datos.existeInternet(Login.this)) {
+                        runOnUiThread(new Runnable() {
+                            public void run() {
+                                iniciando = ProgressDialog.show(Login.this, "", "Iniciando Sesión", true);
+                            }
+                        });
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                JSONObject postData = new JSONObject();
+                                try {
+                                    postData.put("username", txtUsuario.getText().toString().trim());
+                                    postData.put("password", txtContraseña.getText().toString().trim());
+                                    final String resultado = new Authentification.IniciarSesion().execute(postData.toString()).get();
+                                    final JSONObject datos = new JSONObject(resultado);
+                                    new Thread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            try {
+                                                if (datos.getBoolean("status") == true) {
+                                                    SQLITE.ingresarSesion(Login.this, resultado, new Datos.imagendeWEB().execute("http://159.65.69.22:8000" + datos.getJSONObject("data").getJSONObject("profile").get("pic")).get());
+                                                    runOnUiThread(new Runnable() {
+                                                        public void run() {
+                                                            Toast.makeText(Login.this, "Sesión Iniciada", Toast.LENGTH_LONG).show();
+                                                        }
+                                                    });
+                                                    startActivity(new Intent(Login.this, Menu_Agronomo.class));
+                                                    finish();
+                                                }
+                                            } catch (final Exception e) {
+                                                final AlertDialog.Builder dialogo1 = new AlertDialog.Builder(Login.this);
+                                                dialogo1.setTitle("Datos Incorrectos");
+                                                dialogo1.setMessage("Introduzca los datos correctamente");
+                                                dialogo1.setPositiveButton("Enterado", new DialogInterface.OnClickListener() {
+                                                    public void onClick(DialogInterface dialogo1, int id) {
+                                                    }
+                                                });
+                                                runOnUiThread(new Runnable() {
+                                                    public void run() {
+                                                        dialogo1.show();
+                                                    }
+                                                });
+
+                                            }
+                                        }
+                                    }).start();
+                                } catch (JSONException e) {
+                                    //Toast.makeText(Login.this, e.toString(), Toast.LENGTH_LONG).show();
+                                    e.printStackTrace();
+                                } catch (InterruptedException e) {
+                                    //Toast.makeText(Login.this, e.toString(), Toast.LENGTH_LONG).show();
+                                    e.printStackTrace();
+                                } catch (ExecutionException e) {
+                                    //Toast.makeText(Login.this, e.toString(), Toast.LENGTH_LONG).show();
+                                    e.printStackTrace();
                                 }
-                            } catch (Exception e) {
-                                AlertDialog.Builder dialogo1 = new AlertDialog.Builder(Login.this);
-                                dialogo1.setTitle("Datos Incorrectos");
-                                dialogo1.setMessage("Introduzca los datos correctamente");
-                                dialogo1.setPositiveButton("Enterado", new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialogo1, int id) {
+                                runOnUiThread(new Runnable() {
+                                    public void run() {
+                                        if (iniciando.isShowing())
+                                            iniciando.dismiss();
                                     }
                                 });
-                                dialogo1.show();
                             }
-                        } catch (JSONException e) {
-                            Toast.makeText(Login.this, e.toString(), Toast.LENGTH_LONG).show();
-                            e.printStackTrace();
-                        } catch (InterruptedException e) {
-                            Toast.makeText(Login.this, e.toString(), Toast.LENGTH_LONG).show();
-                            e.printStackTrace();
-                        } catch (ExecutionException e) {
-                            Toast.makeText(Login.this, e.toString(), Toast.LENGTH_LONG).show();
-                            e.printStackTrace();
-                        }
+                        }).start();
                     }
+
                 }
             }
         });
     }
 
-    public SpannableString subrayarTexto(String texto){
+    public SpannableString subrayarTexto(String texto) {
         SpannableString textoSubrayado = new SpannableString(texto);
         textoSubrayado.setSpan(new UnderlineSpan(), 0, texto.length(), 0);
         return textoSubrayado;

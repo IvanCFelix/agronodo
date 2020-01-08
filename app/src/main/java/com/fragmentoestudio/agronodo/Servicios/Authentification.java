@@ -55,12 +55,12 @@ public class Authentification {
         }
     }
 
-    public static class ObtenerGeneros extends AsyncTask<String, Void, String> {
+    public static class ObtenerComposiciones extends AsyncTask<String, Void, String> {
 
         @Override
         protected String doInBackground(String... params) {
             try {
-                URL url = new URL(Uris.GENEROS);
+                URL url = new URL(Uris.COMPOSICIONES);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("GET");
                 BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));

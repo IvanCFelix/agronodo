@@ -53,6 +53,13 @@ public class Menu_Agronomo extends AppCompatActivity implements NavigationView.O
         navigationView.getMenu().getItem(0).setChecked(true);
         View headerView = navigationView.getHeaderView(0);
 
+        headerView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
         CircleImageView imagenPerfil = headerView.findViewById(R.id.navheader_civ);
         TextView txtNombre = headerView.findViewById(R.id.navheader_Nombre);
         TextView txtCorreo = headerView.findViewById(R.id.navheader_Correo);
@@ -130,4 +137,6 @@ public class Menu_Agronomo extends AppCompatActivity implements NavigationView.O
         fragmentTransaction.commit();
         return true;
     }
+
+
 }

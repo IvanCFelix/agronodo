@@ -5,5 +5,5 @@ public class Uris {
 
     public static String LOGIN= API_ENDPOINT + "api/auth/login/";
 
-    public static String GENEROS= API_ENDPOINT + "api/genre/";
+    public static String COMPOSICIONES= API_ENDPOINT + "api/composition/";
 }

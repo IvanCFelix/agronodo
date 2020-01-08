@@ -3,9 +3,9 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorGreen</item>
-        <item name="colorAccent">@color/colorBlue</item>
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primary_dark</item>
+        <item name="colorAccent">@color/accent</item>
     </style>
 
     <style name="AppTheme.FullScreen">
@@ -17,8 +17,8 @@
 
     <style name="FlatButton" parent="Theme.AppCompat.Light">
         <item name="android:buttonStyle">@style/Widget.AppCompat.Button.Borderless.Colored</item>
-        <item name="colorControlHighlight">@color/colorBlue</item>
-        <item name="colorAccent">@color/colorPrimary</item>
+        <item name="colorControlHighlight">@color/accent</item>
+        <item name="colorAccent">@color/primary_dark</item>
     </style>
 
     <style name="AppTheme.FullScreen.noAnim">

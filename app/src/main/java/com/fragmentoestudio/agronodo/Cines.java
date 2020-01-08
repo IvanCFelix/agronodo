@@ -36,4 +36,9 @@ public class Cines {
     public void setExpanded(boolean expanded) {
         this.expanded = expanded;
     }
+
+
+    public void insertarPelicula(Movie movie){
+        this.Peliculas.add(movie);
+    }
 }
