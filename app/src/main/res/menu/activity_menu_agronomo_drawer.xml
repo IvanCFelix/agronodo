@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_Intro"
+            android:icon="@drawable/logonegro"
+            android:title="Inicio" />
+    </group>
+
+    <item android:title="Acerca de AgroNodo">
+        <menu>
+            <item
+                android:id="@+id/nav_web"
+                android:icon="@drawable/www"
+                android:title="Sitio WEB" />
+            <item
+                android:id="@+id/nav_salir"
+                android:icon="@drawable/ic_salir"
+                android:title="Cerrar Sesión" />
+        </menu>
+    </item>
+
+</menu>
