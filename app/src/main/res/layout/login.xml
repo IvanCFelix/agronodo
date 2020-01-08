@@ -59,7 +59,7 @@
                     android:id="@+id/cv"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_margin="20dp"
+                    android:layout_margin="15dp"
                     app:cardCornerRadius="10dp">
 
                     <LinearLayout
@@ -70,70 +70,70 @@
                         <android.support.design.widget.TextInputLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:hint="Usuario"
                             android:textColorHint="@color/colorGreen"
                             app:counterEnabled="true"
                             app:counterMaxLength="50"
-                            app:errorEnabled="true"
-                            android:layout_marginTop="5dp"
-                            android:hint="Usuario">
+                            app:errorEnabled="true">
 
                             <EditText
                                 android:id="@+id/txt_Login_Usuario"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:textAlignment="textStart"
-                                android:maxLength="50"
-                                android:inputType="textEmailAddress"
                                 android:drawableLeft="@drawable/ic_persona"
-                                android:drawableTint="@color/colorGreen"
                                 android:drawablePadding="10dp"
+                                android:drawableTint="@color/colorGreen"
+                                android:inputType="textEmailAddress"
+                                android:maxLength="50"
+                                android:paddingTop="15dp"
+                                android:textAlignment="textStart"
                                 android:textSize="18sp"
-                                android:textStyle="bold"
-                                android:paddingTop="15dp"/>
+                                android:textStyle="bold" />
                         </android.support.design.widget.TextInputLayout>
 
                         <android.support.design.widget.TextInputLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:textColorHint="@color/colorGreen"
+                            android:hint="Contraseña"
                             android:textAlignment="center"
+                            android:textColorHint="@color/colorGreen"
                             app:counterEnabled="true"
                             app:counterMaxLength="30"
                             app:errorEnabled="true"
-                            app:passwordToggleEnabled="true"
-                            android:hint="Contraseña">
+                            app:passwordToggleEnabled="true">
 
                             <EditText
                                 android:id="@+id/txt_Login_Contraseña"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:textAlignment="textStart"
-                                android:maxLength="30"
-                                android:inputType="textPassword"
                                 android:drawableStart="@drawable/ic_contrasena"
-                                android:drawableTint="@color/colorGreen"
                                 android:drawablePadding="10dp"
+                                android:drawableTint="@color/colorGreen"
+                                android:inputType="textPassword"
+                                android:maxLength="30"
+                                android:paddingTop="15dp"
+                                android:textAlignment="textStart"
                                 android:textSize="18sp"
-                                android:textStyle="bold"
-                                android:paddingTop="15dp"/>
+                                android:textStyle="bold" />
                         </android.support.design.widget.TextInputLayout>
 
                         <Button
                             android:id="@+id/btnIniciarSesion"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:background="@drawable/boton_grande"
-                            android:textColor="@color/colorWhite"
-                            android:text="Iniciar Sesión"
-                            android:textStyle="bold"
-                            android:textSize="30sp"
                             android:layout_marginTop="5dp"
-                            android:textAllCaps="false" />
+                            android:background="@drawable/boton_grande"
+                            android:paddingVertical="5dp"
+                            android:text="Iniciar Sesión"
+                            android:textAllCaps="false"
+                            android:textColor="@color/colorWhite"
+                            android:textSize="30sp"
+                            android:textStyle="bold" />
 
                     </LinearLayout>
 
                 </android.support.v7.widget.CardView>
-
                <!-- <Button
                     android:id="@+id/btnRegistro"
                     android:layout_width="match_parent"
@@ -157,7 +157,7 @@
                     android:theme="@style/FlatButton"
                     android:textAlignment="center"
                     android:textStyle="bold"
-                    android:textSize="17sp"
+                    android:textSize="18sp"
                     android:textAllCaps="false"
                     android:layout_marginBottom="20dp"/>
 

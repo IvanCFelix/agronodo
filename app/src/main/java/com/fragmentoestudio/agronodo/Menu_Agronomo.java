@@ -18,14 +18,10 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.widget.ImageView;
-import android.widget.MediaController;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.fragmentoestudio.agronodo.Agronomo.Intro_Agronomo;
-import com.fragmentoestudio.agronodo.Servicios.Authentification;
-import com.fragmentoestudio.agronodo.Utilidades.Datos;
+import com.fragmentoestudio.agronodo.Agronomo.Lista_Predios_Agronomo;
 import com.fragmentoestudio.agronodo.Utilidades.SQLITE;
 
 import org.json.JSONException;
@@ -38,7 +34,7 @@ public class Menu_Agronomo extends AppCompatActivity implements NavigationView.O
     public static Fragment fragment;
 
     public static Intro_Agronomo intro = new Intro_Agronomo();
-
+    public static Lista_Predios_Agronomo lista_predios = new Lista_Predios_Agronomo();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,11 +89,19 @@ public class Menu_Agronomo extends AppCompatActivity implements NavigationView.O
         int id = menuItem.getItemId();
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         switch (id) {
             case R.id.nav_Intro:
                 try {
                     fragmentTransaction.replace(R.id.area_ventana, intro);
+                    drawer.closeDrawer(GravityCompat.START);
+                } catch (Exception e) {
+                }
+                break;
+            case R.id.nav_Lista_Predios:
+                try {
+                    fragmentTransaction.replace(R.id.area_ventana, lista_predios);
+                    drawer.closeDrawer(GravityCompat.START);
                 } catch (Exception e) {
                 }
                 break;
@@ -124,8 +128,6 @@ public class Menu_Agronomo extends AppCompatActivity implements NavigationView.O
                 break;
         }
         fragmentTransaction.commit();
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 }

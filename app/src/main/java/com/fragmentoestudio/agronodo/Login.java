@@ -92,7 +92,7 @@ public class Login extends AppCompatActivity {
                             } catch (Exception e) {
                                 AlertDialog.Builder dialogo1 = new AlertDialog.Builder(Login.this);
                                 dialogo1.setTitle("Datos Incorrectos");
-                                dialogo1.setMessage("Introdusca los datos correctamente");
+                                dialogo1.setMessage("Introduzca los datos correctamente");
                                 dialogo1.setPositiveButton("Enterado", new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialogo1, int id) {
                                     }
