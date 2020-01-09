@@ -1,6 +1,7 @@
 package com.fragmentoestudio.agronodo.Agronomo;
 
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -20,6 +21,7 @@ import com.fragmentoestudio.agronodo.Cines;
 import com.fragmentoestudio.agronodo.Movie;
 import com.fragmentoestudio.agronodo.R;
 import com.fragmentoestudio.agronodo.Servicios.Authentification;
+import com.fragmentoestudio.agronodo.Utilidades.Datos;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -36,6 +38,8 @@ public class Lista_Predios_Agronomo extends Fragment {
     SwipeRefreshLayout swipeRefreshLayout;
     Predios_Encabezado movieAdapter;
     FloatingActionButton fabAgregar;
+
+    ProgressDialog cargando;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -56,9 +60,9 @@ public class Lista_Predios_Agronomo extends Fragment {
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
-                if(newState==0){
+                if (newState == 0) {
                     swipeRefreshLayout.setEnabled(true);
-                }else{
+                } else {
                     swipeRefreshLayout.setEnabled(false);
                 }
             }
@@ -85,38 +89,56 @@ public class Lista_Predios_Agronomo extends Fragment {
     }
 
     private void leerComposiciones() throws ExecutionException, InterruptedException, JSONException {
-        JSONArray composiciones = new JSONArray(new Authentification.ObtenerComposiciones().execute().get());
-        cines.clear();
-        for (int i = 0; i<composiciones.length(); i++) {
-            JSONObject composicion = (composiciones.getJSONObject(i));
-            if (cines.size() > 0) {
-                if (listaindexOf(composicion.getJSONObject("profile").getString("email")) == -1) {
+        if (Datos.existeInternet(getContext(), getActivity())) {
+            getActivity().runOnUiThread(new Runnable() {
+                public void run() {
+                    cargando = ProgressDialog.show(getContext(), "", "Cargando Datos", true);
+                }
+            });
+            JSONArray composiciones = new JSONArray(new Authentification.ObtenerComposiciones().execute().get());
+            cines.clear();
+            for (int i = 0; i < composiciones.length(); i++) {
+                JSONObject composicion = (composiciones.getJSONObject(i));
+                if (cines.size() > 0) {
+                    if (listaindexOf(composicion.getJSONObject("profile").getString("email")) == -1) {
+                        ArrayList<Movie> pelicula = new ArrayList<>();
+                        pelicula.add(new Movie(composicion.getString("name")));
+                        cines.add(new Cines(composicion.getJSONObject("profile").getString("email"), pelicula));
+                    } else {
+                        cines.get(listaindexOf(composicion.getJSONObject("profile").getString("email"))).insertarPelicula(new Movie(composicion.getString("name")));
+                    }
+                } else {
                     ArrayList<Movie> pelicula = new ArrayList<>();
                     pelicula.add(new Movie(composicion.getString("name")));
                     cines.add(new Cines(composicion.getJSONObject("profile").getString("email"), pelicula));
-                } else {
-                    cines.get(listaindexOf(composicion.getJSONObject("profile").getString("email"))).insertarPelicula(new Movie(composicion.getString("name")));
                 }
-            } else {
-                ArrayList<Movie> pelicula = new ArrayList<>();
-                pelicula.add(new Movie(composicion.getString("name")));
-                cines.add(new Cines(composicion.getJSONObject("profile").getString("email"), pelicula));
             }
             getActivity().runOnUiThread(new Runnable() {
                 public void run() {
                     if (swipeRefreshLayout.isRefreshing())
                         swipeRefreshLayout.setRefreshing(false);
+                    if (cargando.isShowing())
+                        cargando.dismiss();
                     movieAdapter.notifyDataSetChanged();
                 }
             });
         }
+        getActivity().runOnUiThread(new Runnable() {
+            public void run() {
+                if (swipeRefreshLayout.isRefreshing())
+                    swipeRefreshLayout.setRefreshing(false);
+                movieAdapter.notifyDataSetChanged();
+            }
+        });
     }
 
     class PrimeThread extends Thread {
         long minPrime;
+
         PrimeThread(long minPrime) {
             this.minPrime = minPrime;
         }
+
         public void run() {
             try {
                 leerComposiciones();
@@ -130,9 +152,9 @@ public class Lista_Predios_Agronomo extends Fragment {
         }
     }
 
-    public int listaindexOf(String nombre){
-        for (int i = 0; i<cines.size(); i++){
-            if(cines.get(i).getNombre().equals(nombre))
+    public int listaindexOf(String nombre) {
+        for (int i = 0; i < cines.size(); i++) {
+            if (cines.get(i).getNombre().equals(nombre))
                 return i;
         }
         return -1;
@@ -146,19 +168,19 @@ public class Lista_Predios_Agronomo extends Fragment {
 
     private void initData() {
         cines = new ArrayList<>();
-        ArrayList<Movie> movies= new ArrayList<>();
+        ArrayList<Movie> movies = new ArrayList<>();
         movies.add(new Movie("Cuadra de mi casa"));
         movies.add(new Movie("Tec de Los Mochis"));
         movies.add(new Movie("Cuadra de mi abuela"));
         cines.add(new Cines("Cultivo de Maíz", movies));
-        ArrayList<Movie> movies2= new ArrayList<>();
+        ArrayList<Movie> movies2 = new ArrayList<>();
         movies2.add(new Movie("SML"));
         cines.add(new Cines("Cultivo de Aguacate", movies2));
-        ArrayList<Movie> movies3= new ArrayList<>();
+        ArrayList<Movie> movies3 = new ArrayList<>();
         movies3.add(new Movie("Corerepe"));
         movies3.add(new Movie("Univafu"));
         cines.add(new Cines("Cultivo de Cacahuate", movies3));
-        ArrayList<Movie> movies4= new ArrayList<>();
+        ArrayList<Movie> movies4 = new ArrayList<>();
         movies4.add(new Movie("Casa Daniel"));
         cines.add(new Cines("Cultivo de Trigo", movies4));
 

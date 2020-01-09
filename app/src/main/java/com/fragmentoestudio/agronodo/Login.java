@@ -1,12 +1,15 @@
 package com.fragmentoestudio.agronodo;
 
+import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -50,6 +53,9 @@ public class Login extends AppCompatActivity {
 
     ProgressDialog iniciando;
 
+    public static final int MULTIPLE_PERMISSIONS_REQUEST_CODE = 3;
+    public static final String[] permissions = new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,6 +72,8 @@ public class Login extends AppCompatActivity {
 
         btnOlvido.setText(subrayarTexto("¿Olvidó su Contraseña?"));
 
+        PedirPermisos();
+
         if (SQLITE.obtenerTamañoTabla(Login.this, SQLITE.tablaPerfil) == 1) {
             startActivity(new Intent(Login.this, Menu_Agronomo.class));
             finish();
@@ -77,7 +85,7 @@ public class Login extends AppCompatActivity {
                 if (txtUsuario.getText().toString().isEmpty() || txtContraseña.getText().toString().isEmpty()) {
                     Toast.makeText(Login.this, "Complete los datos", Toast.LENGTH_LONG).show();
                 } else {
-                    if (Datos.existeInternet(Login.this)) {
+                    if (Datos.existeInternet(Login.this, Login.this)) {
                         runOnUiThread(new Runnable() {
                             public void run() {
                                 iniciando = ProgressDialog.show(Login.this, "", "Iniciando Sesión", true);
@@ -164,5 +172,13 @@ public class Login extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
         scrolLogin.clearAnimation();
+    }
+
+    public void PedirPermisos(){
+        if (ActivityCompat.checkSelfPermission(this, permissions[0]) != PackageManager.PERMISSION_GRANTED ||
+                ActivityCompat.checkSelfPermission(this, permissions[1]) != PackageManager.PERMISSION_GRANTED) {
+            //Si alguno de los permisos no esta concedido lo solicita
+            ActivityCompat.requestPermissions(this, permissions, MULTIPLE_PERMISSIONS_REQUEST_CODE);
+        }
     }
 }

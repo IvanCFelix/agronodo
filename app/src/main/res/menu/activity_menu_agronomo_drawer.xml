@@ -6,13 +6,28 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_Intro"
-            android:icon="@drawable/logonegro"
+            android:icon="@drawable/ic_casa"
             android:title="Inicio" />
 
         <item
             android:id="@+id/nav_Lista_Predios"
-            android:icon="@drawable/logonegro"
+            android:icon="@drawable/ic_lista"
             android:title="Mis Predios" />
+
+        <item
+            android:id="@+id/nav_Mapa_Predios"
+            android:icon="@drawable/ic_mapa"
+            android:title="Mi Mapa" />
+
+        <item
+            android:id="@+id/nav_Mi_Usuario"
+            android:icon="@drawable/ic_persona"
+            android:title="Mi Usuario" />
+
+        <item
+            android:id="@+id/nav_Mis_Notificaciones"
+            android:icon="@drawable/ic_notificacion"
+            android:title="Notificaciones" />
     </group>
 
     <item android:title="Acerca de AgroNodo">
