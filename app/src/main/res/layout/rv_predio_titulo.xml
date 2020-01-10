@@ -63,15 +63,12 @@
 
                 </LinearLayout>
 
-
-
-
                 <ImageView
                     android:id="@+id/rv_ivFlecha"
                     android:layout_width="0dp"
                     android:layout_weight="0.5"
                     android:layout_height="match_parent"
-                    android:src="@drawable/ic_flecha"
+                    android:src="@drawable/ic_atras"
                     android:padding="5dp"
                     android:tint="@color/colorWhite"
                     android:scaleType="fitCenter"/>

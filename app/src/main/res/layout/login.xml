@@ -86,7 +86,6 @@
                                 android:drawableTint="@color/colorGreen"
                                 android:inputType="textEmailAddress"
                                 android:maxLength="50"
-                                android:paddingTop="15dp"
                                 android:textAlignment="textStart"
                                 android:textSize="18sp"
                                 android:textStyle="bold" />
@@ -112,7 +111,6 @@
                                 android:drawableTint="@color/colorGreen"
                                 android:inputType="textPassword"
                                 android:maxLength="30"
-                                android:paddingTop="15dp"
                                 android:textAlignment="textStart"
                                 android:textSize="18sp"
                                 android:textStyle="bold" />

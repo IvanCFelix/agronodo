@@ -2,9 +2,8 @@ package com.fragmentoestudio.agronodo.Agronomo;
 
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -14,8 +13,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
+import com.fragmentoestudio.agronodo.Agregar_Campo.Activity_Agregar_Campo;
 import com.fragmentoestudio.agronodo.Adaptadores.Predios_Encabezado;
 import com.fragmentoestudio.agronodo.Cines;
 import com.fragmentoestudio.agronodo.Movie;
@@ -28,7 +27,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.concurrent.ExecutionException;
 
 public class Lista_Predios_Agronomo extends Fragment {
@@ -81,7 +79,7 @@ public class Lista_Predios_Agronomo extends Fragment {
         fabAgregar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                startActivity(new Intent(getContext(), Activity_Agregar_Campo.class));
             }
         });
 

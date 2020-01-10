@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Agregar_Campo.Formulario_Agregar_Campo">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Datos del Predio"
+                android:gravity="center"
+                android:textColor="@color/colorBlack"
+                android:textSize="30sp"
+                android:paddingHorizontal="10dp"
+                android:paddingTop="15dp"
+                android:textStyle="bold"
+                android:textAlignment="center"/>
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/cv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="15dp"
+                app:cardCornerRadius="10dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <android.support.design.widget.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:hint="Nombre"
+                        android:textColorHint="@color/colorGreen"
+                        app:counterEnabled="true"
+                        app:counterMaxLength="50"
+                        app:errorEnabled="true">
+
+                        <EditText
+                            android:id="@+id/txt_Campo_Nombre"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:drawableLeft="@drawable/ic_persona"
+                            android:drawablePadding="10dp"
+                            android:drawableTint="@color/colorGreen"
+                            android:inputType="textPersonName"
+                            android:maxLength="50"
+                            android:textAlignment="textStart"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+                    </android.support.design.widget.TextInputLayout>
+
+                    <Button
+                        android:id="@+id/btnFinalizar"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/boton_grande"
+                        android:paddingVertical="5dp"
+                        android:text="Finalizar"
+                        android:textAllCaps="false"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="30sp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</FrameLayout>

@@ -1,9 +1,11 @@
 package com.fragmentoestudio.agronodo.Agronomo;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -11,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
+import com.fragmentoestudio.agronodo.Agregar_Campo.Activity_Agregar_Campo;
 import com.fragmentoestudio.agronodo.Menu_Agronomo;
 import com.fragmentoestudio.agronodo.R;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -32,21 +35,23 @@ public class Mapa_Predios_Agronomo extends Fragment implements OnMapReadyCallbac
     public static final int MULTIPLE_PERMISSIONS_REQUEST_CODE = 3;
     public static final String[] permissions = new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
 
+    FloatingActionButton fabAgregar;
+
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_mapa_predios_agronomo, container, false);
 
         getActivity().setTitle("Mis Predios");
 
+        fabAgregar = view.findViewById(R.id.fab_agregar);
+
         PedirPermisos();
 
         mapView = view.findViewById(R.id.mapview);
         mapView.onCreate(null);
-        // Gets to GoogleMap from the MapView and does initialization stuff
-        mapView.onResume();
         mapView.getMapAsync(this);
+        mapView.onResume();
 
         return view;
     }
@@ -66,11 +71,18 @@ public class Mapa_Predios_Agronomo extends Fragment implements OnMapReadyCallbac
                     @Override
                     public void onSuccess(Location location) {
                         if (location != null) {
-                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom((new LatLng(location.getLatitude(), location.getLongitude())),14.0f));
+                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom((new LatLng(location.getLatitude(), location.getLongitude())), 14.0f));
                         }
                     }
                 });
         moveMarker();
+
+        fabAgregar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getContext(), Activity_Agregar_Campo.class));
+            }
+        });
     }
 
     public void moveMarker() {
@@ -85,7 +97,7 @@ public class Mapa_Predios_Agronomo extends Fragment implements OnMapReadyCallbac
         }
     }
 
-    public void PedirPermisos(){
+    public void PedirPermisos() {
         if (ActivityCompat.checkSelfPermission(getContext(), permissions[0]) != PackageManager.PERMISSION_GRANTED ||
                 ActivityCompat.checkSelfPermission(getContext(), permissions[1]) != PackageManager.PERMISSION_GRANTED) {
             //Si alguno de los permisos no esta concedido lo solicita
