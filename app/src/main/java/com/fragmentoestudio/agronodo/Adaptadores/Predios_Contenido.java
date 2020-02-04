@@ -11,7 +11,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.fragmentoestudio.agronodo.Movie;
+import com.fragmentoestudio.agronodo.Clases.Movie;
 import com.fragmentoestudio.agronodo.R;
 
 import java.util.List;

@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:background="@drawable/header_register"
-        android:backgroundTint="@color/colorGreen">
+        android:backgroundTint="@color/primary_dark">
 
         <TextView
             android:layout_width="match_parent"
@@ -132,18 +132,6 @@
                     </LinearLayout>
 
                 </android.support.v7.widget.CardView>
-               <!-- <Button
-                    android:id="@+id/btnRegistro"
-                    android:layout_width="match_parent"
-                    android:layout_marginHorizontal="20dp"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/boton_redondo"
-                    android:textColor="@color/colorWhite"
-                    android:text="Registrarse"
-                    android:textStyle="bold"
-                    android:textSize="30sp"
-                    android:layout_marginBottom="20dp"
-                    android:textAllCaps="false" /> -->
 
                 <Button
                     android:id="@+id/btnOlvideContraseña"

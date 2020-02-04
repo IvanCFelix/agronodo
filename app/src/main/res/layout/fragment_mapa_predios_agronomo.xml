@@ -18,8 +18,8 @@
         android:layout_gravity="end|bottom"
         app:backgroundTint="@color/colorBlue"
         android:src="@drawable/ic_agregar"
-        app:fabCustomSize="45dp"
-        app:maxImageSize="16dp"
+        app:fabCustomSize="50dp"
+        app:maxImageSize="18dp"
         android:layout_margin="16dp" />
 
 </FrameLayout>

@@ -68,7 +68,7 @@ public class Mapa_Agregar_Campo extends Fragment implements OnMapReadyCallback {
                     @Override
                     public void onSuccess(Location location) {
                         if (location != null) {
-                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom((new LatLng(location.getLatitude(), location.getLongitude())), 14.0f));
+                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom((new LatLng(location.getLatitude(), location.getLongitude())), 17.0f));
                         }
                     }
                 });

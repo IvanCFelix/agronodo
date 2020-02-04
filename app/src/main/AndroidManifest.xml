@@ -37,7 +37,8 @@
             android:name=".Menu_Agronomo"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:label="@string/title_activity_menu__agronomo"
-            android:theme="@style/AppTheme.FullScreen" />
+            android:theme="@style/AppTheme.FullScreen" >
+        </activity>
         <activity
             android:name=".Login"
             android:configChanges="orientation|screenSize|keyboardHidden"

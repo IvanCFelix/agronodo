@@ -37,4 +37,9 @@
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="DialogAnimation">
+        <item name="android:windowEnterAnimation">@anim/aparecer_dialogo</item>
+        <item name="android:windowExitAnimation">@anim/desaparecer_dialogo</item>
+    </style>
 </resources>

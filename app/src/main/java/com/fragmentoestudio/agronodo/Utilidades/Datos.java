@@ -21,10 +21,7 @@ import java.net.URL;
 import java.net.URLConnection;
 
 public class Datos {
-    Bitmap base64aImagen(String imagen){
-        byte[] decodedString = Base64.decode(imagen, Base64.DEFAULT);
-        return BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-    }
+
 
     public static class imagendeWEB extends AsyncTask<String, Void, Bitmap> {
         protected Bitmap doInBackground(String... params) {
@@ -37,6 +34,8 @@ public class Datos {
                 Bitmap myBitmap = BitmapFactory.decodeStream(input);
                 return myBitmap;
             } catch(IOException e) {
+                return null;
+            } catch (Exception e){
                 return null;
             }
         }

@@ -24,9 +24,13 @@ public class SQLITE {
         return 0;
     }
 
-    public static void ingresarSesion(Context contexto, String JSON, Bitmap imagen) {
+    public static void ingresarSesion(Context contexto, String JSON, Bitmap imagen, String formato) {
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        imagen.compress(Bitmap.CompressFormat.JPEG, 100, bos);
+        if(formato.equals("png")){
+            imagen.compress(Bitmap.CompressFormat.PNG, 50, bos);
+        }else{
+            imagen.compress(Bitmap.CompressFormat.JPEG, 50, bos);
+        }
         byte[] img = bos.toByteArray();
         if(obtenerTamañoTabla(contexto, tablaPerfil)==0) {
             Base_Datos base_de_datos = new Base_Datos(contexto);

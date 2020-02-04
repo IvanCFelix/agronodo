@@ -80,7 +80,16 @@ public class Mapa_Predios_Agronomo extends Fragment implements OnMapReadyCallbac
         fabAgregar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getContext(), Activity_Agregar_Campo.class));
+                if (ActivityCompat.checkSelfPermission(getContext(), permissions[0]) != PackageManager.PERMISSION_GRANTED ||
+                        ActivityCompat.checkSelfPermission(getContext(), permissions[1]) != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(getActivity(), permissions, MULTIPLE_PERMISSIONS_REQUEST_CODE);
+                    if (ActivityCompat.checkSelfPermission(getContext(), permissions[0]) == PackageManager.PERMISSION_GRANTED ||
+                            ActivityCompat.checkSelfPermission(getContext(), permissions[1]) == PackageManager.PERMISSION_GRANTED) {
+                        startActivity(new Intent(getContext(), Activity_Agregar_Campo.class));
+                    }
+                } else {
+                    startActivity(new Intent(getContext(), Activity_Agregar_Campo.class));
+                }
             }
         });
     }

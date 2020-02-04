@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_margin="10dp"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/dialogo_curvo"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_height="wrap_content">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_margin="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Recuperar Contraseña"
+            android:textSize="30sp"
+            android:textAlignment="center"
+            android:textColor="#000"
+            android:layout_marginBottom="5dp"
+            android:textStyle="bold"/>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Correo"
+            android:textColorHint="@color/colorGreen"
+            app:counterEnabled="true"
+            app:counterMaxLength="50"
+            app:errorEnabled="true">
+
+            <EditText
+                android:id="@+id/txt_recuperar_Correo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_correo"
+                android:drawablePadding="10dp"
+                android:drawableTint="@color/colorGreen"
+                android:inputType="textEmailAddress"
+                android:maxLength="50"
+                android:textAlignment="textStart"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+        </android.support.design.widget.TextInputLayout>
+
+        <Button
+            android:id="@+id/btnRecuperarContraseña"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/boton_redondo"
+            android:paddingVertical="5dp"
+            android:text="Recuperar Contraseña"
+            android:textAllCaps="false"
+            android:textColor="@color/colorWhite"
+            android:textSize="25sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    </ScrollView>
+
+</FrameLayout>

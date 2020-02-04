@@ -1,8 +1,12 @@
 package com.fragmentoestudio.agronodo;
+import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -38,6 +42,9 @@ public class Menu_Agronomo extends AppCompatActivity implements NavigationView.O
     public static Mi_Usuario_Agronomo mi_usuarioAgronomo = new Mi_Usuario_Agronomo();
     public static Notificaciones_Agronomo notificaciones_agronomo = new Notificaciones_Agronomo();
 
+    public static final int MULTIPLE_PERMISSIONS_REQUEST_CODE = 3;
+    public static final String[] permissions = new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,20 +77,33 @@ public class Menu_Agronomo extends AppCompatActivity implements NavigationView.O
         try {
             usuario = new JSONObject(SQLITE.obtenerUsuario(Menu_Agronomo.this));
         } catch (JSONException e) {
+            SQLITE.eliminarBasedeDatos(Menu_Agronomo.this);
+            startActivity(new Intent(Menu_Agronomo.this, Login.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+            finish();
             e.printStackTrace();
+        } catch (Exception e){
+
         }
         try {
-            txtNombre.setText(usuario.getJSONObject("data").getJSONObject("profile").getString("first_name") + " " + usuario.getJSONObject("data").getJSONObject("profile").getString("last_name"));
+            txtNombre.setText(usuario.getJSONObject("profile").getString("names") + " " + usuario.getJSONObject("profile").getString("lastnames"));
         } catch (JSONException e) {
             e.printStackTrace();
+        } catch (Exception e){
+
         }
 
         try {
-            txtCorreo.setText(usuario.getJSONObject("data").getJSONObject("user").getString("email"));
+            txtCorreo.setText(usuario.getString("email"));
         } catch (JSONException e) {
             e.printStackTrace();
+        } catch (Exception e){
+
         }
-        imagenPerfil.setImageBitmap(SQLITE.obtenerImagen(Menu_Agronomo.this));
+
+        Bitmap imagen = SQLITE.obtenerImagen(Menu_Agronomo.this);
+        if(imagen!=null) {
+            imagenPerfil.setImageBitmap(imagen);
+        }
 
         fragment = intro;
         FragmentManager fragmentManager = getSupportFragmentManager();
@@ -115,8 +135,18 @@ public class Menu_Agronomo extends AppCompatActivity implements NavigationView.O
                 break;
             case R.id.nav_Mapa_Predios:
                 try {
-                    fragmentTransaction.replace(R.id.area_ventana, mapa_prediosAgronomo);
-                    drawer.closeDrawer(GravityCompat.START);
+                    if (ActivityCompat.checkSelfPermission(Menu_Agronomo.this, permissions[0]) != PackageManager.PERMISSION_GRANTED ||
+                            ActivityCompat.checkSelfPermission(Menu_Agronomo.this, permissions[1]) != PackageManager.PERMISSION_GRANTED) {
+                        ActivityCompat.requestPermissions(Menu_Agronomo.this, permissions, MULTIPLE_PERMISSIONS_REQUEST_CODE);
+                        if (ActivityCompat.checkSelfPermission(Menu_Agronomo.this, permissions[0]) == PackageManager.PERMISSION_GRANTED ||
+                                ActivityCompat.checkSelfPermission(Menu_Agronomo.this, permissions[1]) == PackageManager.PERMISSION_GRANTED) {
+                            fragmentTransaction.replace(R.id.area_ventana, mapa_prediosAgronomo);
+                            drawer.closeDrawer(GravityCompat.START);
+                        }
+                    } else {
+                        fragmentTransaction.replace(R.id.area_ventana, mapa_prediosAgronomo);
+                        drawer.closeDrawer(GravityCompat.START);
+                    }
                 } catch (Exception e) {
                 }
                 break;

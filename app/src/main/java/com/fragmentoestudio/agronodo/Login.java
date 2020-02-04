@@ -1,11 +1,16 @@
 package com.fragmentoestudio.agronodo;
 
 import android.Manifest;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Message;
@@ -16,10 +21,13 @@ import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -42,9 +50,8 @@ import java.util.concurrent.ExecutionException;
 
 public class Login extends AppCompatActivity {
 
-    Button btnLogin;
-    EditText txtUsuario, txtContraseña;
-    Button btnOlvido;
+    EditText txtUsuario, txtContraseña, txtRecuperarCorreo;
+    Button btnLogin, btnOlvido, btnRecuperar;
     ScrollView scrolLogin;
 
     LinearLayout lyLogin;
@@ -52,6 +59,8 @@ public class Login extends AppCompatActivity {
     Animation aparece, desaparece;
 
     ProgressDialog iniciando;
+
+    Dialog dialogo_Recuperar;
 
     public static final int MULTIPLE_PERMISSIONS_REQUEST_CODE = 3;
     public static final String[] permissions = new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
@@ -72,6 +81,61 @@ public class Login extends AppCompatActivity {
 
         btnOlvido.setText(subrayarTexto("¿Olvidó su Contraseña?"));
 
+        dialogo_Recuperar = new Dialog(Login.this);
+        dialogo_Recuperar.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialogo_Recuperar.setContentView(R.layout.dialogo_recuperar_contrasena);
+        dialogo_Recuperar.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(dialogo_Recuperar.getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        dialogo_Recuperar.getWindow().setAttributes(lp);
+        dialogo_Recuperar.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation; //style id
+
+        txtRecuperarCorreo = dialogo_Recuperar.findViewById(R.id.txt_recuperar_Correo);
+        btnRecuperar = dialogo_Recuperar.findViewById(R.id.btnRecuperarContraseña);
+
+        btnRecuperar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!txtRecuperarCorreo.getText().toString().trim().isEmpty()) {
+                    runOnUiThread(new Runnable() {
+                        public void run() {
+                            iniciando = ProgressDialog.show(Login.this, "", "Verificando Correo", true);
+                        }
+                    });
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            JSONObject postData = new JSONObject();
+                            try {
+                                postData.put("email", txtRecuperarCorreo.getText().toString().trim());
+                                final String resultado = new Authentification.RecuperarContraseña().execute(postData.toString()).get();
+                                final AlertDialog.Builder dialogo1 = new AlertDialog.Builder(Login.this);
+                                dialogo1.setMessage(resultado);
+                                dialogo1.setPositiveButton("Enterado", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialogo1, int id) {
+                                        if (resultado.equals("Correo de Recuperación Enviado Exitosamente")) {
+                                            txtRecuperarCorreo.setText("");
+                                            dialogo_Recuperar.dismiss();
+                                        }
+                                    }
+                                });
+                                runOnUiThread(new Runnable() {
+                                    public void run() {
+                                        if (iniciando.isShowing())
+                                            iniciando.dismiss();
+                                        dialogo1.show();
+                                    }
+                                });
+                            } catch (Exception e) {
+                            }
+                        }
+                    }).start();
+                }
+            }
+        });
+
         PedirPermisos();
 
         if (SQLITE.obtenerTamañoTabla(Login.this, SQLITE.tablaPerfil) == 1) {
@@ -85,52 +149,75 @@ public class Login extends AppCompatActivity {
                 if (txtUsuario.getText().toString().isEmpty() || txtContraseña.getText().toString().isEmpty()) {
                     Toast.makeText(Login.this, "Complete los datos", Toast.LENGTH_LONG).show();
                 } else {
-                    if (Datos.existeInternet(Login.this, Login.this)) {
-                        runOnUiThread(new Runnable() {
-                            public void run() {
-                                iniciando = ProgressDialog.show(Login.this, "", "Iniciando Sesión", true);
-                            }
-                        });
-                        new Thread(new Runnable() {
-                            @Override
-                            public void run() {
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (Datos.existeInternet(Login.this, Login.this)) {
+                                runOnUiThread(new Runnable() {
+                                    public void run() {
+                                        iniciando = ProgressDialog.show(Login.this, "", "Iniciando Sesión", true);
+                                    }
+                                });
+
                                 JSONObject postData = new JSONObject();
                                 try {
+
                                     postData.put("username", txtUsuario.getText().toString().trim());
                                     postData.put("password", txtContraseña.getText().toString().trim());
                                     final String resultado = new Authentification.IniciarSesion().execute(postData.toString()).get();
-                                    final JSONObject datos = new JSONObject(resultado);
-                                    new Thread(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            try {
-                                                if (datos.getBoolean("status") == true) {
-                                                    SQLITE.ingresarSesion(Login.this, resultado, new Datos.imagendeWEB().execute("http://159.65.69.22:8000" + datos.getJSONObject("data").getJSONObject("profile").get("pic")).get());
-                                                    runOnUiThread(new Runnable() {
-                                                        public void run() {
-                                                            Toast.makeText(Login.this, "Sesión Iniciada", Toast.LENGTH_LONG).show();
-                                                        }
-                                                    });
-                                                    startActivity(new Intent(Login.this, Menu_Agronomo.class));
-                                                    finish();
-                                                }
-                                            } catch (final Exception e) {
-                                                final AlertDialog.Builder dialogo1 = new AlertDialog.Builder(Login.this);
-                                                dialogo1.setTitle("Datos Incorrectos");
-                                                dialogo1.setMessage("Introduzca los datos correctamente");
-                                                dialogo1.setPositiveButton("Enterado", new DialogInterface.OnClickListener() {
-                                                    public void onClick(DialogInterface dialogo1, int id) {
-                                                    }
-                                                });
-                                                runOnUiThread(new Runnable() {
-                                                    public void run() {
-                                                        dialogo1.show();
-                                                    }
-                                                });
 
+                                    final JSONObject datos = new JSONObject(resultado);
+                                    try {
+                                        if (datos.getString("token").length() > 0 && (datos.getInt("user_type") == 1 || datos.getInt("user_type") == 2 || datos.getInt("user_type") == 3)) {
+                                            final String url = datos.getJSONObject("profile").getString("photo");
+                                            Bitmap imagen = new Datos.imagendeWEB().execute(Uris.API_ENDPOINT + datos.getJSONObject("profile").getString("photo")).get();
+                                            if(imagen==null){
+                                                imagen = BitmapFactory.decodeResource(getResources(), R.drawable.logo);
                                             }
+                                            SQLITE.ingresarSesion(Login.this, resultado, imagen, url.substring(url.indexOf(".") + 1));
+                                            runOnUiThread(new Runnable() {
+                                                public void run() {
+                                                    Toast.makeText(Login.this, "Sesión Iniciada", Toast.LENGTH_LONG).show();
+                                                }
+                                            });
+                                            startActivity(new Intent(Login.this, Menu_Agronomo.class));
+                                            finish();
+                                        } else {
+                                            final AlertDialog.Builder dialogo1 = new AlertDialog.Builder(Login.this);
+                                            dialogo1.setTitle("Tipo de cuenta no soportada");
+                                            dialogo1.setMessage("Su cuenta de tipo " + datos.getString("user_type_name") + " no es soportada en la aplicación");
+                                            dialogo1.setPositiveButton("Enterado", new DialogInterface.OnClickListener() {
+                                                public void onClick(DialogInterface dialogo1, int id) {
+                                                }
+                                            });
+                                            runOnUiThread(new Runnable() {
+                                                public void run() {
+                                                    dialogo1.show();
+                                                }
+                                            });
                                         }
-                                    }).start();
+
+                                    } catch (final Exception e) {
+                                        final AlertDialog.Builder dialogo1 = new AlertDialog.Builder(Login.this);
+                                        dialogo1.setTitle("Datos Incorrectos");
+                                        dialogo1.setMessage("Introduzca los datos correctamente");
+                                        dialogo1.setPositiveButton("Enterado", new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialogo1, int id) {
+                                            }
+                                        });
+                                        runOnUiThread(new Runnable() {
+                                            public void run() {
+                                                if (iniciando.isShowing())
+                                                    iniciando.dismiss();
+                                                dialogo1.show();
+                                            }
+                                        });
+                                    }
+                                    /*runOnUiThread(new Runnable() {
+                                        public void run() {
+                                            Toast.makeText(Login.this, resultado, Toast.LENGTH_LONG).show();
+                                        }
+                                    });*/
                                 } catch (JSONException e) {
                                     //Toast.makeText(Login.this, e.toString(), Toast.LENGTH_LONG).show();
                                     e.printStackTrace();
@@ -141,6 +228,7 @@ public class Login extends AppCompatActivity {
                                     //Toast.makeText(Login.this, e.toString(), Toast.LENGTH_LONG).show();
                                     e.printStackTrace();
                                 }
+
                                 runOnUiThread(new Runnable() {
                                     public void run() {
                                         if (iniciando.isShowing())
@@ -148,10 +236,19 @@ public class Login extends AppCompatActivity {
                                     }
                                 });
                             }
-                        }).start();
-                    }
-
+                        }
+                    }).start();
                 }
+
+            }
+
+        });
+
+        btnOlvido.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                dialogo_Recuperar.show();
             }
         });
     }
@@ -174,7 +271,7 @@ public class Login extends AppCompatActivity {
         scrolLogin.clearAnimation();
     }
 
-    public void PedirPermisos(){
+    public void PedirPermisos() {
         if (ActivityCompat.checkSelfPermission(this, permissions[0]) != PackageManager.PERMISSION_GRANTED ||
                 ActivityCompat.checkSelfPermission(this, permissions[1]) != PackageManager.PERMISSION_GRANTED) {
             //Si alguno de los permisos no esta concedido lo solicita

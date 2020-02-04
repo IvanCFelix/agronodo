@@ -17,7 +17,6 @@ import javax.net.ssl.HttpsURLConnection;
 public class Authentification {
 
     public static class IniciarSesion extends AsyncTask<String, Void, String> {
-
         @Override
         protected String doInBackground(String... params) {
             try {
@@ -43,12 +42,39 @@ public class Authentification {
                 br.close();
                 connection.disconnect();
                 return jsonString.toString();
-
             } catch (Exception e) {
                 return "Error";
             }
         }
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+        }
+    }
 
+    public static class RecuperarContraseña extends AsyncTask<String, Void, String> {
+        @Override
+        protected String doInBackground(String... params) {
+            try {
+                URL url = new URL(Uris.RECUPERAR_CONTRASEÑA);
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setRequestMethod("POST");
+                connection.setRequestProperty("Accept", "application/json");
+                connection.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
+                OutputStreamWriter writer = new OutputStreamWriter(connection.getOutputStream(), "UTF-8");
+                writer.write(params[0]);
+                writer.close();
+                if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
+                    return "Correo de Recuperación Enviado Exitosamente";
+                } else if (connection.getResponseCode() == HttpURLConnection.HTTP_BAD_REQUEST) {
+                    return "El email seleccionado no existe";
+                }
+                connection.disconnect();
+            } catch (Exception e) {
+                return "Error";
+            }
+            return null;
+        }
         @Override
         protected void onPostExecute(String result) {
             super.onPostExecute(result);

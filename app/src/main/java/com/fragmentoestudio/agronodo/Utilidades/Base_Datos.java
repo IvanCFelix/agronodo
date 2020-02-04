@@ -14,7 +14,9 @@ public class Base_Datos extends SQLiteOpenHelper {
     }
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("CREATE TABLE " + SQLITE.tablaPerfil + "(Datos Text, Imagen Blob);");
+        try {
+            db.execSQL("CREATE TABLE IF NOT EXISTS " + SQLITE.tablaPerfil + "(Datos Text, Imagen Blob);");
+        }catch (Exception e){}
     }
 
     @Override

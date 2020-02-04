@@ -12,7 +12,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.fragmentoestudio.agronodo.Cines;
+import com.fragmentoestudio.agronodo.Clases.Cines;
 import com.fragmentoestudio.agronodo.R;
 
 import java.util.List;
