@@ -46,24 +46,27 @@ public class Datos {
 
     }
 
-    public static boolean existeInternet(final Context context, Activity activity){
-        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        if(connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
-                connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED) {
-            return true;
-        }else{
-            activity.runOnUiThread(new Runnable() {
-                public void run() {
-                    AlertDialog.Builder dialogo1 = new AlertDialog.Builder(context);
-                    dialogo1.setTitle("Sin Conexión");
-                    dialogo1.setMessage("Compruebe su conexión a internet");
-                    dialogo1.setPositiveButton("Enterado", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialogo1, int id) {
-                        }
-                    });
-                    dialogo1.show();
-                }
-            });
+    public static boolean existeInternet(final Context context, Activity activity) {
+        try {
+            ConnectivityManager conMgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+            if (conMgr.getActiveNetworkInfo() != null && conMgr.getActiveNetworkInfo().isAvailable() && conMgr.getActiveNetworkInfo().isConnected()) {
+                return true;
+            }else {
+                activity.runOnUiThread(new Runnable() {
+                    public void run() {
+                        AlertDialog.Builder dialogo1 = new AlertDialog.Builder(context);
+                        dialogo1.setTitle("Sin Conexión");
+                        dialogo1.setMessage("Compruebe su conexión a internet");
+                        dialogo1.setPositiveButton("Enterado", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialogo1, int id) {
+                            }
+                        });
+                        dialogo1.show();
+                    }
+                });
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return false;
     }

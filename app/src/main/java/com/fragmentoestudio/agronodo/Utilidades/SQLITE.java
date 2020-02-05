@@ -7,10 +7,15 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
+import com.fragmentoestudio.agronodo.Clases.Campos;
+
 import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
 
 public class SQLITE {
     public static final String tablaPerfil = "Perfil";
+    public static final String tablaCampos = "Campos";
+    public static final String tablaCultivos = "Cultivos";
 
     public static int obtenerTamañoTabla(Context contexto, String tabla){
         Base_Datos base_datos = new Base_Datos(contexto);
@@ -63,6 +68,21 @@ public class SQLITE {
         return null;
     }
 
+    public static int obtenerValorMaximo(Context contexto, String tabla, String campo) {
+        Base_Datos bd = new Base_Datos(contexto);
+        SQLiteDatabase db = bd.getWritableDatabase();
+        if (db != null) {
+            Cursor c = db.rawQuery("select MAX(" + campo + ") from " + tabla + " ;", null);
+            if (c.getCount() == 1) {
+                c.moveToFirst();
+                int valor = c.getInt(0);
+                db.close();
+                return valor;
+            }
+        }
+        return 1;
+    }
+
     public static Bitmap obtenerImagen(Context contexto){
         if(obtenerTamañoTabla(contexto, tablaPerfil)==1) {
             Base_Datos base_de_datos = new Base_Datos(contexto);
@@ -83,5 +103,52 @@ public class SQLITE {
 
     public static void eliminarBasedeDatos(Context context){
         context.deleteDatabase(Base_Datos.nombreBaseDatos);
+    }
+
+    public static String agregarCampo(Context context, Campos campo){
+        Base_Datos bd = new Base_Datos(context);
+        SQLiteDatabase db = bd.getWritableDatabase();
+        if (db != null) {
+            ContentValues registro = new ContentValues();
+            registro.put("ID", campo.getID());
+            registro.put("Nombre", campo.getNombre());
+            registro.put("Cultivo", campo.getTipo_Cultivo());
+            registro.put("Coordenadas", campo.getCoordenadas());
+            db.insert(SQLITE.tablaCampos, null, registro);
+            db.close();
+            return "Campo registrado exitosamente";
+        }
+        return "No se pudo agregar este Lote";
+    }
+
+    public static String agregarCultivo(Context context, String cultivo){
+        Base_Datos bd = new Base_Datos(context);
+        SQLiteDatabase db = bd.getWritableDatabase();
+        if (db != null) {
+            ContentValues registro = new ContentValues();
+            registro.put("Nombre", cultivo);
+            db.insert(SQLITE.tablaCultivos, null, registro);
+            db.close();
+            return "Cultivo registrado exitosamente";
+        }
+        return "No se pudo agregar este Cultivo";
+    }
+
+    public static ArrayList<String> obtenerCultivos(Context contexto) {
+        Base_Datos bd = new Base_Datos(contexto);
+        SQLiteDatabase db = bd.getWritableDatabase();
+        if (db != null) {
+            ArrayList<String> lista = new ArrayList<>();
+            Cursor c = db.rawQuery("select * from " + SQLITE.tablaCultivos + ";", null);
+            if (c.getCount() > 0) {
+                if (c.moveToFirst()) {
+                    do {
+                        lista.add(c.getString(0));
+                    } while (c.moveToNext());
+                }
+            }
+            return lista;
+        }
+        return null;
     }
 }

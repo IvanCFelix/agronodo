@@ -11,6 +11,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.ConnectivityManager;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Message;
@@ -171,9 +172,9 @@ public class Login extends AppCompatActivity {
                                     try {
                                         if (datos.getString("token").length() > 0 && (datos.getInt("user_type") == 1 || datos.getInt("user_type") == 2 || datos.getInt("user_type") == 3)) {
                                             String url = datos.getJSONObject("profile").getString("photo");
-                                            String formato =  url.substring(url.indexOf(".") + 1);
-                                            Bitmap imagen = new Datos.imagendeWEB().execute(Uris.API_ENDPOINT + datos.getJSONObject("profile").getString("photo")).get();
-                                            if(imagen==null){
+                                            String formato = url.substring(url.indexOf(".") + 1);
+                                            Bitmap imagen = new Datos.imagendeWEB().execute(Uris.API_ENDPOINT + url).get();
+                                            if (imagen == null) {
                                                 imagen = BitmapFactory.decodeResource(getResources(), R.drawable.logo);
                                                 formato = "png";
                                             }

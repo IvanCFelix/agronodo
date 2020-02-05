@@ -22,4 +22,16 @@
         app:maxImageSize="16dp"
         android:layout_margin="16dp" />
 
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_atras"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start|bottom"
+        app:backgroundTint="@color/colorBlue"
+        android:src="@drawable/ic_atras"
+        android:visibility="gone"
+        app:fabCustomSize="45dp"
+        app:maxImageSize="16dp"
+        android:layout_margin="16dp" />
+
 </FrameLayout>

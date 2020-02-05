@@ -38,6 +38,7 @@ public class Mapa_Agregar_Campo extends Fragment implements OnMapReadyCallback {
     private FusedLocationProviderClient mFusedLocationClient;
     private View view;
     private MapView mapView;
+    public FloatingActionButton fabVolver;
 
     public ArrayList<LatLng> coordenadas = new ArrayList<>();
 
@@ -46,6 +47,7 @@ public class Mapa_Agregar_Campo extends Fragment implements OnMapReadyCallback {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_mapa_agregar_campo, container, false);
+        fabVolver = view.findViewById(R.id.fab_volver);
         mapView = view.findViewById(R.id.mapview);
         mapView.onCreate(null);
         mapView.getMapAsync(this);
@@ -74,6 +76,37 @@ public class Mapa_Agregar_Campo extends Fragment implements OnMapReadyCallback {
                 });
         moveMarker();
         setMapLongClick(mMap);
+
+        fabVolver.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("RestrictedApi")
+            @Override
+            public void onClick(View v) {
+                if (coordenadas.size() > 0) {
+                    coordenadas.remove(coordenadas.size() - 1);
+                    if (coordenadas.isEmpty()) {
+                        fabVolver.setVisibility(View.GONE);
+                        mMap.clear();
+                    } else {
+                        mMap.clear();
+                        PolylineOptions polylineOptions = new PolylineOptions();
+                        polylineOptions.width(7);
+                        polylineOptions.color(Color.GREEN);
+
+                        for (int i = 0; i < coordenadas.size(); i++) {
+                            Marker marcador = mMap.addMarker(new MarkerOptions()
+                                    .position(coordenadas.get(i))
+                                    .title("Marcador #" + (i + 1)));
+                            //.draggable(true)
+                            //.icon(getMarkerIcon("#002402")))
+                            marcador.setTag(String.valueOf(i));
+                            polylineOptions.add(coordenadas.get(i));
+                        }
+                        polylineOptions.add(coordenadas.get(0));
+                        mMap.addPolyline(polylineOptions);
+                    }
+                }
+            }
+        });
     }
 
     public void moveMarker() {
@@ -96,47 +129,22 @@ public class Mapa_Agregar_Campo extends Fragment implements OnMapReadyCallback {
                 //Animation anim_slide_down = AnimationUtils.loadAnimation(this, R.anim.slide_from_top_fab);
                 map.clear();
                 coordenadas.add(latLng);
-
-                PolylineOptions polylineOptions= new PolylineOptions();
+                fabVolver.setVisibility(View.VISIBLE);
+                PolylineOptions polylineOptions = new PolylineOptions();
                 polylineOptions.width(7);
                 polylineOptions.color(Color.GREEN);
 
-                for (int i=0; i<coordenadas.size(); i++) {
+                for (int i = 0; i < coordenadas.size(); i++) {
                     Marker marcador = mMap.addMarker(new MarkerOptions()
                             .position(coordenadas.get(i))
-                            .title("Marcador #" + (i+1)));
-                            //.draggable(true)
-                            //.icon(getMarkerIcon("#002402")))
+                            .title("Marcador #" + (i + 1)));
+                    //.draggable(true)
+                    //.icon(getMarkerIcon("#002402")))
                     marcador.setTag(String.valueOf(i));
                     polylineOptions.add(coordenadas.get(i));
                 }
                 polylineOptions.add(coordenadas.get(0));
                 map.addPolyline(polylineOptions);
-                /*int i= 0;
-                String cd= "";
-                for (int x=0; x<coordenadas_polygono.size(); x++){
-                    cd+= coordenadas_polygono.get(x);
-                }
-                cd+= coordenadas_polygono.get(0);
-                PolylineOptions polylineOptions= new PolylineOptions();
-                polylineOptions.width(10);
-                polylineOptions.color(Color.GREEN);
-                StringTokenizer st = new StringTokenizer(cd, ":;");
-                while (st.hasMoreTokens()) {
-                    String Latitud = st.nextToken();
-                    String Longitud = st.nextToken();
-                    Marker marcador = mMap.addMarker(new MarkerOptions()
-                            .position(new LatLng(Double.parseDouble(Latitud),Double.parseDouble(Longitud)))
-                            .title("Marcador #" + (i+1))
-                            .draggable(true)
-                            .icon(getMarkerIcon("#002402")));
-                    marcador.setTag(String.valueOf(i));
-                    fab_Limpiar.setVisibility(View.VISIBLE);
-                    fab_Limpiar.setAnimation(anim_slide_down);
-                    polylineOptions.add(new LatLng(Double.parseDouble(Latitud),Double.parseDouble(Longitud)));
-                    i++;
-                }
-                */
             }
         });
     }
