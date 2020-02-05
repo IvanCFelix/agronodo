@@ -21,7 +21,7 @@ public class Intro_Agronomo extends Fragment {
         View view = inflater.inflate(R.layout.fragment_intro_agronomo, container, false);
 
         swipeRefreshLayout = view.findViewById(R.id.swiperefresh);
-        getActivity().setTitle("AgroNodo");
+        getActivity().setTitle(" AgroNodo");
         swipeRefreshLayout.setColorSchemeResources(R.color.colorGreen);
 
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {

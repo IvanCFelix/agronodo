@@ -4,6 +4,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -61,6 +64,10 @@ public class Menu_Agronomo extends AppCompatActivity implements NavigationView.O
 
         navigationView.getMenu().getItem(0).setChecked(true);
         View headerView = navigationView.getHeaderView(0);
+
+        Drawable icono = getResources().getDrawable(R.drawable.ic_casa);
+        icono.setColorFilter(Color.parseColor("#FFFFFF"), PorterDuff.Mode.SRC_ATOP);
+        getSupportActionBar().setIcon(icono);
 
         headerView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -123,6 +130,9 @@ public class Menu_Agronomo extends AppCompatActivity implements NavigationView.O
                 try {
                     fragmentTransaction.replace(R.id.area_ventana, intro);
                     drawer.closeDrawer(GravityCompat.START);
+                    Drawable icono = getResources().getDrawable(R.drawable.ic_casa);
+                    icono.setColorFilter(Color.parseColor("#FFFFFF"), PorterDuff.Mode.SRC_ATOP);
+                    getSupportActionBar().setIcon(icono);
                 } catch (Exception e) {
                 }
                 break;
@@ -130,6 +140,9 @@ public class Menu_Agronomo extends AppCompatActivity implements NavigationView.O
                 try {
                     fragmentTransaction.replace(R.id.area_ventana, lista_predios);
                     drawer.closeDrawer(GravityCompat.START);
+                    Drawable icono = getResources().getDrawable(R.drawable.ic_lista);
+                    icono.setColorFilter(Color.parseColor("#FFFFFF"), PorterDuff.Mode.SRC_ATOP);
+                    getSupportActionBar().setIcon(icono);
                 } catch (Exception e) {
                 }
                 break;
@@ -146,6 +159,9 @@ public class Menu_Agronomo extends AppCompatActivity implements NavigationView.O
                     } else {
                         fragmentTransaction.replace(R.id.area_ventana, mapa_prediosAgronomo);
                         drawer.closeDrawer(GravityCompat.START);
+                        Drawable icono = getResources().getDrawable(R.drawable.ic_mapa);
+                        icono.setColorFilter(Color.parseColor("#FFFFFF"), PorterDuff.Mode.SRC_ATOP);
+                        getSupportActionBar().setIcon(icono);
                     }
                 } catch (Exception e) {
                 }
@@ -154,6 +170,9 @@ public class Menu_Agronomo extends AppCompatActivity implements NavigationView.O
                 try {
                     fragmentTransaction.replace(R.id.area_ventana, mi_usuarioAgronomo);
                     drawer.closeDrawer(GravityCompat.START);
+                    Drawable icono = getResources().getDrawable(R.drawable.ic_persona);
+                    icono.setColorFilter(Color.parseColor("#FFFFFF"), PorterDuff.Mode.SRC_ATOP);
+                    getSupportActionBar().setIcon(icono);
                 } catch (Exception e) {
                 }
                 break;
@@ -161,6 +180,9 @@ public class Menu_Agronomo extends AppCompatActivity implements NavigationView.O
                 try {
                     fragmentTransaction.replace(R.id.area_ventana, notificaciones_agronomo);
                     drawer.closeDrawer(GravityCompat.START);
+                    Drawable icono = getResources().getDrawable(R.drawable.ic_notificacion);
+                    icono.setColorFilter(Color.parseColor("#FFFFFF"), PorterDuff.Mode.SRC_ATOP);
+                    getSupportActionBar().setIcon(icono);
                 } catch (Exception e) {
                 }
                 break;

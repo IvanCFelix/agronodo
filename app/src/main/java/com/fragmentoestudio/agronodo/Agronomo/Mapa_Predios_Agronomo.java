@@ -3,6 +3,7 @@ package com.fragmentoestudio.agronodo.Agronomo;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -12,10 +13,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.fragmentoestudio.agronodo.Agregar_Campo.Activity_Agregar_Campo;
+import com.fragmentoestudio.agronodo.Clases.Campos;
 import com.fragmentoestudio.agronodo.Menu_Agronomo;
 import com.fragmentoestudio.agronodo.R;
+import com.fragmentoestudio.agronodo.Utilidades.SQLITE;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -24,7 +28,13 @@ import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.PolygonOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+
+import java.util.ArrayList;
 
 public class Mapa_Predios_Agronomo extends Fragment implements OnMapReadyCallback {
 
@@ -37,12 +47,14 @@ public class Mapa_Predios_Agronomo extends Fragment implements OnMapReadyCallbac
 
     FloatingActionButton fabAgregar;
 
+    ArrayList<Campos> campos = new ArrayList<>();
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_mapa_predios_agronomo, container, false);
 
-        getActivity().setTitle("Mis Predios");
+        getActivity().setTitle(" Mis Predios");
 
         fabAgregar = view.findViewById(R.id.fab_agregar);
 
@@ -92,6 +104,7 @@ public class Mapa_Predios_Agronomo extends Fragment implements OnMapReadyCallbac
                 }
             }
         });
+        desplegarCampos();
     }
 
     public void moveMarker() {
@@ -116,6 +129,40 @@ public class Mapa_Predios_Agronomo extends Fragment implements OnMapReadyCallbac
                     .detach(Menu_Agronomo.mapa_prediosAgronomo)
                     .attach(Menu_Agronomo.mapa_prediosAgronomo)
                     .commit();
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(mMap!=null){
+            desplegarCampos();
+        }
+    }
+
+    void desplegarCampos(){
+        mMap.clear();
+        campos = SQLITE.obtenerCampos(getContext());
+        for (Campos campo : campos){
+            ArrayList<LatLng> listacoordeandas = new ArrayList<>();
+            try {
+                JSONArray coordenadas = new JSONArray("[" + campo.getCoordenadas() + "]");
+                for(int i=0; i<coordenadas.length(); i++){
+                    listacoordeandas.add(new LatLng(Double.parseDouble(coordenadas.getJSONObject(i).getString("Latitud")), Double.parseDouble(coordenadas.getJSONObject(i).getString("Longitud"))));
+                }
+                PolygonOptions polygonOptions = new PolygonOptions();
+                for (int i = 0; i<coordenadas.length(); i++) {
+                    polygonOptions.add(listacoordeandas.get(i));
+                }
+                polygonOptions.strokeColor(Color.rgb(36,133,60));
+                polygonOptions.clickable(true);
+                polygonOptions.fillColor(Color.argb(0, 47, 123, 255));
+                polygonOptions.strokeWidth(5);
+                mMap.addPolygon(polygonOptions);
+            } catch (JSONException e) {
+                e.printStackTrace();
+                Toast.makeText(getContext(), e.toString(), Toast.LENGTH_SHORT).show();
+            }
         }
     }
 }

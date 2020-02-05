@@ -11,19 +11,21 @@ import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.fragmentoestudio.agronodo.Clases.Movie;
+import com.fragmentoestudio.agronodo.Clases.Campos;
 import com.fragmentoestudio.agronodo.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Predios_Contenido extends RecyclerView.Adapter<Predios_Contenido.MovieVH> {
 
-    private static final String TAG = "MovieAdapter";
-    List<Movie> movieList;
+    ArrayList<Campos> campos_source;
+    ArrayList<Campos> campos_filtrados;
     Context context;
 
-    public Predios_Contenido(List<Movie> movieList, Context context) {
-        this.movieList = movieList;
+    public Predios_Contenido(ArrayList<Campos> lista, Context context) {
+        this.campos_source = lista;
+        this.campos_filtrados = lista;
         this.context = context;
     }
 
@@ -36,25 +38,25 @@ public class Predios_Contenido extends RecyclerView.Adapter<Predios_Contenido.Mo
 
     @Override
     public void onBindViewHolder(@NonNull MovieVH holder, int position) {
-        final Movie movie = movieList.get(position);
-        holder.txtNombre.setText(movie.getTitle());
+        final Campos campo = campos_filtrados.get(position);
+        holder.txtNombre.setText(campo.getNombre());
         holder.txtNombre.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, movie + "", Toast.LENGTH_LONG).show();
+                Toast.makeText(context, campo + "", Toast.LENGTH_LONG).show();
             }
         });
         Animation aparece = AnimationUtils.loadAnimation(context, R.anim.aparecer_lista);
         holder.txtNombre.setAnimation(aparece);
-    }
+}
 
     @Override
     public int getItemCount() {
-        return movieList.size();
+        return campos_filtrados.size();
     }
 
     class MovieVH extends RecyclerView.ViewHolder {
-        private static final String TAG = "MovieVH";
+
         TextView txtNombre;
 
         public MovieVH(@NonNull final View itemView) {

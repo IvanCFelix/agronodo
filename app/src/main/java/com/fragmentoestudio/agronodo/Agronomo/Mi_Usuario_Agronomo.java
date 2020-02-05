@@ -38,7 +38,7 @@ public class Mi_Usuario_Agronomo extends Fragment {
 
         civPerfil.setImageBitmap(SQLITE.obtenerImagen(getContext()));
 
-        getActivity().setTitle("Mi Usuario");
+        getActivity().setTitle(" Mi Usuario");
         return view;
     }
 

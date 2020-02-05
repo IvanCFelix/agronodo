@@ -30,7 +30,7 @@ public class Notificaciones_Agronomo extends Fragment {
             }
         });
 
-        getActivity().setTitle("Notificaciones");
+        getActivity().setTitle(" Notificaciones");
 
         return view;
     }

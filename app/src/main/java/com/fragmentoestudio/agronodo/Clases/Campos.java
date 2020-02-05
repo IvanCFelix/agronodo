@@ -6,6 +6,7 @@ public class Campos {
     private String Tipo_Cultivo;
     private String Coordenadas;
 
+
     public Campos(int ID, String nombre, String tipo_Cultivo, String coordenadas) {
         this.ID = ID;
         Nombre = nombre;

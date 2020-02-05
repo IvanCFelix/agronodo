@@ -8,6 +8,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
 import com.fragmentoestudio.agronodo.Clases.Campos;
+import com.fragmentoestudio.agronodo.Clases.Cultivos;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
@@ -150,5 +151,78 @@ public class SQLITE {
             return lista;
         }
         return null;
+    }
+
+    public static ArrayList<Cultivos> obtenerCultivosLista(Context contexto) {
+        Base_Datos bd = new Base_Datos(contexto);
+        SQLiteDatabase db = bd.getWritableDatabase();
+        if (db != null) {
+            ArrayList<Cultivos> lista = new ArrayList<>();
+            Cursor c = db.rawQuery("select * from " + SQLITE.tablaCultivos + ";", null);
+            if (c.getCount() > 0) {
+                if (c.moveToFirst()) {
+                    do {
+                        lista.add(new Cultivos(c.getString(0)));
+                    } while (c.moveToNext());
+                }
+            }
+            return lista;
+        }
+        return null;
+    }
+
+    public static int obtenerCantidadCamposCultivos(Context contexto, String cultivo){
+        Base_Datos base_datos = new Base_Datos(contexto);
+        SQLiteDatabase db = base_datos.getWritableDatabase();
+        if (db != null) {
+            Cursor c= db.rawQuery("select * from " + tablaCampos + " where Cultivo = '" + cultivo + "' ;", null);
+            int contador= c.getCount();
+            db.close();
+            return contador;
+        }
+        return 0;
+    }
+
+    public static ArrayList<Campos> obtenerCamposdeunCultivo(Context contexto, String cultivo) {
+        Base_Datos bd = new Base_Datos(contexto);
+        SQLiteDatabase db = bd.getWritableDatabase();
+        if (db != null) {
+            ArrayList<Campos> lista = new ArrayList<>();
+            Cursor c = db.rawQuery("select * from " + SQLITE.tablaCampos + " where Cultivo = '" + cultivo + "';", null);
+            if (c.getCount() > 0) {
+                if (c.moveToFirst()) {
+                    do {
+                        lista.add(new Campos(c.getInt(0), c.getString(1), c.getString(2), c.getString(3)));
+                    } while (c.moveToNext());
+                }
+            }
+            return lista;
+        }
+        return null;
+    }
+
+    public static ArrayList<Campos> obtenerCampos(Context contexto) {
+        Base_Datos bd = new Base_Datos(contexto);
+        SQLiteDatabase db = bd.getWritableDatabase();
+        if (db != null) {
+            ArrayList<Campos> lista = new ArrayList<>();
+            Cursor c = db.rawQuery("select * from " + SQLITE.tablaCampos + ";", null);
+            if (c.getCount() > 0) {
+                if (c.moveToFirst()) {
+                    do {
+                        lista.add(new Campos(c.getInt(0), c.getString(1), c.getString(2), c.getString(3)));
+                    } while (c.moveToNext());
+                }
+            }
+            return lista;
+        }
+        return null;
+    }
+
+    public static void limpiarTabla(Context contexto, String tabla) {
+        Base_Datos bd = new Base_Datos(contexto);
+        SQLiteDatabase db = bd.getWritableDatabase();
+        db.execSQL("delete from " + tabla + ";");
+        db.close();
     }
 }

@@ -20,11 +20,11 @@ import android.widget.Toast;
 
 import com.fragmentoestudio.agronodo.Agregar_Campo.Activity_Agregar_Campo;
 import com.fragmentoestudio.agronodo.Adaptadores.Predios_Encabezado;
-import com.fragmentoestudio.agronodo.Clases.Cines;
-import com.fragmentoestudio.agronodo.Clases.Movie;
+import com.fragmentoestudio.agronodo.Clases.Cultivos;
 import com.fragmentoestudio.agronodo.R;
 import com.fragmentoestudio.agronodo.Servicios.Authentification;
 import com.fragmentoestudio.agronodo.Utilidades.Datos;
+import com.fragmentoestudio.agronodo.Utilidades.SQLITE;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -36,9 +36,9 @@ import java.util.concurrent.ExecutionException;
 public class Lista_Predios_Agronomo extends Fragment {
 
     RecyclerView recyclerView;
-    ArrayList<Cines> cines = new ArrayList<>();
+    ArrayList<Cultivos> cultivos = new ArrayList<>();
     SwipeRefreshLayout swipeRefreshLayout;
-    Predios_Encabezado movieAdapter;
+    Predios_Encabezado adapter;
     FloatingActionButton fabAgregar;
 
     ProgressDialog cargando;
@@ -55,11 +55,15 @@ public class Lista_Predios_Agronomo extends Fragment {
         recyclerView = view.findViewById(R.id.recyclerView);
         fabAgregar = view.findViewById(R.id.fab_agregar);
         swipeRefreshLayout = view.findViewById(R.id.swiperefresh);
-        getActivity().setTitle("Mis Predios");
-        initRecyclerView();
+        getActivity().setTitle(" Mis Predios");
+        adapter = new Predios_Encabezado(cultivos, getContext());
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setAdapter(adapter);
+
+        cargando= new ProgressDialog(getContext());
+
         PrimeThread p = new PrimeThread(140);
         p.start();
-        //initData();
 
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -102,8 +106,23 @@ public class Lista_Predios_Agronomo extends Fragment {
         return view;
     }
 
-    private void leerComposiciones() {
-        if (Datos.existeInternet(getContext(), getActivity())) {
+    private void llenarLista() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                cultivos.clear();
+                cultivos = SQLITE.obtenerCultivosLista(getContext());
+                getActivity().runOnUiThread(new Runnable() {
+                    public void run() {
+                        adapter = new Predios_Encabezado(cultivos, getContext());
+                        recyclerView.setAdapter(adapter);
+                        if (swipeRefreshLayout.isRefreshing())
+                            swipeRefreshLayout.setRefreshing(false);
+                    }
+                });
+            }
+        }).start();
+        /*if (Datos.existeInternet(getContext(), getActivity())) {
             new Thread(new Runnable() {
                 @Override
                 public void run() {
@@ -112,69 +131,20 @@ public class Lista_Predios_Agronomo extends Fragment {
                             cargando = ProgressDialog.show(getContext(), "", "Cargando Datos", true);
                         }
                     });
+                    cultivos.clear();
+                    cultivos = SQLITE.obtenerCultivosLista(getContext());
 
-                    try {
-                        final JSONObject resultado = new JSONObject(new Authentification.ObtenerComposiciones().execute().get());
-                        final JSONArray composiciones = resultado.getJSONArray("results");
-
-                        cines.clear();
-                        if(composiciones==null || composiciones.length()==0){
-                            getActivity().runOnUiThread(new Runnable() {
-                                public void run() {
-                                    Toast.makeText(getContext(), "No se pudieron obtener los datos", Toast.LENGTH_SHORT).show();
-                                }
-                            });
-                        }else{
-                            for (int i = 0; i < composiciones.length(); i++) {
-                                final JSONObject composicion = (composiciones.getJSONObject(i));
-                                if (cines.size() > 0) {
-                                    if (listaindexOf(composicion.getJSONObject("user").getString("email")) == -1) {
-                                        ArrayList<Movie> pelicula = new ArrayList<>();
-                                        pelicula.add(new Movie(composicion.getString("name")));
-                                        cines.add(new Cines(composicion.getJSONObject("user").getString("email"), pelicula));
-                                    } else {
-                                        cines.get(listaindexOf(composicion.getJSONObject("user").getString("email"))).insertarPelicula(new Movie(composicion.getString("name")));
-                                    }
-                                } else {
-                                    ArrayList<Movie> pelicula = new ArrayList<>();
-                                    pelicula.add(new Movie(composicion.getString("name")));
-                                    cines.add(new Cines(composicion.getJSONObject("user").getString("email"), pelicula));
-                                }
-                            }
+                    getActivity().runOnUiThread(new Runnable() {
+                        public void run() {
+                            Toast.makeText(getContext(), cultivos.size() + "", Toast.LENGTH_SHORT).show();
+                            if (swipeRefreshLayout.isRefreshing())
+                                swipeRefreshLayout.setRefreshing(false);
+                            if (cargando.isShowing())
+                                cargando.dismiss();
+                            adapater.notifyDataSetChanged();
                         }
+                    });
 
-                        getActivity().runOnUiThread(new Runnable() {
-                            public void run() {
-                                if (swipeRefreshLayout.isRefreshing())
-                                    swipeRefreshLayout.setRefreshing(false);
-                                if (cargando.isShowing())
-                                    cargando.dismiss();
-                                movieAdapter.notifyDataSetChanged();
-                            }
-                        });
-
-                    } catch (final ExecutionException e) {
-                        e.printStackTrace();
-                        getActivity().runOnUiThread(new Runnable() {
-                            public void run() {
-                                Toast.makeText(getContext(), e.toString(), Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                    } catch (final InterruptedException e) {
-                        getActivity().runOnUiThread(new Runnable() {
-                            public void run() {
-                                Toast.makeText(getContext(), e.toString(), Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                        e.printStackTrace();
-                    } catch (final JSONException e) {
-                        getActivity().runOnUiThread(new Runnable() {
-                            public void run() {
-                                Toast.makeText(getContext(), e.toString(), Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                        e.printStackTrace();
-                    }
                 }
             }).start();
         }
@@ -184,9 +154,9 @@ public class Lista_Predios_Agronomo extends Fragment {
                     swipeRefreshLayout.setRefreshing(false);
                 if (cargando != null && cargando.isShowing())
                     cargando.dismiss();
-                movieAdapter.notifyDataSetChanged();
+                adapater.notifyDataSetChanged();
             }
-        });
+        });*/
 
     }
 
@@ -198,22 +168,14 @@ public class Lista_Predios_Agronomo extends Fragment {
         }
 
         public void run() {
-            leerComposiciones();
+            llenarLista();
         }
     }
 
-    public int listaindexOf(String nombre) {
-        for (int i = 0; i < cines.size(); i++) {
-            if (cines.get(i).getNombre().equals(nombre))
-                return i;
-        }
-        return -1;
+    @Override
+    public void onResume() {
+        super.onResume();
+        PrimeThread p = new PrimeThread(140);
+        p.start();
     }
-
-    private void initRecyclerView() {
-        movieAdapter = new Predios_Encabezado(cines, getContext());
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setAdapter(movieAdapter);
-    }
-
 }

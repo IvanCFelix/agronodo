@@ -11,59 +11,61 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import com.fragmentoestudio.agronodo.Clases.Cines;
+import com.fragmentoestudio.agronodo.Clases.Cultivos;
 import com.fragmentoestudio.agronodo.R;
+import com.fragmentoestudio.agronodo.Utilidades.SQLITE;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class Predios_Encabezado extends RecyclerView.Adapter<Predios_Encabezado.MovieVH> {
+public class Predios_Encabezado extends RecyclerView.Adapter<Predios_Encabezado.ViewHolder> {
 
-    private static final String TAG = "MovieAdapter";
-    List<Cines> movieList;
+    ArrayList<Cultivos> cultivo_source;
+    ArrayList<Cultivos> cultivo_filtrados;
     Context context;
 
-    public Predios_Encabezado(List<Cines> movieList, Context context) {
-        this.movieList = movieList;
+    public Predios_Encabezado(ArrayList<Cultivos> lista, Context context) {
+        this.cultivo_source = lista;
+        this.cultivo_filtrados = lista;
         this.context = context;
     }
 
     @NonNull
     @Override
-    public MovieVH onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.rv_predio_titulo, parent, false);
-        return new MovieVH(view);
+        return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MovieVH holder, int position) {
-        Cines cine = movieList.get(position);
-        holder.txtContador.setText(cine.getPeliculas().size() + "");
-        holder.titleTextView.setText(cine.getNombre());
-        Predios_Contenido prediosContenido = new Predios_Contenido(cine.getPeliculas(), context);
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        Cultivos cultivo = cultivo_filtrados.get(position);
+        holder.txtContador.setText(SQLITE.obtenerCantidadCamposCultivos(context, cultivo.getNombre()) + "");
+        holder.txtTitulo.setText(cultivo.getNombre());
+        Predios_Contenido prediosContenido = new Predios_Contenido(SQLITE.obtenerCamposdeunCultivo(context, cultivo.getNombre()), context);
         holder.recyclerView.setLayoutManager(new LinearLayoutManager(context));
         holder.recyclerView.setAdapter(prediosContenido);
-        boolean isExpanded = movieList.get(position).isExpanded();
+        boolean isExpanded = cultivo_filtrados.get(position).isExpanded();
         holder.expandableLayout.setVisibility(isExpanded ? View.VISIBLE : View.GONE);
         holder.imvFlecha.setRotation(isExpanded ? -90f : 0);
     }
 
     @Override
     public int getItemCount() {
-        return movieList.size();
+        return cultivo_filtrados.size();
     }
 
-    class MovieVH extends RecyclerView.ViewHolder {
-        private static final String TAG = "MovieVH";
+    class ViewHolder extends RecyclerView.ViewHolder {
+
         ConstraintLayout expandableLayout;
-        TextView titleTextView, txtContador;
+        TextView txtTitulo, txtContador;
         RecyclerView recyclerView;
         LinearLayout layout;
         ImageView imvFlecha;
 
-        public MovieVH(@NonNull final View itemView) {
+        public ViewHolder(@NonNull final View itemView) {
             super(itemView);
-            titleTextView = itemView.findViewById(R.id.titleTextView);
+            txtTitulo = itemView.findViewById(R.id.titleTextView);
             txtContador = itemView.findViewById(R.id.rv_txtcontador);
             recyclerView = itemView.findViewById(R.id.rvCine);
             expandableLayout = itemView.findViewById(R.id.expandableLayout);
@@ -73,9 +75,13 @@ public class Predios_Encabezado extends RecyclerView.Adapter<Predios_Encabezado.
             layout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Cines cine = movieList.get(getAdapterPosition());
-                    cine.setExpanded(!cine.isExpanded());
-                    notifyItemChanged(getAdapterPosition());
+                    Cultivos cultivo = cultivo_filtrados.get(getAdapterPosition());
+                    if(SQLITE.obtenerCantidadCamposCultivos(context, cultivo.getNombre())>0) {
+                        cultivo.setExpanded(!cultivo.isExpanded());
+                        notifyItemChanged(getAdapterPosition());
+                    }else{
+
+                    }
                 }
             });
         }

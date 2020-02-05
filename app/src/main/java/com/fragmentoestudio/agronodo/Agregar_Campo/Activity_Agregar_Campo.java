@@ -82,13 +82,13 @@ public class Activity_Agregar_Campo extends AppCompatActivity {
                         campo.setNombre(formulario_agregar_campo.txtNombre.getText().toString().trim());
                         String coordenadas = "";
                         for (int i = 0; i < mapa_agregar_campo.coordenadas.size(); i++) {
-                            coordenadas = coordenadas + "{" + mapa_agregar_campo.coordenadas.get(i).latitude + "," + mapa_agregar_campo.coordenadas.get(i).longitude + "}";
+                            coordenadas = coordenadas + "{'Latitud': " + mapa_agregar_campo.coordenadas.get(i).latitude + ", 'Longitud': " + mapa_agregar_campo.coordenadas.get(i).longitude + "}";
                             if (mapa_agregar_campo.coordenadas.size() - 1 != i) {
                                 coordenadas = coordenadas + ",";
                             }
                         }
                         campo.setCoordenadas(coordenadas);
-                        if (formulario_agregar_campo.spnCultivo.getVisibility() == View.VISIBLE) {
+                        if (formulario_agregar_campo.tilCultivo.getVisibility() == View.VISIBLE) {
                             if (formulario_agregar_campo.txtCultivo.getText().toString().trim().isEmpty()) {
                                 completarDatos();
                                 return;
@@ -96,11 +96,11 @@ public class Activity_Agregar_Campo extends AppCompatActivity {
                                 campo.setTipo_Cultivo(formulario_agregar_campo.txtCultivo.getText().toString().trim());
                             }
                         } else {
-                            if (formulario_agregar_campo.spnCultivo.getSelectedItem().equals("-Otro-")) {
+                            if (formulario_agregar_campo.spnCultivo.getSelectedItem().toString().equals("-Otro-")) {
                                 completarDatos();
                                 return;
                             } else {
-                                campo.setTipo_Cultivo(formulario_agregar_campo.txtCultivo.getText().toString().trim());
+                                campo.setTipo_Cultivo(formulario_agregar_campo.spnCultivo.getSelectedItem().toString());
                             }
                         }
 
