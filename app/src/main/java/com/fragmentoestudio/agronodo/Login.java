@@ -167,14 +167,17 @@ public class Login extends AppCompatActivity {
                                     final String resultado = new Authentification.IniciarSesion().execute(postData.toString()).get();
 
                                     final JSONObject datos = new JSONObject(resultado);
+
                                     try {
                                         if (datos.getString("token").length() > 0 && (datos.getInt("user_type") == 1 || datos.getInt("user_type") == 2 || datos.getInt("user_type") == 3)) {
-                                            final String url = datos.getJSONObject("profile").getString("photo");
+                                            String url = datos.getJSONObject("profile").getString("photo");
+                                            String formato =  url.substring(url.indexOf(".") + 1);
                                             Bitmap imagen = new Datos.imagendeWEB().execute(Uris.API_ENDPOINT + datos.getJSONObject("profile").getString("photo")).get();
                                             if(imagen==null){
                                                 imagen = BitmapFactory.decodeResource(getResources(), R.drawable.logo);
+                                                formato = "png";
                                             }
-                                            SQLITE.ingresarSesion(Login.this, resultado, imagen, url.substring(url.indexOf(".") + 1));
+                                            SQLITE.ingresarSesion(Login.this, resultado, imagen, formato);
                                             runOnUiThread(new Runnable() {
                                                 public void run() {
                                                     Toast.makeText(Login.this, "Sesión Iniciada", Toast.LENGTH_LONG).show();
