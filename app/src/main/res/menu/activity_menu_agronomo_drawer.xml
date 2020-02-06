@@ -11,7 +11,7 @@
 
         <item
             android:id="@+id/nav_Lista_Predios"
-            android:icon="@drawable/ic_lista"
+            android:icon="@drawable/ic_campo"
             android:title="Mis Predios" />
 
         <item
@@ -34,7 +34,7 @@
         <menu>
             <item
                 android:id="@+id/nav_web"
-                android:icon="@drawable/www"
+                android:icon="@drawable/ic_internet"
                 android:title="Sitio WEB" />
             <item
                 android:id="@+id/nav_salir"

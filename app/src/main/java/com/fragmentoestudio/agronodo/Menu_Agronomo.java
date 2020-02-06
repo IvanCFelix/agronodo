@@ -140,7 +140,7 @@ public class Menu_Agronomo extends AppCompatActivity implements NavigationView.O
                 try {
                     fragmentTransaction.replace(R.id.area_ventana, lista_predios);
                     drawer.closeDrawer(GravityCompat.START);
-                    Drawable icono = getResources().getDrawable(R.drawable.ic_lista);
+                    Drawable icono = getResources().getDrawable(R.drawable.ic_campo);
                     icono.setColorFilter(Color.parseColor("#FFFFFF"), PorterDuff.Mode.SRC_ATOP);
                     getSupportActionBar().setIcon(icono);
                 } catch (Exception e) {

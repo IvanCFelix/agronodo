@@ -42,11 +42,12 @@
                         android:layout_height="30dp"
                         android:text="0"
                         android:background="@drawable/textview_redondo"
+                        android:paddingRight="1dp"
                         android:textStyle="bold"
                         android:gravity="center"
-                        android:textColor="@color/colorWhite"
+                        android:textColor="@color/colorGreen"
                         android:textSize="15sp"
-                        android:backgroundTint="@color/accent"
+                        android:backgroundTint="@color/colorWhite"
                         tools:ignore="MissingConstraints" />
 
                     <TextView

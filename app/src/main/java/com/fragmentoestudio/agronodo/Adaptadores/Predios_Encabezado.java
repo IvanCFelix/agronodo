@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.fragmentoestudio.agronodo.Clases.Cultivos;
 import com.fragmentoestudio.agronodo.R;
 import com.fragmentoestudio.agronodo.Utilidades.SQLITE;
@@ -23,11 +25,15 @@ public class Predios_Encabezado extends RecyclerView.Adapter<Predios_Encabezado.
     ArrayList<Cultivos> cultivo_source;
     ArrayList<Cultivos> cultivo_filtrados;
     Context context;
+    RecyclerView rvEncabezado;
+    Predios_Encabezado adapter;
 
-    public Predios_Encabezado(ArrayList<Cultivos> lista, Context context) {
+    public Predios_Encabezado(ArrayList<Cultivos> lista, Context context, RecyclerView rv, Predios_Encabezado adapter) {
         this.cultivo_source = lista;
         this.cultivo_filtrados = lista;
         this.context = context;
+        this.adapter = adapter;
+        rvEncabezado = rv;
     }
 
     @NonNull
@@ -42,7 +48,7 @@ public class Predios_Encabezado extends RecyclerView.Adapter<Predios_Encabezado.
         Cultivos cultivo = cultivo_filtrados.get(position);
         holder.txtContador.setText(SQLITE.obtenerCantidadCamposCultivos(context, cultivo.getNombre()) + "");
         holder.txtTitulo.setText(cultivo.getNombre());
-        Predios_Contenido prediosContenido = new Predios_Contenido(SQLITE.obtenerCamposdeunCultivo(context, cultivo.getNombre()), context);
+        Predios_Contenido prediosContenido = new Predios_Contenido(SQLITE.obtenerCamposdeunCultivo(context, cultivo.getNombre()), context, adapter, rvEncabezado);
         holder.recyclerView.setLayoutManager(new LinearLayoutManager(context));
         holder.recyclerView.setAdapter(prediosContenido);
         boolean isExpanded = cultivo_filtrados.get(position).isExpanded();

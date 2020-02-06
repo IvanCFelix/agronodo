@@ -1,4 +1,4 @@
-package com.fragmentoestudio.agronodo.Agregar_Campo;
+package com.fragmentoestudio.agronodo.Editar_Campo;
 
 
 import android.annotation.SuppressLint;
@@ -12,10 +12,14 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.fragmentoestudio.agronodo.Clases.Campos;
 import com.fragmentoestudio.agronodo.R;
+import com.fragmentoestudio.agronodo.Utilidades.SQLITE;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -26,15 +30,21 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 
-import java.util.ArrayList;
+import org.json.JSONArray;
+import org.json.JSONException;
 
-public class Mapa_Agregar_Campo extends Fragment implements OnMapReadyCallback {
+import java.util.ArrayList;
+import java.util.List;
+import java.util.StringTokenizer;
+
+public class Mapa_Editar_Campo extends Fragment implements OnMapReadyCallback {
 
     private GoogleMap mMap;
     private FusedLocationProviderClient mFusedLocationClient;
@@ -48,12 +58,12 @@ public class Mapa_Agregar_Campo extends Fragment implements OnMapReadyCallback {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_mapa_agregar_campo, container, false);
+        View view = inflater.inflate(R.layout.fragment_mapa_editar_campo, container, false);
         fabVolver = view.findViewById(R.id.fab_volver);
         mapView = view.findViewById(R.id.mapview);
         mapView.onCreate(null);
-        mapView.getMapAsync(this);
         mapView.onResume();
+        mapView.getMapAsync(this);
         return view;
     }
 
@@ -66,18 +76,23 @@ public class Mapa_Agregar_Campo extends Fragment implements OnMapReadyCallback {
             return;
         }
         mMap.setMyLocationEnabled(true);
-        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(getActivity());
-        mFusedLocationClient.getLastLocation()
-                .addOnSuccessListener(getActivity(), new OnSuccessListener<Location>() {
-                    @Override
-                    public void onSuccess(Location location) {
-                        if (location != null) {
-                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom((new LatLng(location.getLatitude(), location.getLongitude())), 17.0f));
-                        }
-                    }
-                });
         moveMarker();
         setMapLongClick(mMap);
+
+        int ID = getArguments().getInt("ID");
+        Campos campo = SQLITE.obtenerCampo(getContext(), ID);
+
+        try {
+            JSONArray JSONcoordenadas = new JSONArray("[" + campo.getCoordenadas() + "]");
+            for(int i=0; i<JSONcoordenadas.length(); i++){
+                coordenadas.add(new LatLng(Double.parseDouble(JSONcoordenadas.getJSONObject(i).getString("Latitud")), Double.parseDouble(JSONcoordenadas.getJSONObject(i).getString("Longitud"))));
+            }
+            dibujarCampo();
+            LatLngBounds latLngBounds = getPolygonLatLngBounds(coordenadas);
+            mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(latLngBounds, 50));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
         fabVolver.setOnClickListener(new View.OnClickListener() {
             @SuppressLint("RestrictedApi")
@@ -96,6 +111,7 @@ public class Mapa_Agregar_Campo extends Fragment implements OnMapReadyCallback {
             }
         });
 
+
         mMap.setOnMarkerDragListener(new GoogleMap.OnMarkerDragListener() {
             @Override
             public void onMarkerDragStart(Marker marker) {
@@ -104,7 +120,6 @@ public class Mapa_Agregar_Campo extends Fragment implements OnMapReadyCallback {
 
             @Override
             public void onMarkerDrag(Marker marker) {
-
             }
 
             @Override
@@ -163,5 +178,13 @@ public class Mapa_Agregar_Campo extends Fragment implements OnMapReadyCallback {
         float[] hsv = new float[3];
         Color.colorToHSV(Color.parseColor(color), hsv);
         return BitmapDescriptorFactory.defaultMarker(hsv[0]);
+    }
+
+    private static LatLngBounds getPolygonLatLngBounds(final List<LatLng> polygon) {
+        final LatLngBounds.Builder centerBuilder = LatLngBounds.builder();
+        for (LatLng point : polygon) {
+            centerBuilder.include(point);
+        }
+        return centerBuilder.build();
     }
 }

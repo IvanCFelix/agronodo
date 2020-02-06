@@ -81,7 +81,7 @@ public class Authentification {
         }
     }
 
-    public static class ObtenerComposiciones extends AsyncTask<String, Void, String> {
+    /*public static class ObtenerComposiciones extends AsyncTask<String, Void, String> {
 
         @Override
         protected String doInBackground(String... params) {
@@ -107,5 +107,5 @@ public class Authentification {
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
         }
-    }
+    }*/
 }

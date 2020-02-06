@@ -157,7 +157,6 @@ public class Mapa_Predios_Agronomo extends Fragment implements OnMapReadyCallbac
                 polygonOptions.strokeColor(Color.rgb(36,133,60));
                 polygonOptions.clickable(true);
                 polygonOptions.fillColor(Color.argb(0, 47, 123, 255));
-                polygonOptions.strokeWidth(5);
                 mMap.addPolygon(polygonOptions);
             } catch (JSONException e) {
                 e.printStackTrace();

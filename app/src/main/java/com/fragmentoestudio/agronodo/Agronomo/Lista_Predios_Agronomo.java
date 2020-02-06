@@ -16,6 +16,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.fragmentoestudio.agronodo.Agregar_Campo.Activity_Agregar_Campo;
@@ -36,10 +37,11 @@ import java.util.concurrent.ExecutionException;
 public class Lista_Predios_Agronomo extends Fragment {
 
     RecyclerView recyclerView;
-    ArrayList<Cultivos> cultivos = new ArrayList<>();
     SwipeRefreshLayout swipeRefreshLayout;
     Predios_Encabezado adapter;
     FloatingActionButton fabAgregar;
+
+    TextView txtNoHay;
 
     ProgressDialog cargando;
 
@@ -52,13 +54,12 @@ public class Lista_Predios_Agronomo extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_lista_predios_agronomo, container, false);
 
+        txtNoHay = view.findViewById(R.id.txtNoHay);
         recyclerView = view.findViewById(R.id.recyclerView);
         fabAgregar = view.findViewById(R.id.fab_agregar);
         swipeRefreshLayout = view.findViewById(R.id.swiperefresh);
         getActivity().setTitle(" Mis Predios");
-        adapter = new Predios_Encabezado(cultivos, getContext());
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setAdapter(adapter);
 
         cargando= new ProgressDialog(getContext());
 
@@ -107,21 +108,20 @@ public class Lista_Predios_Agronomo extends Fragment {
     }
 
     private void llenarLista() {
-        new Thread(new Runnable() {
-            @Override
+        getActivity().runOnUiThread(new Runnable() {
             public void run() {
-                cultivos.clear();
-                cultivos = SQLITE.obtenerCultivosLista(getContext());
-                getActivity().runOnUiThread(new Runnable() {
-                    public void run() {
-                        adapter = new Predios_Encabezado(cultivos, getContext());
-                        recyclerView.setAdapter(adapter);
-                        if (swipeRefreshLayout.isRefreshing())
-                            swipeRefreshLayout.setRefreshing(false);
-                    }
-                });
+                ArrayList<Cultivos> cultivos = SQLITE.obtenerCultivosLista(getContext());
+                adapter = new Predios_Encabezado(cultivos, getContext(), recyclerView, adapter);
+                recyclerView.setAdapter(adapter);
+                if(cultivos.isEmpty()){
+                    txtNoHay.setVisibility(View.VISIBLE);
+                }else{
+                    txtNoHay.setVisibility(View.GONE);
+                }
+                if (swipeRefreshLayout.isRefreshing())
+                    swipeRefreshLayout.setRefreshing(false);
             }
-        }).start();
+        });
         /*if (Datos.existeInternet(getContext(), getActivity())) {
             new Thread(new Runnable() {
                 @Override
@@ -175,7 +175,9 @@ public class Lista_Predios_Agronomo extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        PrimeThread p = new PrimeThread(140);
-        p.start();
+        try {
+            PrimeThread p = new PrimeThread(140);
+            p.start();
+        }catch (Exception e){}
     }
 }

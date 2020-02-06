@@ -219,6 +219,47 @@ public class SQLITE {
         return null;
     }
 
+    public static Campos obtenerCampo(Context context, int id) {
+        Base_Datos bd = new Base_Datos(context);
+        SQLiteDatabase db = bd.getWritableDatabase();
+        if (db != null) {
+            Cursor c = db.rawQuery("select * from " + SQLITE.tablaCampos + " where ID = " + id + "  ;", null);
+            if (c.getCount() == 1) {
+                c.moveToFirst();
+                Campos campo = new Campos(c.getInt(0), c.getString(1), c.getString(2), c.getString(3));
+                db.close();
+                return campo;
+            }
+        }
+        return null;
+    }
+
+    public static String editarCampo(Context contexto, Campos campo) {
+        Base_Datos bd = new Base_Datos(contexto);
+        SQLiteDatabase db = bd.getWritableDatabase();
+        if (db != null) {
+            ContentValues registro = new ContentValues();
+            registro.put("Nombre", campo.getNombre());
+            registro.put("Cultivo", campo.getTipo_Cultivo());
+            registro.put("Coordenadas", campo.getCoordenadas());
+            db.update(SQLITE.tablaCampos, registro, "ID = '" + campo.getID() + "'", null);
+            db.close();
+            return "Predio editado exitosamente";
+        }
+        return "No se pudo editar el Predio";
+    }
+
+    public static String borrarCampo(Context contexto, int id) {
+        Base_Datos bd = new Base_Datos(contexto);
+        SQLiteDatabase db = bd.getWritableDatabase();
+        if (db != null) {
+            db.execSQL("DELETE FROM " + SQLITE.tablaCampos + " WHERE ID=" + id + ";");
+            db.close();
+            return "Predio eliminado exitosamente";
+        }
+        return "No se pudo eliminar el Predio";
+    }
+
     public static void limpiarTabla(Context contexto, String tabla) {
         Base_Datos bd = new Base_Datos(contexto);
         SQLiteDatabase db = bd.getWritableDatabase();

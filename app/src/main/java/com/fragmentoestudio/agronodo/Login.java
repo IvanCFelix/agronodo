@@ -172,8 +172,9 @@ public class Login extends AppCompatActivity {
                                     try {
                                         if (datos.getString("token").length() > 0 && (datos.getInt("user_type") == 1 || datos.getInt("user_type") == 2 || datos.getInt("user_type") == 3)) {
                                             String url = datos.getJSONObject("profile").getString("photo");
+
                                             String formato = url.substring(url.indexOf(".") + 1);
-                                            Bitmap imagen = new Datos.imagendeWEB().execute(Uris.API_ENDPOINT + url).get();
+                                            Bitmap imagen = new Datos.imagendeWEB().execute(Uris.ENDPOINT_AGRONODO + url).get();
                                             if (imagen == null) {
                                                 imagen = BitmapFactory.decodeResource(getResources(), R.drawable.logo);
                                                 formato = "png";
