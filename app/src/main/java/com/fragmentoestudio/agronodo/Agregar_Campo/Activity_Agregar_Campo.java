@@ -78,7 +78,7 @@ public class Activity_Agregar_Campo extends AppCompatActivity {
                         return;
                     } else {
                         Campos campo = new Campos();
-                        campo.setID(SQLITE.obtenerValorMaximo(Activity_Agregar_Campo.this, SQLITE.tablaCampos, "ID"));
+                        campo.setID(SQLITE.obtenerValorMaximo(Activity_Agregar_Campo.this, SQLITE.tablaCampos, "ID") + 1);
                         campo.setNombre(formulario_agregar_campo.txtNombre.getText().toString().trim());
                         String coordenadas = "";
                         for (int i = 0; i < mapa_agregar_campo.coordenadas.size(); i++) {
@@ -88,25 +88,6 @@ public class Activity_Agregar_Campo extends AppCompatActivity {
                             }
                         }
                         campo.setCoordenadas(coordenadas);
-                        if (formulario_agregar_campo.tilCultivo.getVisibility() == View.VISIBLE) {
-                            if (formulario_agregar_campo.txtCultivo.getText().toString().trim().isEmpty()) {
-                                completarDatos();
-                                return;
-                            } else {
-                                campo.setTipo_Cultivo(formulario_agregar_campo.txtCultivo.getText().toString().trim());
-                            }
-                        } else {
-                            if (formulario_agregar_campo.spnCultivo.getSelectedItem().toString().equals("-Otro-")) {
-                                completarDatos();
-                                return;
-                            } else {
-                                campo.setTipo_Cultivo(formulario_agregar_campo.spnCultivo.getSelectedItem().toString());
-                            }
-                        }
-
-                        if (formulario_agregar_campo.spnCultivo.getVisibility() == View.VISIBLE && !formulario_agregar_campo.txtCultivo.getText().toString().trim().isEmpty()) {
-                            SQLITE.agregarCultivo(Activity_Agregar_Campo.this, campo.getTipo_Cultivo());
-                        }
 
                         AlertDialog.Builder dialogo1 = new AlertDialog.Builder(Activity_Agregar_Campo.this);
                         dialogo1.setCancelable(false);

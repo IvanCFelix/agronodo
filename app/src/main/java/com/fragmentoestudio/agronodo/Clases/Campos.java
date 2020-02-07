@@ -3,15 +3,15 @@ package com.fragmentoestudio.agronodo.Clases;
 public class Campos {
     private int ID;
     private String Nombre;
-    private String Tipo_Cultivo;
     private String Coordenadas;
+    private boolean expanded;
 
 
-    public Campos(int ID, String nombre, String tipo_Cultivo, String coordenadas) {
+    public Campos(int ID, String nombre, String coordenadas) {
         this.ID = ID;
         Nombre = nombre;
-        Tipo_Cultivo = tipo_Cultivo;
         Coordenadas = coordenadas;
+        this.expanded = false;
     }
 
     public Campos() {
@@ -33,19 +33,19 @@ public class Campos {
         Nombre = nombre;
     }
 
-    public String getTipo_Cultivo() {
-        return Tipo_Cultivo;
-    }
-
-    public void setTipo_Cultivo(String tipo_Cultivo) {
-        Tipo_Cultivo = tipo_Cultivo;
-    }
-
     public String getCoordenadas() {
         return Coordenadas;
     }
 
     public void setCoordenadas(String coordenadas) {
         Coordenadas = coordenadas;
+    }
+
+    public boolean isExpanded() {
+        return expanded;
+    }
+
+    public void setExpanded(boolean expanded) {
+        this.expanded = expanded;
     }
 }

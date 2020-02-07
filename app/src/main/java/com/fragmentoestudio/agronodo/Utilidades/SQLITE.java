@@ -16,7 +16,7 @@ import java.util.ArrayList;
 public class SQLITE {
     public static final String tablaPerfil = "Perfil";
     public static final String tablaCampos = "Campos";
-    public static final String tablaCultivos = "Cultivos";
+    public static final String tablaSubCampos = "SubCampos";
 
     public static int obtenerTamañoTabla(Context contexto, String tabla){
         Base_Datos base_datos = new Base_Datos(contexto);
@@ -113,62 +113,12 @@ public class SQLITE {
             ContentValues registro = new ContentValues();
             registro.put("ID", campo.getID());
             registro.put("Nombre", campo.getNombre());
-            registro.put("Cultivo", campo.getTipo_Cultivo());
             registro.put("Coordenadas", campo.getCoordenadas());
             db.insert(SQLITE.tablaCampos, null, registro);
             db.close();
             return "Campo registrado exitosamente";
         }
         return "No se pudo agregar este Lote";
-    }
-
-    public static String agregarCultivo(Context context, String cultivo){
-        Base_Datos bd = new Base_Datos(context);
-        SQLiteDatabase db = bd.getWritableDatabase();
-        if (db != null) {
-            ContentValues registro = new ContentValues();
-            registro.put("Nombre", cultivo);
-            db.insert(SQLITE.tablaCultivos, null, registro);
-            db.close();
-            return "Cultivo registrado exitosamente";
-        }
-        return "No se pudo agregar este Cultivo";
-    }
-
-    public static ArrayList<String> obtenerCultivos(Context contexto) {
-        Base_Datos bd = new Base_Datos(contexto);
-        SQLiteDatabase db = bd.getWritableDatabase();
-        if (db != null) {
-            ArrayList<String> lista = new ArrayList<>();
-            Cursor c = db.rawQuery("select * from " + SQLITE.tablaCultivos + ";", null);
-            if (c.getCount() > 0) {
-                if (c.moveToFirst()) {
-                    do {
-                        lista.add(c.getString(0));
-                    } while (c.moveToNext());
-                }
-            }
-            return lista;
-        }
-        return null;
-    }
-
-    public static ArrayList<Cultivos> obtenerCultivosLista(Context contexto) {
-        Base_Datos bd = new Base_Datos(contexto);
-        SQLiteDatabase db = bd.getWritableDatabase();
-        if (db != null) {
-            ArrayList<Cultivos> lista = new ArrayList<>();
-            Cursor c = db.rawQuery("select * from " + SQLITE.tablaCultivos + ";", null);
-            if (c.getCount() > 0) {
-                if (c.moveToFirst()) {
-                    do {
-                        lista.add(new Cultivos(c.getString(0)));
-                    } while (c.moveToNext());
-                }
-            }
-            return lista;
-        }
-        return null;
     }
 
     public static int obtenerCantidadCamposCultivos(Context contexto, String cultivo){
@@ -183,24 +133,6 @@ public class SQLITE {
         return 0;
     }
 
-    public static ArrayList<Campos> obtenerCamposdeunCultivo(Context contexto, String cultivo) {
-        Base_Datos bd = new Base_Datos(contexto);
-        SQLiteDatabase db = bd.getWritableDatabase();
-        if (db != null) {
-            ArrayList<Campos> lista = new ArrayList<>();
-            Cursor c = db.rawQuery("select * from " + SQLITE.tablaCampos + " where Cultivo = '" + cultivo + "';", null);
-            if (c.getCount() > 0) {
-                if (c.moveToFirst()) {
-                    do {
-                        lista.add(new Campos(c.getInt(0), c.getString(1), c.getString(2), c.getString(3)));
-                    } while (c.moveToNext());
-                }
-            }
-            return lista;
-        }
-        return null;
-    }
-
     public static ArrayList<Campos> obtenerCampos(Context contexto) {
         Base_Datos bd = new Base_Datos(contexto);
         SQLiteDatabase db = bd.getWritableDatabase();
@@ -210,7 +142,7 @@ public class SQLITE {
             if (c.getCount() > 0) {
                 if (c.moveToFirst()) {
                     do {
-                        lista.add(new Campos(c.getInt(0), c.getString(1), c.getString(2), c.getString(3)));
+                        lista.add(new Campos(c.getInt(0), c.getString(1), c.getString(2)));
                     } while (c.moveToNext());
                 }
             }
@@ -226,7 +158,7 @@ public class SQLITE {
             Cursor c = db.rawQuery("select * from " + SQLITE.tablaCampos + " where ID = " + id + "  ;", null);
             if (c.getCount() == 1) {
                 c.moveToFirst();
-                Campos campo = new Campos(c.getInt(0), c.getString(1), c.getString(2), c.getString(3));
+                Campos campo = new Campos(c.getInt(0), c.getString(1), c.getString(2));
                 db.close();
                 return campo;
             }
@@ -240,7 +172,6 @@ public class SQLITE {
         if (db != null) {
             ContentValues registro = new ContentValues();
             registro.put("Nombre", campo.getNombre());
-            registro.put("Cultivo", campo.getTipo_Cultivo());
             registro.put("Coordenadas", campo.getCoordenadas());
             db.update(SQLITE.tablaCampos, registro, "ID = '" + campo.getID() + "'", null);
             db.close();

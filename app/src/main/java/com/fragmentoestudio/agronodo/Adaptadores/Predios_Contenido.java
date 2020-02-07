@@ -15,9 +15,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.fragmentoestudio.agronodo.Clases.Campos;
-import com.fragmentoestudio.agronodo.Clases.Cultivos;
+import com.fragmentoestudio.agronodo.Clases.SubCampos;
 import com.fragmentoestudio.agronodo.Editar_Campo.Activity_Editar_Campo;
 import com.fragmentoestudio.agronodo.R;
 import com.fragmentoestudio.agronodo.Utilidades.SQLITE;
@@ -27,17 +25,15 @@ import java.util.List;
 
 public class Predios_Contenido extends RecyclerView.Adapter<Predios_Contenido.MovieVH> {
 
-    ArrayList<Campos> campos_source;
-    ArrayList<Campos> campos_filtrados;
+    ArrayList<SubCampos> subCampos_source;
+    ArrayList<SubCampos> subCampos_filtrados;
     Context context;
     RecyclerView rvEncabezados;
-    Predios_Encabezado adapter;
 
-    public Predios_Contenido(ArrayList<Campos> lista, Context context, Predios_Encabezado adapter, RecyclerView rv) {
-        this.campos_source = lista;
-        this.campos_filtrados = lista;
+    public Predios_Contenido(ArrayList<SubCampos> lista, Context context, RecyclerView rv) {
+        this.subCampos_filtrados = lista;
+        this.subCampos_source = lista;
         this.context = context;
-        this.adapter = adapter;
         rvEncabezados = rv;
     }
 
@@ -50,14 +46,14 @@ public class Predios_Contenido extends RecyclerView.Adapter<Predios_Contenido.Mo
 
     @Override
     public void onBindViewHolder(@NonNull MovieVH holder, int position) {
-        final Campos campo = campos_filtrados.get(position);
+        final SubCampos subCampo = subCampos_filtrados.get(position);
         Animation aparece = AnimationUtils.loadAnimation(context, R.anim.aparecer_lista);
         holder.ly.setAnimation(aparece);
-        holder.txtNombre.setText(campo.getNombre());
+        holder.txtNombre.setText(subCampo.getNombre());
         holder.txtNombre.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, campo.getNombre(), Toast.LENGTH_LONG).show();
+                Toast.makeText(context, subCampo.getNombre(), Toast.LENGTH_LONG).show();
             }
         });
         holder.ivEditar.setOnClickListener(new View.OnClickListener() {
@@ -65,10 +61,10 @@ public class Predios_Contenido extends RecyclerView.Adapter<Predios_Contenido.Mo
             public void onClick(View view) {
                 AlertDialog.Builder dialogo1 = new AlertDialog.Builder(context);
                 dialogo1.setCancelable(false);
-                dialogo1.setMessage("¿Deseas editar el predio " + campo.getNombre() + "?");
+                dialogo1.setMessage("¿Deseas editar el SubCampo " + subCampo.getNombre() + "?");
                 dialogo1.setPositiveButton("Editar", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialogo1, int id) {
-                        context.startActivity(new Intent(context, Activity_Editar_Campo.class).putExtra("ID", campo.getID()));
+                        //context.startActivity(new Intent(context, Activity_Editar_Campo.class).putExtra("ID", campo.getID()));
                     }
                 });
                 dialogo1.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
@@ -85,13 +81,13 @@ public class Predios_Contenido extends RecyclerView.Adapter<Predios_Contenido.Mo
             public void onClick(View view) {
                 AlertDialog.Builder dialogo1 = new AlertDialog.Builder(context);
                 dialogo1.setCancelable(false);
-                dialogo1.setMessage("¿Deseas eliminar el predio " + campo.getNombre() + "?");
+                dialogo1.setMessage("¿Deseas eliminar el SubCampo " + subCampo.getNombre() + "?");
                 dialogo1.setPositiveButton("Eliminar", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialogo1, int id) {
-                        SQLITE.borrarCampo(context, campo.getID());
+                        /*SQLITE.borrarCampo(context, campo.getID());
                         ArrayList<Cultivos> cultivos = SQLITE.obtenerCultivosLista(context);
-                        adapter = new Predios_Encabezado(cultivos, context, rvEncabezados, adapter);
-                        rvEncabezados.setAdapter(adapter);
+                        Predios_Encabezado adapter = new Predios_Encabezado(cultivos, context, rvEncabezados);
+                        rvEncabezados.setAdapter(adapter);*/
                     }
                 });
                 dialogo1.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
@@ -106,7 +102,7 @@ public class Predios_Contenido extends RecyclerView.Adapter<Predios_Contenido.Mo
 
     @Override
     public int getItemCount() {
-        return campos_filtrados.size();
+        return subCampos_filtrados.size();
     }
 
     class MovieVH extends RecyclerView.ViewHolder {

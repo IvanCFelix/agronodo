@@ -22,10 +22,7 @@ import java.util.ArrayList;
  */
 public class Formulario_Agregar_Campo extends Fragment {
 
-    public EditText txtNombre, txtCultivo;
-    TextInputLayout tilCultivo;
-    public Spinner spnCultivo;
-    ArrayList<String> cultivos = new ArrayList<>();
+    public EditText txtNombre;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -34,31 +31,6 @@ public class Formulario_Agregar_Campo extends Fragment {
         View view = inflater.inflate(R.layout.fragment_formulario_agregar_campo, container, false);
 
         txtNombre = view.findViewById(R.id.txt_AgregarCampo_Nombre);
-        txtCultivo = view.findViewById(R.id.txt_AgregarCampo_Cultivo);
-        tilCultivo = view.findViewById(R.id.til_AgregarCampo_Cultivo);
-        spnCultivo = view.findViewById(R.id.spn_AgregarCampo_Tipo);
-
-        cultivos = SQLITE.obtenerCultivos(getContext());
-
-        cultivos.add("Seleccione un cultivo");
-
-        spnCultivo.setAdapter(new ArrayAdapter<String>(getContext(), R.layout.spinner_item, cultivos));
-
-        spnCultivo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if(spnCultivo.getSelectedItem().equals("Seleccione un cultivo")){
-                    tilCultivo.setVisibility(View.VISIBLE);
-                }else{
-                    tilCultivo.setVisibility(View.GONE);
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
 
         return view;
     }

@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import com.fragmentoestudio.agronodo.Agregar_Campo.Activity_Agregar_Campo;
 import com.fragmentoestudio.agronodo.Adaptadores.Predios_Encabezado;
+import com.fragmentoestudio.agronodo.Clases.Campos;
 import com.fragmentoestudio.agronodo.Clases.Cultivos;
 import com.fragmentoestudio.agronodo.R;
 import com.fragmentoestudio.agronodo.Servicios.Authentification;
@@ -110,10 +111,10 @@ public class Lista_Predios_Agronomo extends Fragment {
     private void llenarLista() {
         getActivity().runOnUiThread(new Runnable() {
             public void run() {
-                ArrayList<Cultivos> cultivos = SQLITE.obtenerCultivosLista(getContext());
-                adapter = new Predios_Encabezado(cultivos, getContext(), recyclerView, adapter);
+                ArrayList<Campos> campos = SQLITE.obtenerCampos(getContext());
+                adapter = new Predios_Encabezado(campos, getContext(), recyclerView);
                 recyclerView.setAdapter(adapter);
-                if(cultivos.isEmpty()){
+                if(campos.isEmpty()){
                     txtNoHay.setVisibility(View.VISIBLE);
                 }else{
                     txtNoHay.setVisibility(View.GONE);

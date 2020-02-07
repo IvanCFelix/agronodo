@@ -88,26 +88,6 @@ public class Activity_Editar_Campo extends AppCompatActivity {
                             }
                         }
                         campo.setCoordenadas(coordenadas);
-                        if (formulario_editar_campo.tilCultivo.getVisibility() == View.VISIBLE) {
-                            if (formulario_editar_campo.txtCultivo.getText().toString().trim().isEmpty()) {
-                                completarDatos();
-                                return;
-                            } else {
-                                campo.setTipo_Cultivo(formulario_editar_campo.txtCultivo.getText().toString().trim());
-                            }
-                        } else {
-                            if (formulario_editar_campo.spnCultivo.getSelectedItem().toString().equals("-Otro-")) {
-                                completarDatos();
-                                return;
-                            } else {
-                                campo.setTipo_Cultivo(formulario_editar_campo.spnCultivo.getSelectedItem().toString());
-                            }
-                        }
-
-                        if (formulario_editar_campo.spnCultivo.getVisibility() == View.VISIBLE && !formulario_editar_campo.txtCultivo.getText().toString().trim().isEmpty()) {
-                            SQLITE.agregarCultivo(Activity_Editar_Campo.this, campo.getTipo_Cultivo());
-                        }
-
                         AlertDialog.Builder dialogo1 = new AlertDialog.Builder(Activity_Editar_Campo.this);
                         dialogo1.setCancelable(false);
                         dialogo1.setMessage(SQLITE.editarCampo(Activity_Editar_Campo.this, campo));

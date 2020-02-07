@@ -42,7 +42,7 @@
                     <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
+                        android:layout_margin="5dp"
                         android:hint="Nombre"
                         android:textColorHint="@color/colorGreen"
                         app:counterEnabled="true"
@@ -61,56 +61,6 @@
                             android:textAlignment="textStart"
                             android:textSize="18sp"
                             android:textStyle="bold" />
-                    </android.support.design.widget.TextInputLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginVertical="10dp"
-                        android:orientation="horizontal">
-
-                        <ImageView
-                            android:id="@+id/iv_AgregarCampo_Tipo"
-                            android:layout_margin="5dp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:scaleType="fitCenter"
-                            android:src="@drawable/ic_cultivo"
-                            android:tint="@color/colorGreen"/>
-
-                        <Spinner
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginVertical="1dp"
-                            android:id="@+id/spn_AgregarCampo_Tipo"/>
-
-                    </LinearLayout>
-
-                    <android.support.design.widget.TextInputLayout
-                        android:layout_marginBottom="5dp"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textColorHint="@color/colorGreen"
-                        android:textAlignment="center"
-                        android:visibility="gone"
-                        app:counterEnabled="true"
-                        app:counterMaxLength="20"
-                        android:id="@+id/til_AgregarCampo_Cultivo"
-                        app:errorEnabled="true"
-                        android:hint="Nombre del Cultivo Nuevo">
-
-                        <EditText
-                            android:id="@+id/txt_AgregarCampo_Cultivo"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:drawableLeft="@drawable/ic_cultivo"
-                            android:drawablePadding="10dp"
-                            android:drawableTint="@color/colorGreen"
-                            android:inputType="textPersonName|textCapSentences"
-                            android:maxLength="50"
-                            android:textAlignment="textStart"
-                            android:textSize="18sp"
-                            android:textStyle="bold"/>
                     </android.support.design.widget.TextInputLayout>
 
                 </LinearLayout>
