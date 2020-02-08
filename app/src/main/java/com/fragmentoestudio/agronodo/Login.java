@@ -3,7 +3,6 @@ package com.fragmentoestudio.agronodo;
 import android.Manifest;
 import android.app.Dialog;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -11,10 +10,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.net.ConnectivityManager;
-import android.os.AsyncTask;
-import android.os.Handler;
-import android.os.Message;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -28,10 +23,8 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.fragmentoestudio.agronodo.Servicios.Authentification;
@@ -42,11 +35,6 @@ import com.fragmentoestudio.agronodo.Utilidades.Uris;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.concurrent.ExecutionException;
 
 public class Login extends AppCompatActivity {
@@ -140,7 +128,7 @@ public class Login extends AppCompatActivity {
         PedirPermisos();
 
         if (SQLITE.obtenerTamañoTabla(Login.this, SQLITE.tablaPerfil) == 1) {
-            startActivity(new Intent(Login.this, Menu_Agronomo.class));
+            startActivity(new Intent(Login.this, Menu_Ingeniero.class));
             finish();
         }
 
@@ -170,23 +158,33 @@ public class Login extends AppCompatActivity {
                                     final JSONObject datos = new JSONObject(resultado);
 
                                     try {
-                                        if (datos.getString("token").length() > 0 && (datos.getInt("user_type") == 1 || datos.getInt("user_type") == 2 || datos.getInt("user_type") == 3)) {
-                                            String url = datos.getJSONObject("profile").getString("photo");
-
-                                            String formato = url.substring(url.indexOf(".") + 1);
-                                            Bitmap imagen = new Datos.imagendeWEB().execute(Uris.ENDPOINT_AGRONODO + url).get();
-                                            if (imagen == null) {
-                                                imagen = BitmapFactory.decodeResource(getResources(), R.drawable.logo);
-                                                formato = "png";
+                                        if (datos.getString("token").length() > 0 && (datos.getInt("user_type") == 4 || datos.getInt("user_type") == 5 || datos.getInt("user_type") == 6 || datos.getInt("user_type") == 7)) {
+                                            switch (datos.getInt("user_type")){
+                                                case 4:
+                                                    String url = datos.getJSONObject("profile").getString("logo");
+                                                    try {
+                                                        String formato = url.substring(url.indexOf(".") + 1);
+                                                        Bitmap imagen = null;
+                                                        imagen = new Datos.imagendeWEB().execute(Uris.ENDPOINT_AGRONODO + url).get();
+                                                        if (imagen == null) {
+                                                            imagen = BitmapFactory.decodeResource(getResources(), R.drawable.logo);
+                                                            formato = "png";
+                                                        }
+                                                        SQLITE.ingresarSesion(Login.this, resultado, imagen, formato);
+                                                        runOnUiThread(new Runnable() {
+                                                            public void run() {
+                                                                Toast.makeText(Login.this, "Sesión Iniciada", Toast.LENGTH_LONG).show();
+                                                                startActivity(new Intent(Login.this, Menu_Ingeniero.class));
+                                                                finish();
+                                                            }
+                                                        });
+                                                    } catch (ExecutionException e) {
+                                                        e.printStackTrace();
+                                                    } catch (InterruptedException e) {
+                                                        e.printStackTrace();
+                                                    }
+                                                    break;
                                             }
-                                            SQLITE.ingresarSesion(Login.this, resultado, imagen, formato);
-                                            runOnUiThread(new Runnable() {
-                                                public void run() {
-                                                    Toast.makeText(Login.this, "Sesión Iniciada", Toast.LENGTH_LONG).show();
-                                                }
-                                            });
-                                            startActivity(new Intent(Login.this, Menu_Agronomo.class));
-                                            finish();
                                         } else {
                                             final AlertDialog.Builder dialogo1 = new AlertDialog.Builder(Login.this);
                                             dialogo1.setTitle("Tipo de cuenta no soportada");

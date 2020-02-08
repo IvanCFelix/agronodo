@@ -90,6 +90,7 @@ public class Mapa_Agregar_SubPredio extends Fragment implements OnMapReadyCallba
             for(int i=0; i<JSONcoordenadas.length(); i++){
                 coordenadas_padre.add(new LatLng(Double.parseDouble(JSONcoordenadas.getJSONObject(i).getString("Latitud")), Double.parseDouble(JSONcoordenadas.getJSONObject(i).getString("Longitud"))));
             }
+            coordenadas_padre.add(coordenadas_padre.get(0));
             dibujarCampo();
             LatLngBounds latLngBounds = getPolygonLatLngBounds(coordenadas_padre);
             mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(latLngBounds, 50));
@@ -138,7 +139,8 @@ public class Mapa_Agregar_SubPredio extends Fragment implements OnMapReadyCallba
                     dialogo1.setMessage("El Marcador debe estar dentro del Predio");
                     dialogo1.setPositiveButton("Enterado", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialogo1, int id) {
-
+                            mMap.clear();
+                            dibujarCampo();
                         }
                     });
                     dialogo1.show();
@@ -192,7 +194,6 @@ public class Mapa_Agregar_SubPredio extends Fragment implements OnMapReadyCallba
             for (int i = 0; i < coordenadas_padre.size(); i++) {
                 polylineOptions.add(coordenadas_padre.get(i));
             }
-            polylineOptions.add(coordenadas_padre.get(0));
             mMap.addPolyline(polylineOptions);
         }catch (Exception e){}
 

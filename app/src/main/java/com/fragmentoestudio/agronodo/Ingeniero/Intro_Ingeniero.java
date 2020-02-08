@@ -1,4 +1,4 @@
-package com.fragmentoestudio.agronodo.Agronomo;
+package com.fragmentoestudio.agronodo.Ingeniero;
 
 
 import android.os.Bundle;
@@ -9,13 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.fragmentoestudio.agronodo.R;
-import com.fragmentoestudio.agronodo.Utilidades.SQLITE;
 
-import de.hdodenhof.circleimageview.CircleImageView;
-
-public class Mi_Usuario_Agronomo extends Fragment {
-
-    CircleImageView civPerfil;
+public class Intro_Ingeniero extends Fragment {
 
     SwipeRefreshLayout swipeRefreshLayout;
 
@@ -23,11 +18,12 @@ public class Mi_Usuario_Agronomo extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View  view = inflater.inflate(R.layout.fragment_mi_usuario_agronomo, container, false);
+        View view = inflater.inflate(R.layout.fragment_intro_ingeniero, container, false);
 
-        civPerfil = view.findViewById(R.id.civ_perfil);
         swipeRefreshLayout = view.findViewById(R.id.swiperefresh);
+        getActivity().setTitle(" AgroNodo");
         swipeRefreshLayout.setColorSchemeResources(R.color.colorGreen);
+
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -36,9 +32,6 @@ public class Mi_Usuario_Agronomo extends Fragment {
             }
         });
 
-        civPerfil.setImageBitmap(SQLITE.obtenerImagen(getContext()));
-
-        getActivity().setTitle(" Mi Usuario");
         return view;
     }
 

@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".Agronomo.Mapa_Predios_Agronomo">
+    tools:context=".Ingeniero.Mapa_Predios_Ingeniero">
 
     <com.google.android.gms.maps.MapView
         android:id="@+id/mapview"

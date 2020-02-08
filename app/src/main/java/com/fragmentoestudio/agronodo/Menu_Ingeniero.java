@@ -24,26 +24,29 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.fragmentoestudio.agronodo.Agronomo.Intro_Agronomo;
-import com.fragmentoestudio.agronodo.Agronomo.Lista_Predios_Agronomo;
-import com.fragmentoestudio.agronodo.Agronomo.Mapa_Predios_Agronomo;
-import com.fragmentoestudio.agronodo.Agronomo.Mi_Usuario_Agronomo;
-import com.fragmentoestudio.agronodo.Agronomo.Notificaciones_Agronomo;
+import com.fragmentoestudio.agronodo.Ingeniero.Intro_Ingeniero;
+import com.fragmentoestudio.agronodo.Ingeniero.Lista_Predios_Ingeniero;
+import com.fragmentoestudio.agronodo.Ingeniero.Mapa_Predios_Ingeniero;
+import com.fragmentoestudio.agronodo.Ingeniero.Mi_Usuario_Ingeniero;
+import com.fragmentoestudio.agronodo.Ingeniero.Notificaciones_Ingeniero;
 import com.fragmentoestudio.agronodo.Utilidades.SQLITE;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class Menu_Agronomo extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class Menu_Ingeniero extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     public static Fragment fragment;
 
-    public static Intro_Agronomo intro = new Intro_Agronomo();
-    public static Lista_Predios_Agronomo lista_predios = new Lista_Predios_Agronomo();
-    public static Mapa_Predios_Agronomo mapa_prediosAgronomo = new Mapa_Predios_Agronomo();
-    public static Mi_Usuario_Agronomo mi_usuarioAgronomo = new Mi_Usuario_Agronomo();
-    public static Notificaciones_Agronomo notificaciones_agronomo = new Notificaciones_Agronomo();
+    public static Intro_Ingeniero intro = new Intro_Ingeniero();
+    public static Lista_Predios_Ingeniero lista_predios = new Lista_Predios_Ingeniero();
+    public static Mapa_Predios_Ingeniero mapa_prediosAgronomo = new Mapa_Predios_Ingeniero();
+    public static Mi_Usuario_Ingeniero mi_usuarioAgronomo = new Mi_Usuario_Ingeniero();
+    public static Notificaciones_Ingeniero notificaciones_agronomo = new Notificaciones_Ingeniero();
+
+    public static CircleImageView imagenPerfil;
+    public static TextView txtNombre, txtCorreo;
 
     public static final int MULTIPLE_PERMISSIONS_REQUEST_CODE = 3;
     public static final String[] permissions = new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
@@ -51,7 +54,7 @@ public class Menu_Agronomo extends AppCompatActivity implements NavigationView.O
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_menu_agronomo);
+        setContentView(R.layout.activity_menu_ingeniero);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -77,22 +80,22 @@ public class Menu_Agronomo extends AppCompatActivity implements NavigationView.O
             }
         });
 
-        CircleImageView imagenPerfil = headerView.findViewById(R.id.navheader_civ);
-        TextView txtNombre = headerView.findViewById(R.id.navheader_Nombre);
-        TextView txtCorreo = headerView.findViewById(R.id.navheader_Correo);
+        imagenPerfil = headerView.findViewById(R.id.navheader_civ);
+        txtNombre = headerView.findViewById(R.id.navheader_Nombre);
+        txtCorreo = headerView.findViewById(R.id.navheader_Correo);
         JSONObject usuario= null;
         try {
-            usuario = new JSONObject(SQLITE.obtenerUsuario(Menu_Agronomo.this));
+            usuario = new JSONObject(SQLITE.obtenerUsuario(Menu_Ingeniero.this));
         } catch (JSONException e) {
-            SQLITE.eliminarBasedeDatos(Menu_Agronomo.this);
-            startActivity(new Intent(Menu_Agronomo.this, Login.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+            SQLITE.eliminarBasedeDatos(Menu_Ingeniero.this);
+            startActivity(new Intent(Menu_Ingeniero.this, Login.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
             finish();
             e.printStackTrace();
         } catch (Exception e){
 
         }
         try {
-            txtNombre.setText(usuario.getJSONObject("profile").getString("names") + " " + usuario.getJSONObject("profile").getString("lastnames"));
+            txtNombre.setText(usuario.getJSONObject("profile").getString("agricola"));
         } catch (JSONException e) {
             e.printStackTrace();
         } catch (Exception e){
@@ -107,7 +110,7 @@ public class Menu_Agronomo extends AppCompatActivity implements NavigationView.O
 
         }
 
-        Bitmap imagen = SQLITE.obtenerImagen(Menu_Agronomo.this);
+        Bitmap imagen = SQLITE.obtenerImagen(Menu_Ingeniero.this);
         if(imagen!=null) {
             imagenPerfil.setImageBitmap(imagen);
         }
@@ -148,11 +151,11 @@ public class Menu_Agronomo extends AppCompatActivity implements NavigationView.O
                 break;
             case R.id.nav_Mapa_Predios:
                 try {
-                    if (ActivityCompat.checkSelfPermission(Menu_Agronomo.this, permissions[0]) != PackageManager.PERMISSION_GRANTED ||
-                            ActivityCompat.checkSelfPermission(Menu_Agronomo.this, permissions[1]) != PackageManager.PERMISSION_GRANTED) {
-                        ActivityCompat.requestPermissions(Menu_Agronomo.this, permissions, MULTIPLE_PERMISSIONS_REQUEST_CODE);
-                        if (ActivityCompat.checkSelfPermission(Menu_Agronomo.this, permissions[0]) == PackageManager.PERMISSION_GRANTED ||
-                                ActivityCompat.checkSelfPermission(Menu_Agronomo.this, permissions[1]) == PackageManager.PERMISSION_GRANTED) {
+                    if (ActivityCompat.checkSelfPermission(Menu_Ingeniero.this, permissions[0]) != PackageManager.PERMISSION_GRANTED ||
+                            ActivityCompat.checkSelfPermission(Menu_Ingeniero.this, permissions[1]) != PackageManager.PERMISSION_GRANTED) {
+                        ActivityCompat.requestPermissions(Menu_Ingeniero.this, permissions, MULTIPLE_PERMISSIONS_REQUEST_CODE);
+                        if (ActivityCompat.checkSelfPermission(Menu_Ingeniero.this, permissions[0]) == PackageManager.PERMISSION_GRANTED ||
+                                ActivityCompat.checkSelfPermission(Menu_Ingeniero.this, permissions[1]) == PackageManager.PERMISSION_GRANTED) {
                             fragmentTransaction.replace(R.id.area_ventana, mapa_prediosAgronomo);
                             drawer.closeDrawer(GravityCompat.START);
                         }
@@ -187,16 +190,16 @@ public class Menu_Agronomo extends AppCompatActivity implements NavigationView.O
                 }
                 break;
             case R.id.nav_web:
-                Toast.makeText(Menu_Agronomo.this, "Aun en Desarrollo", Toast.LENGTH_LONG).show();
+                Toast.makeText(Menu_Ingeniero.this, "Aun en Desarrollo", Toast.LENGTH_LONG).show();
                 break;
             case R.id.nav_salir:
-                AlertDialog.Builder dialogo1 = new AlertDialog.Builder(Menu_Agronomo.this);
+                AlertDialog.Builder dialogo1 = new AlertDialog.Builder(Menu_Ingeniero.this);
                 dialogo1.setTitle("Cerrar Sesión");
                 dialogo1.setMessage("¿ Desea cerrar sesión ?");
                 dialogo1.setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialogo1, int id) {
-                        SQLITE.eliminarBasedeDatos(Menu_Agronomo.this);
-                        startActivity(new Intent(Menu_Agronomo.this, Login.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                        SQLITE.eliminarBasedeDatos(Menu_Ingeniero.this);
+                        startActivity(new Intent(Menu_Ingeniero.this, Login.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
                         finish();
                     }
                 });

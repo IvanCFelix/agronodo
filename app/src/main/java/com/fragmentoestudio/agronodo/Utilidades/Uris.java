@@ -7,5 +7,5 @@ public class Uris {
 
     public static String RECUPERAR_CONTRASEÑA= ENDPOINT_AGRONODO + "password/reset/";
 
-
+    public static String REFRESCAR_PERFIL= ENDPOINT_AGRONODO + "refresh/";
 }

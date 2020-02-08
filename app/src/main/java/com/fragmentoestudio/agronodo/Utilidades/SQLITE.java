@@ -38,16 +38,17 @@ public class SQLITE {
             imagen.compress(Bitmap.CompressFormat.JPEG, 50, bos);
         }
         byte[] img = bos.toByteArray();
-        if(obtenerTamañoTabla(contexto, tablaPerfil)==0) {
-            Base_Datos base_de_datos = new Base_Datos(contexto);
-            SQLiteDatabase db = base_de_datos.getWritableDatabase();
-            if (db != null) {
-                ContentValues usuario = new ContentValues();
-                usuario.put("Datos", JSON);
-                usuario.put("Imagen", img);
-                db.insert(SQLITE.tablaPerfil, null, usuario);
-                db.close();
-            }
+        if(obtenerTamañoTabla(contexto, tablaPerfil)>0) {
+            SQLITE.limpiarTabla(contexto, tablaPerfil);
+        }
+        Base_Datos base_de_datos = new Base_Datos(contexto);
+        SQLiteDatabase db = base_de_datos.getWritableDatabase();
+        if (db != null) {
+            ContentValues usuario = new ContentValues();
+            usuario.put("Datos", JSON);
+            usuario.put("Imagen", img);
+            db.insert(SQLITE.tablaPerfil, null, usuario);
+            db.close();
         }
     }
 

@@ -4,6 +4,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
+import com.fragmentoestudio.agronodo.Utilidades.SQLITE;
 import com.fragmentoestudio.agronodo.Utilidades.Uris;
 
 import java.io.BufferedReader;
@@ -81,14 +82,17 @@ public class Authentification {
         }
     }
 
-    /*public static class ObtenerComposiciones extends AsyncTask<String, Void, String> {
+    public static class RefrescarPerfil extends AsyncTask<String, Void, String> {
 
         @Override
         protected String doInBackground(String... params) {
             try {
-                URL url = new URL(Uris.COMPOSICIONES);
+                URL url = new URL(Uris.REFRESCAR_PERFIL);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("GET");
+                connection.setRequestProperty("Accept", "application/json");
+                connection.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
+                connection.setRequestProperty("Authorization", "token " + params[0]);
                 BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
                 StringBuffer jsonString = new StringBuffer();
                 String line;
@@ -107,5 +111,5 @@ public class Authentification {
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
         }
-    }*/
+    }
 }

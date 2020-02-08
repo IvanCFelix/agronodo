@@ -1,4 +1,4 @@
-package com.fragmentoestudio.agronodo.Agronomo;
+package com.fragmentoestudio.agronodo.Ingeniero;
 
 
 import android.Manifest;
@@ -17,25 +17,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.fragmentoestudio.agronodo.Agregar_Campo.Activity_Agregar_Campo;
 import com.fragmentoestudio.agronodo.Adaptadores.Predios_Encabezado;
 import com.fragmentoestudio.agronodo.Clases.Campos;
-import com.fragmentoestudio.agronodo.Clases.Cultivos;
 import com.fragmentoestudio.agronodo.R;
-import com.fragmentoestudio.agronodo.Servicios.Authentification;
-import com.fragmentoestudio.agronodo.Utilidades.Datos;
 import com.fragmentoestudio.agronodo.Utilidades.SQLITE;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
-import java.util.concurrent.ExecutionException;
 
-public class Lista_Predios_Agronomo extends Fragment {
+public class Lista_Predios_Ingeniero extends Fragment {
 
     RecyclerView recyclerView;
     SwipeRefreshLayout swipeRefreshLayout;
@@ -53,7 +44,7 @@ public class Lista_Predios_Agronomo extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_lista_predios_agronomo, container, false);
+        View view = inflater.inflate(R.layout.fragment_lista_predios_ingeniero, container, false);
 
         txtNoHay = view.findViewById(R.id.txtNoHay);
         recyclerView = view.findViewById(R.id.recyclerView);
