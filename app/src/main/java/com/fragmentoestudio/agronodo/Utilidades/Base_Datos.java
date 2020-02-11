@@ -20,6 +20,7 @@ public class Base_Datos extends SQLiteOpenHelper {
         db.execSQL("CREATE TABLE IF NOT EXISTS " + SQLITE.tablaPerfil + "(Datos Text, Imagen Blob);");
         db.execSQL("CREATE TABLE IF NOT EXISTS " + SQLITE.tablaCampos + "(ID Number, Nombre Text, Coordenadas Text);");
         db.execSQL("CREATE TABLE IF NOT EXISTS " + SQLITE.tablaSubCampos + "(ID Number, ID_Padre Number, Nombre Text, Tipo_Cultivo Text, Tipo_Agricultura Text, Coordenadas Text, Fecha_Inicio Text, Fecha_Final Text);");
+        db.execSQL("CREATE TABLE IF NOT EXISTS " + SQLITE.tablaCultivo + "(Nombre Text);");
     }
 
     @Override

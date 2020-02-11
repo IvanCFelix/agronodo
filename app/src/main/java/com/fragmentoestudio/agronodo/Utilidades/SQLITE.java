@@ -17,6 +17,7 @@ public class SQLITE {
     public static final String tablaPerfil = "Perfil";
     public static final String tablaCampos = "Campos";
     public static final String tablaSubCampos = "SubCampos";
+    public static final String tablaCultivo = "Cultivos";
 
     public static int obtenerTamañoTabla(Context contexto, String tabla){
         Base_Datos base_datos = new Base_Datos(contexto);
