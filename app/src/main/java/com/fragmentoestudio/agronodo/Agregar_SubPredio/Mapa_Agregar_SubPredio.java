@@ -90,7 +90,6 @@ public class Mapa_Agregar_SubPredio extends Fragment implements OnMapReadyCallba
             for(int i=0; i<JSONcoordenadas.length(); i++){
                 coordenadas_padre.add(new LatLng(Double.parseDouble(JSONcoordenadas.getJSONObject(i).getString("Latitud")), Double.parseDouble(JSONcoordenadas.getJSONObject(i).getString("Longitud"))));
             }
-            coordenadas_padre.add(coordenadas_padre.get(0));
             dibujarCampo();
             LatLngBounds latLngBounds = getPolygonLatLngBounds(coordenadas_padre);
             mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(latLngBounds, 50));

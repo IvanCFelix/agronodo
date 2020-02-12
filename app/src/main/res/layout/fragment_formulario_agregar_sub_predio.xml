@@ -13,6 +13,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingBottom="70dp"
             android:orientation="vertical">
 
             <TextView
@@ -51,7 +52,7 @@
                         app:errorEnabled="true">
 
                         <EditText
-                            android:id="@+id/txt_AgregarCampo_Nombre"
+                            android:id="@+id/txt_AgregarSubCampo_Nombre"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:drawableLeft="@drawable/ic_persona"
@@ -63,6 +64,131 @@
                             android:textSize="18sp"
                             android:textStyle="bold" />
                     </android.support.design.widget.TextInputLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_margin="9dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/ic_cultivo"
+                            android:tint="@color/colorGreen"/>
+
+                        <Spinner
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:id="@+id/spn_AgregarCampo_Cultivo"/>
+
+                    </LinearLayout>
+
+                    <android.support.design.widget.TextInputLayout
+                        android:layout_margin="5dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColorHint="@color/colorGreen"
+                        android:textAlignment="center"
+                        app:counterEnabled="true"
+                        android:visibility="gone"
+                        app:counterMaxLength="20"
+                        android:id="@+id/til_AgregarSubCampo_Cultivo"
+                        app:errorEnabled="true"
+                        android:hint="Nombre del Cultivo Nuevo">
+
+                        <EditText
+                            android:id="@+id/txt_AgregarSubCampo_Cultivo"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textAlignment="textStart"
+                            android:maxLength="20"
+                            android:textStyle="bold"
+                            android:drawableLeft="@drawable/ic_cultivo"
+                            android:drawableTint="@color/colorGreen"
+                            android:drawablePadding="5dp"
+                            android:inputType="textCapWords|textPersonName"
+                            android:textSize="18sp"
+                            android:paddingTop="15dp"/>
+                    </android.support.design.widget.TextInputLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="8dp"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_margin="9dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/ic_campo"
+                            android:tint="@color/colorGreen"/>
+
+                        <Spinner
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:id="@+id/spn_AgregarCampo_Agricultura"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="5dp"
+                            android:text="Fecha Inicial - "
+                            android:textColor="#000"/>
+
+                        <EditText
+                            android:id="@+id/txtSubCampoFechaHoy"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:drawableLeft="@drawable/ic_calendario"
+                            android:textStyle="bold"
+                            android:drawablePadding="5dp"
+                            android:editable="false"
+                            android:drawableTint="@color/colorGreen"
+                            android:textSize="18sp"
+                            android:textColor="#000"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Fecha a Finalizar - "
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="5dp"
+                            android:textColor="#000"/>
+
+                        <EditText
+                            android:id="@+id/txtSubCampoFechaFin"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:drawableLeft="@drawable/ic_calendario"
+                            android:drawableTint="@color/colorGreen"
+                            android:textStyle="bold"
+                            android:drawablePadding="5dp"
+                            android:textSize="18sp"
+                            android:editable="false"
+                            android:hint="Seleccionar Fecha"
+                            android:textColor="#000"/>
+
+                    </LinearLayout>
 
                 </LinearLayout>
 

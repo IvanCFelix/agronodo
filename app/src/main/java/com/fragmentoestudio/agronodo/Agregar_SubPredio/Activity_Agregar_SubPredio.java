@@ -13,7 +13,10 @@ import android.view.View;
 
 import com.fragmentoestudio.agronodo.Adaptadores.SlideViewPager;
 import com.fragmentoestudio.agronodo.Agregar_Campo.Activity_Agregar_Campo;
+import com.fragmentoestudio.agronodo.Clases.SubCampos;
 import com.fragmentoestudio.agronodo.R;
+import com.fragmentoestudio.agronodo.Utilidades.SQLITE;
+import com.google.android.gms.maps.model.LatLng;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,21 +69,88 @@ public class Activity_Agregar_SubPredio extends AppCompatActivity {
                         }
                         paginas.setCurrentItem(1);
                     } else {
-                        AlertDialog.Builder dialogo1 = new AlertDialog.Builder(Activity_Agregar_SubPredio.this);
-                        dialogo1.setTitle("Atención");
-                        dialogo1.setMessage("El SubPredio tomará todo el tamaño");
-                        dialogo1.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialogo1, int id) {
-                                mapa_agregar_subPredio.coordenadas = mapa_agregar_subPredio.coordenadas_padre;
-                                mapa_agregar_subPredio.dibujarCampo();
+                        if (mapa_agregar_subPredio.coordenadas.size() == 0) {
+                            AlertDialog.Builder dialogo1 = new AlertDialog.Builder(Activity_Agregar_SubPredio.this);
+                            dialogo1.setTitle("Atención");
+                            dialogo1.setMessage("El SubPredio tomará todo el tamaño");
+                            dialogo1.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialogo1, int id) {
+                                    for (LatLng coordenada : mapa_agregar_subPredio.coordenadas_padre) {
+                                        mapa_agregar_subPredio.coordenadas.add(coordenada);
+                                    }
+                                    mapa_agregar_subPredio.coordenadas.remove(mapa_agregar_subPredio.coordenadas.size() - 1);
+                                    mapa_agregar_subPredio.dibujarCampo();
+                                    if (lista.size() == 1) {
+                                        lista.add(formulario_agregar_subPredio);
+                                        adaptador.notifyDataSetChanged();
+                                    }
+                                    paginas.setCurrentItem(1);
+                                }
+                            });
+                            dialogo1.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialogo1, int id) {
+                                    dialogo1.dismiss();
+                                }
+                            });
+                            dialogo1.show();
+                        }else{
+                            AlertDialog.Builder dialogo1 = new AlertDialog.Builder(Activity_Agregar_SubPredio.this);
+                            dialogo1.setTitle("Error");
+                            dialogo1.setMessage("El campo seleccionado no es valido");
+                            dialogo1.setPositiveButton("Enterado", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialogo1, int id) {
+                                    dialogo1.dismiss();
+                                }
+                            });
+                            dialogo1.show();
+                        }
+                    }
+                }else{
+                    if(mapa_agregar_subPredio.coordenadas.size()>=3 || formulario_agregar_subPredio.txtNombre.getText().toString().trim().isEmpty() || Formulario_Agregar_SubPredio.txtFechaHoy.getText().toString().trim().isEmpty() || Formulario_Agregar_SubPredio.txtFechaFin.getText().toString().trim().isEmpty()){
+                        if(formulario_agregar_subPredio.spnAgricultura.getSelectedItemPosition()!=0){
+                            SubCampos subCampo = new SubCampos();
+                            subCampo.setID(SQLITE.obtenerValorMaximo(Activity_Agregar_SubPredio.this, SQLITE.tablaSubCampos, "ID") + 1);
+                            subCampo.setID_Padre(ID);
+                            subCampo.setNombre(formulario_agregar_subPredio.txtNombre.getText().toString().trim());
+                            if(formulario_agregar_subPredio.tilCultivo.getVisibility() == View.VISIBLE){
+                                if(formulario_agregar_subPredio.txtCultivo.getText().toString().trim().isEmpty()){
+                                    completarDatos();
+                                    return;
+                                }else{
+                                    subCampo.setTipo_Cultivo(formulario_agregar_subPredio.txtCultivo.getText().toString().trim());
+                                }
+                            }else{
+                                subCampo.setTipo_Cultivo(formulario_agregar_subPredio.spnCultivos.getSelectedItem().toString());
                             }
-                        });
-                        dialogo1.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialogo1, int id) {
-                                dialogo1.dismiss();
+                            subCampo.setTipo_Agricultura(formulario_agregar_subPredio.spnAgricultura.getSelectedItem().toString());
+
+                            String coordenadas = "";
+                            mapa_agregar_subPredio.coordenadas.add(mapa_agregar_subPredio.coordenadas.get(0));
+                            for (int i = 0; i < mapa_agregar_subPredio.coordenadas.size(); i++) {
+                                coordenadas = coordenadas + "{'Latitud': " + mapa_agregar_subPredio.coordenadas.get(i).latitude + ", 'Longitud': " + mapa_agregar_subPredio.coordenadas.get(i).longitude + "}";
+                                if (mapa_agregar_subPredio.coordenadas.size() - 1 != i) {
+                                    coordenadas = coordenadas + ",";
+                                }
                             }
-                        });
-                        dialogo1.show();
+                            subCampo.setCoordenadas(coordenadas);
+
+                            subCampo.setFecha_Inicio(Formulario_Agregar_SubPredio.txtFechaHoy.getText().toString().trim());
+                            subCampo.setFecha_Final(Formulario_Agregar_SubPredio.txtFechaFin.getText().toString().trim());
+
+                            AlertDialog.Builder dialogo1 = new AlertDialog.Builder(Activity_Agregar_SubPredio.this);
+                            dialogo1.setCancelable(false);
+                            dialogo1.setMessage(SQLITE.agregarSubCampo(Activity_Agregar_SubPredio.this, subCampo));
+                            dialogo1.setPositiveButton("Enterado", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialogo1, int id) {
+                                    Formulario_Agregar_SubPredio.txtFechaHoy.setText("");
+                                    Formulario_Agregar_SubPredio.txtFechaFin.setText("");
+                                    finish();
+                                }
+                            });
+                            dialogo1.show();
+                        }else{
+                            completarDatos();
+                        }
                     }
                 }
             }
