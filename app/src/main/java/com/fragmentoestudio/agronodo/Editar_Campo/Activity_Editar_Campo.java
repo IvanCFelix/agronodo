@@ -81,6 +81,7 @@ public class Activity_Editar_Campo extends AppCompatActivity {
                         campo.setID(SQLITE.obtenerValorMaximo(Activity_Editar_Campo.this, SQLITE.tablaCampos, "ID"));
                         campo.setNombre(formulario_editar_campo.txtNombre.getText().toString().trim());
                         String coordenadas = "";
+                        mapa_editar_campo.coordenadas.add(mapa_editar_campo.coordenadas.get(0));
                         for (int i = 0; i < mapa_editar_campo.coordenadas.size(); i++) {
                             coordenadas = coordenadas + "{'Latitud': " + mapa_editar_campo.coordenadas.get(i).latitude + ", 'Longitud': " + mapa_editar_campo.coordenadas.get(i).longitude + "}";
                             if (mapa_editar_campo.coordenadas.size() - 1 != i) {

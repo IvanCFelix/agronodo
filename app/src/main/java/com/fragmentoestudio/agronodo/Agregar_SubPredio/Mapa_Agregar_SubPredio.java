@@ -107,10 +107,9 @@ public class Mapa_Agregar_SubPredio extends Fragment implements OnMapReadyCallba
                 if (coordenadas.size() > 0) {
                     coordenadas.remove(coordenadas.size() - 1);
                     mMap.clear();
+                    dibujarCampo();
                     if (coordenadas.isEmpty()) {
                         fabVolver.setVisibility(View.GONE);
-                    } else {
-                        dibujarCampo();
                     }
                 }
             }

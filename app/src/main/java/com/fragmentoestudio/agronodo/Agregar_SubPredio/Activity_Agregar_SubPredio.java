@@ -58,7 +58,31 @@ public class Activity_Agregar_SubPredio extends AppCompatActivity {
         fabSiguiente.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                if (paginas.getCurrentItem() == 0) {
+                    if (mapa_agregar_subPredio.coordenadas.size() >= 3) {
+                        if (lista.size() == 1) {
+                            lista.add(formulario_agregar_subPredio);
+                            adaptador.notifyDataSetChanged();
+                        }
+                        paginas.setCurrentItem(1);
+                    } else {
+                        AlertDialog.Builder dialogo1 = new AlertDialog.Builder(Activity_Agregar_SubPredio.this);
+                        dialogo1.setTitle("Atención");
+                        dialogo1.setMessage("El SubPredio tomará todo el tamaño");
+                        dialogo1.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialogo1, int id) {
+                                mapa_agregar_subPredio.coordenadas = mapa_agregar_subPredio.coordenadas_padre;
+                                mapa_agregar_subPredio.dibujarCampo();
+                            }
+                        });
+                        dialogo1.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialogo1, int id) {
+                                dialogo1.dismiss();
+                            }
+                        });
+                        dialogo1.show();
+                    }
+                }
             }
         });
 
