@@ -15,6 +15,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.fragmentoestudio.agronodo.Clases.Campos;
 import com.fragmentoestudio.agronodo.Clases.SubCampos;
 import com.fragmentoestudio.agronodo.Editar_Campo.Activity_Editar_Campo;
 import com.fragmentoestudio.agronodo.R;
@@ -84,10 +86,10 @@ public class Predios_Contenido extends RecyclerView.Adapter<Predios_Contenido.Mo
                 dialogo1.setMessage("¿Deseas eliminar el SubCampo " + subCampo.getNombre() + "?");
                 dialogo1.setPositiveButton("Eliminar", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialogo1, int id) {
-                        /*SQLITE.borrarCampo(context, campo.getID());
-                        ArrayList<Cultivos> cultivos = SQLITE.obtenerCultivosLista(context);
-                        Predios_Encabezado adapter = new Predios_Encabezado(cultivos, context, rvEncabezados);
-                        rvEncabezados.setAdapter(adapter);*/
+                        SQLITE.borrarSubCampo(context, subCampo.getID());
+                        ArrayList<Campos> campos = SQLITE.obtenerCampos(context);
+                        Predios_Encabezado adapter = new Predios_Encabezado(campos, context, rvEncabezados);
+                        rvEncabezados.setAdapter(adapter);
                     }
                 });
                 dialogo1.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {

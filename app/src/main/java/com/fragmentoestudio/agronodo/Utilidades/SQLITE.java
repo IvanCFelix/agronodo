@@ -238,6 +238,17 @@ public class SQLITE {
         return "No se pudo eliminar el Predio";
     }
 
+    public static String borrarSubCampo(Context contexto, int id) {
+        Base_Datos bd = new Base_Datos(contexto);
+        SQLiteDatabase db = bd.getWritableDatabase();
+        if (db != null) {
+            db.execSQL("DELETE FROM " + SQLITE.tablaSubCampos + " WHERE ID=" + id + ";");
+            db.close();
+            return "SubPredio eliminado exitosamente";
+        }
+        return "No se pudo eliminar el SubPredio";
+    }
+
     public static void limpiarTabla(Context contexto, String tabla) {
         Base_Datos bd = new Base_Datos(contexto);
         SQLiteDatabase db = bd.getWritableDatabase();

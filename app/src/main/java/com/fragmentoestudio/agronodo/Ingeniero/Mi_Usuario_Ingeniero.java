@@ -9,6 +9,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.fragmentoestudio.agronodo.Menu_Ingeniero;
 import com.fragmentoestudio.agronodo.R;
@@ -80,7 +81,7 @@ public class Mi_Usuario_Ingeniero extends Fragment {
                     String token = usuarioJSON.getString("token");
                     final String resultado = new Authentification.RefrescarPerfil().execute(token).get();
                     final JSONObject datos = new JSONObject(resultado);
-                    String url = datos.getJSONObject("profile").getString("logo");
+                    String url = datos.getJSONObject("profile").getString("photo");
                     String formato = url.substring(url.indexOf(".") + 1);
                     Bitmap imagen = new Datos.imagendeWEB().execute(Uris.ENDPOINT_AGRONODO + url).get();
                     if (imagen == null) {
@@ -95,12 +96,33 @@ public class Mi_Usuario_Ingeniero extends Fragment {
                     });
                 } catch (
                         JSONException e) {
+                    getActivity().runOnUiThread(new Runnable() {
+                        public void run() {
+                            Toast.makeText(getContext(), "Ha ocurrido un error con los datos", Toast.LENGTH_SHORT).show();
+                            if (swipeRefreshLayout.isRefreshing())
+                                swipeRefreshLayout.setRefreshing(false);
+                        }
+                    });
                     e.printStackTrace();
                 } catch (
                         InterruptedException e) {
+                    getActivity().runOnUiThread(new Runnable() {
+                        public void run() {
+                            Toast.makeText(getContext(), "Ha ocurrido un error con los datos", Toast.LENGTH_SHORT).show();
+                            if (swipeRefreshLayout.isRefreshing())
+                                swipeRefreshLayout.setRefreshing(false);
+                        }
+                    });
                     e.printStackTrace();
                 } catch (
                         ExecutionException e) {
+                    getActivity().runOnUiThread(new Runnable() {
+                        public void run() {
+                            Toast.makeText(getContext(), "Ha ocurrido un error con los datos", Toast.LENGTH_SHORT).show();
+                            if (swipeRefreshLayout.isRefreshing())
+                                swipeRefreshLayout.setRefreshing(false);
+                        }
+                    });
                     e.printStackTrace();
                 }
             }
@@ -126,7 +148,7 @@ public class Mi_Usuario_Ingeniero extends Fragment {
                 swipeRefreshLayout.setRefreshing(false);
         } catch (JSONException e) {
             e.printStackTrace();
-        } catch (Exception e){
+        } catch (Exception e) {
             if (swipeRefreshLayout.isRefreshing())
                 swipeRefreshLayout.setRefreshing(false);
         }

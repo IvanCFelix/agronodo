@@ -136,7 +136,14 @@ public class Login extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (txtUsuario.getText().toString().isEmpty() || txtContraseña.getText().toString().isEmpty()) {
-                    Toast.makeText(Login.this, "Complete los datos", Toast.LENGTH_LONG).show();
+                    AlertDialog.Builder dialogo1 = new AlertDialog.Builder(Login.this);
+                    dialogo1.setTitle("Datos Incompletos");
+                    dialogo1.setMessage("Complete los datos correctamente");
+                    dialogo1.setPositiveButton("Enterado", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialogo1, int id) {
+                        }
+                    });
+                    dialogo1.show();
                 } else {
                     new Thread(new Runnable() {
                         @Override
@@ -161,7 +168,7 @@ public class Login extends AppCompatActivity {
                                         if (datos.getString("token").length() > 0 && (datos.getInt("user_type") == 4 || datos.getInt("user_type") == 5 || datos.getInt("user_type") == 6 || datos.getInt("user_type") == 7)) {
                                             switch (datos.getInt("user_type")){
                                                 case 4:
-                                                    String url = datos.getJSONObject("profile").getString("logo");
+                                                    String url = datos.getJSONObject("profile").getString("photo");
                                                     try {
                                                         String formato = url.substring(url.indexOf(".") + 1);
                                                         Bitmap imagen = null;
