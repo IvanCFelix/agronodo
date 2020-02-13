@@ -69,7 +69,7 @@ public class Activity_Agregar_SubPredio extends AppCompatActivity {
                         }
                         paginas.setCurrentItem(1);
                     } else {
-                        if (mapa_agregar_subPredio.coordenadas.size() == 0) {
+                        if (mapa_agregar_subPredio.coordenadas.size() == 0 && mapa_agregar_subPredio.subCampos.size()==0) {
                             AlertDialog.Builder dialogo1 = new AlertDialog.Builder(Activity_Agregar_SubPredio.this);
                             dialogo1.setTitle("Atención");
                             dialogo1.setMessage("El SubPredio tomará todo el tamaño");
@@ -118,6 +118,7 @@ public class Activity_Agregar_SubPredio extends AppCompatActivity {
                                     return;
                                 }else{
                                     subCampo.setTipo_Cultivo(formulario_agregar_subPredio.txtCultivo.getText().toString().trim());
+                                    SQLITE.agregarCultivo(Activity_Agregar_SubPredio.this, formulario_agregar_subPredio.txtCultivo.getText().toString().trim());
                                 }
                             }else{
                                 subCampo.setTipo_Cultivo(formulario_agregar_subPredio.spnCultivos.getSelectedItem().toString());

@@ -4,7 +4,13 @@ package com.fragmentoestudio.agronodo.Agregar_SubPredio;
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.LayerDrawable;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -31,11 +37,13 @@ import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.GroundOverlayOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.google.android.gms.maps.model.TileOverlayOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 
 import org.json.JSONArray;
@@ -91,7 +99,7 @@ public class Mapa_Agregar_SubPredio extends Fragment implements OnMapReadyCallba
 
         try {
             JSONArray JSONcoordenadas = new JSONArray("[" + campo.getCoordenadas() + "]");
-            for(int i=0; i<JSONcoordenadas.length(); i++){
+            for (int i = 0; i < JSONcoordenadas.length(); i++) {
                 coordenadas_padre.add(new LatLng(Double.parseDouble(JSONcoordenadas.getJSONObject(i).getString("Latitud")), Double.parseDouble(JSONcoordenadas.getJSONObject(i).getString("Longitud"))));
             }
             dibujarCampo();
@@ -99,7 +107,7 @@ public class Mapa_Agregar_SubPredio extends Fragment implements OnMapReadyCallba
             mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(latLngBounds, 50));
         } catch (JSONException e) {
             e.printStackTrace();
-        } catch (Exception e){
+        } catch (Exception e) {
 
         }
 
@@ -131,29 +139,29 @@ public class Mapa_Agregar_SubPredio extends Fragment implements OnMapReadyCallba
 
             @Override
             public void onMarkerDragEnd(Marker marker) {
-                if(verificarDentroDelArea(marker.getPosition(), coordenadas_padre)) {
+                if (verificarDentroDelArea(marker.getPosition(), coordenadas_padre)) {
                     Boolean libre = true;
-                    for (SubCampos subCampo : subCampos){
+                    for (SubCampos subCampo : subCampos) {
                         try {
                             ArrayList<LatLng> coordenadas_hijo = new ArrayList<>();
                             JSONArray JSONcoordenadas = new JSONArray("[" + subCampo.getCoordenadas() + "]");
-                            for(int i=0; i<JSONcoordenadas.length(); i++){
+                            for (int i = 0; i < JSONcoordenadas.length(); i++) {
                                 coordenadas_hijo.add(new LatLng(Double.parseDouble(JSONcoordenadas.getJSONObject(i).getString("Latitud")), Double.parseDouble(JSONcoordenadas.getJSONObject(i).getString("Longitud"))));
                             }
-                            if(verificarDentroDelArea(marker.getPosition(), coordenadas_hijo))
-                                libre= false;
+                            if (verificarDentroDelArea(marker.getPosition(), coordenadas_hijo))
+                                libre = false;
                         } catch (JSONException e) {
                             e.printStackTrace();
-                        } catch (Exception e){
+                        } catch (Exception e) {
 
                         }
                     }
-                    if(libre) {
+                    if (libre) {
                         coordenadas.set(Integer.parseInt(String.valueOf(marker.getTag())), marker.getPosition());
                         mMap.clear();
                         dibujarCampo();
                         mMap.animateCamera(CameraUpdateFactory.newLatLng(marker.getPosition()));
-                    }else{
+                    } else {
                         AlertDialog.Builder dialogo1 = new AlertDialog.Builder(getContext());
                         dialogo1.setMessage("El Marcador no puede estar dentro de otros SubCampos");
                         dialogo1.setPositiveButton("Enterado", new DialogInterface.OnClickListener() {
@@ -164,7 +172,7 @@ public class Mapa_Agregar_SubPredio extends Fragment implements OnMapReadyCallba
                         });
                         dialogo1.show();
                     }
-                }else{
+                } else {
                     AlertDialog.Builder dialogo1 = new AlertDialog.Builder(getContext());
                     dialogo1.setMessage("El Marcador debe estar dentro del Predio");
                     dialogo1.setPositiveButton("Enterado", new DialogInterface.OnClickListener() {
@@ -197,29 +205,29 @@ public class Mapa_Agregar_SubPredio extends Fragment implements OnMapReadyCallba
             @Override
             public void onMapLongClick(LatLng latLng) {
                 //Animation anim_slide_down = AnimationUtils.loadAnimation(this, R.anim.slide_from_top_fab);
-                if(verificarDentroDelArea(latLng, coordenadas_padre)) {
+                if (verificarDentroDelArea(latLng, coordenadas_padre)) {
                     Boolean libre = true;
-                    for (SubCampos subCampo : subCampos){
+                    for (SubCampos subCampo : subCampos) {
                         try {
                             ArrayList<LatLng> coordenadas_hijo = new ArrayList<>();
                             JSONArray JSONcoordenadas = new JSONArray("[" + subCampo.getCoordenadas() + "]");
-                            for(int i=0; i<JSONcoordenadas.length(); i++){
+                            for (int i = 0; i < JSONcoordenadas.length(); i++) {
                                 coordenadas_hijo.add(new LatLng(Double.parseDouble(JSONcoordenadas.getJSONObject(i).getString("Latitud")), Double.parseDouble(JSONcoordenadas.getJSONObject(i).getString("Longitud"))));
                             }
-                            if(verificarDentroDelArea(latLng, coordenadas_hijo))
-                                libre= false;
+                            if (verificarDentroDelArea(latLng, coordenadas_hijo))
+                                libre = false;
                         } catch (JSONException e) {
                             e.printStackTrace();
-                        } catch (Exception e){
+                        } catch (Exception e) {
 
                         }
                     }
-                    if(libre) {
+                    if (libre) {
                         map.clear();
                         coordenadas.add(latLng);
                         fabVolver.setVisibility(View.VISIBLE);
                         dibujarCampo();
-                    }else{
+                    } else {
                         AlertDialog.Builder dialogo1 = new AlertDialog.Builder(getContext());
                         dialogo1.setMessage("El Marcador no puede estar dentro de otros SubCampos");
                         dialogo1.setPositiveButton("Enterado", new DialogInterface.OnClickListener() {
@@ -229,7 +237,7 @@ public class Mapa_Agregar_SubPredio extends Fragment implements OnMapReadyCallba
                         });
                         dialogo1.show();
                     }
-                }else{
+                } else {
                     AlertDialog.Builder dialogo1 = new AlertDialog.Builder(getContext());
                     dialogo1.setMessage("El Marcador debe estar dentro del Predio");
                     dialogo1.setPositiveButton("Enterado", new DialogInterface.OnClickListener() {
@@ -243,39 +251,43 @@ public class Mapa_Agregar_SubPredio extends Fragment implements OnMapReadyCallba
         });
     }
 
-    void dibujarCampo(){
+    void dibujarCampo() {
         try {
             PolylineOptions polylineOptions = new PolylineOptions();
             polylineOptions.width(7);
-            polylineOptions.color(Color.argb(155, 0, 148, 81));
+            polylineOptions.color(Color.argb(170, 0, 148, 81));
             for (int i = 0; i < coordenadas_padre.size(); i++) {
                 polylineOptions.add(coordenadas_padre.get(i));
             }
             mMap.addPolyline(polylineOptions);
-        }catch (Exception e){}
+        } catch (Exception e) {
+        }
 
-        try{
-            for (SubCampos subCampo : subCampos){
+        try {
+            for (SubCampos subCampo : subCampos) {
                 try {
                     ArrayList<LatLng> coordenadas_hijo = new ArrayList<>();
                     JSONArray JSONcoordenadas = new JSONArray("[" + subCampo.getCoordenadas() + "]");
-                    for(int i=0; i<JSONcoordenadas.length(); i++){
+                    for (int i = 0; i < JSONcoordenadas.length(); i++) {
                         coordenadas_hijo.add(new LatLng(Double.parseDouble(JSONcoordenadas.getJSONObject(i).getString("Latitud")), Double.parseDouble(JSONcoordenadas.getJSONObject(i).getString("Longitud"))));
                     }
+
                     PolylineOptions polylineOptions = new PolylineOptions();
                     polylineOptions.width(7);
-                    polylineOptions.color(Color.argb(155, 0, 50, 151));
+                    polylineOptions.color(Color.argb(170, 0, 50, 151));
                     for (int i = 0; i < coordenadas_hijo.size(); i++) {
                         polylineOptions.add(coordenadas_hijo.get(i));
                     }
                     mMap.addPolyline(polylineOptions);
+                    MarkerOptions options = new MarkerOptions().position(getPolygonLatLngBounds(coordenadas_hijo).getCenter()).icon(BitmapDescriptorFactory.fromBitmap(textoaBitmap(subCampo.getNombre())));
+                    mMap.addMarker(options);
                 } catch (JSONException e) {
                     e.printStackTrace();
-                } catch (Exception e){
-
+                } catch (Exception e) {
                 }
             }
-        }catch (Exception e){}
+        } catch (Exception e) {
+        }
 
         try {
             PolylineOptions polylineOptions = new PolylineOptions();
@@ -291,7 +303,8 @@ public class Mapa_Agregar_SubPredio extends Fragment implements OnMapReadyCallba
             }
             polylineOptions.add(coordenadas.get(0));
             mMap.addPolyline(polylineOptions);
-        }catch (Exception e){}
+        } catch (Exception e) {
+        }
     }
 
     public BitmapDescriptor getMarkerIcon(String color) {
@@ -310,12 +323,12 @@ public class Mapa_Agregar_SubPredio extends Fragment implements OnMapReadyCallba
 
     private boolean verificarDentroDelArea(LatLng tap, ArrayList<LatLng> vertices) {
         int intersectCount = 0;
-        for(int j=0; j<vertices.size()-1; j++) {
-            if( rayCastIntersect(tap, vertices.get(j), vertices.get(j+1)) ) {
+        for (int j = 0; j < vertices.size() - 1; j++) {
+            if (rayCastIntersect(tap, vertices.get(j), vertices.get(j + 1))) {
                 intersectCount++;
             }
         }
-        return (intersectCount%2) == 1; // odd = inside, even = outside;
+        return (intersectCount % 2) == 1; // odd = inside, even = outside;
     }
 
     private boolean rayCastIntersect(LatLng tap, LatLng vertA, LatLng vertB) {
@@ -327,14 +340,29 @@ public class Mapa_Agregar_SubPredio extends Fragment implements OnMapReadyCallba
         double pY = tap.latitude;
         double pX = tap.longitude;
 
-        if ( (aY>pY && bY>pY) || (aY<pY && bY<pY) || (aX<pX && bX<pX) ) {
+        if ((aY > pY && bY > pY) || (aY < pY && bY < pY) || (aX < pX && bX < pX)) {
             return false; // a and b can't both be above or below pt.y, and a or b must be east of pt.x
         }
 
-        double m = (aY-bY) / (aX-bX);               // Rise over run
+        double m = (aY - bY) / (aX - bX);               // Rise over run
         double bee = (-aX) * m + aY;                // y = mx + b
         double x = (pY - bee) / m;                  // algebra is neat!
 
         return x > pX;
     }
+
+    public Bitmap textoaBitmap(String text) {
+        Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        paint.setTextSize(50);
+        paint.setColor(Color.WHITE);
+        paint.setTextAlign(Paint.Align.CENTER);
+        float baseline = -paint.ascent(); // ascent() is negative
+        int width = (int) (paint.measureText(text) + 0.5f); // round
+        int height = (int) (baseline + paint.descent() + 0.5f);
+        Bitmap image = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(image);
+        canvas.drawText(text, 0, baseline, paint);
+        return image;
+    }
+
 }

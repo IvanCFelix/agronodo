@@ -24,11 +24,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.fragmentoestudio.agronodo.Ingeniero.Intro_Ingeniero;
-import com.fragmentoestudio.agronodo.Ingeniero.Lista_Predios_Ingeniero;
-import com.fragmentoestudio.agronodo.Ingeniero.Mapa_Predios_Ingeniero;
-import com.fragmentoestudio.agronodo.Ingeniero.Mi_Usuario_Ingeniero;
-import com.fragmentoestudio.agronodo.Ingeniero.Notificaciones_Ingeniero;
+import com.fragmentoestudio.agronodo.Agricola.Intro_Agricola;
+import com.fragmentoestudio.agronodo.Agricola.Lista_Predios_Agricola;
+import com.fragmentoestudio.agronodo.Agricola.Mapa_Predios_Agricola;
+import com.fragmentoestudio.agronodo.Agricola.Mi_Usuario_Agricola;
+import com.fragmentoestudio.agronodo.Agricola.Notificaciones_Agricola;
 import com.fragmentoestudio.agronodo.Utilidades.SQLITE;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -39,11 +39,11 @@ public class Menu_Ingeniero extends AppCompatActivity implements NavigationView.
 
     public static Fragment fragment;
 
-    public static Intro_Ingeniero intro = new Intro_Ingeniero();
-    public static Lista_Predios_Ingeniero lista_predios = new Lista_Predios_Ingeniero();
-    public static Mapa_Predios_Ingeniero mapa_prediosAgronomo = new Mapa_Predios_Ingeniero();
-    public static Mi_Usuario_Ingeniero mi_usuarioAgronomo = new Mi_Usuario_Ingeniero();
-    public static Notificaciones_Ingeniero notificaciones_agronomo = new Notificaciones_Ingeniero();
+    public static Intro_Agricola intro = new Intro_Agricola();
+    public static Lista_Predios_Agricola lista_predios = new Lista_Predios_Agricola();
+    public static Mapa_Predios_Agricola mapa_prediosAgronomo = new Mapa_Predios_Agricola();
+    public static Mi_Usuario_Agricola mi_usuarioAgronomo = new Mi_Usuario_Agricola();
+    public static Notificaciones_Agricola notificaciones_agronomo = new Notificaciones_Agricola();
 
     public static CircleImageView imagenPerfil;
     public static TextView txtNombre, txtCorreo;

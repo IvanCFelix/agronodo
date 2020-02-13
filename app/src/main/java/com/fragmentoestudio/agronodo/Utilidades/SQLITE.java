@@ -124,6 +124,19 @@ public class SQLITE {
         return "No se pudo agregar este Lote";
     }
 
+    public static String agregarCultivo(Context context, String cultivo){
+        Base_Datos bd = new Base_Datos(context);
+        SQLiteDatabase db = bd.getWritableDatabase();
+        if (db != null) {
+            ContentValues registro = new ContentValues();
+            registro.put("Nombre", cultivo);
+            db.insert(SQLITE.tablaCultivo, null, registro);
+            db.close();
+            return "Cultivo registrado exitosamente";
+        }
+        return "No se pudo agregar este Cultivo";
+    }
+
     public static String agregarSubCampo(Context context, SubCampos subCampos){
         Base_Datos bd = new Base_Datos(context);
         SQLiteDatabase db = bd.getWritableDatabase();

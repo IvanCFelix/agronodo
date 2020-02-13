@@ -1,4 +1,4 @@
-package com.fragmentoestudio.agronodo.Ingeniero;
+package com.fragmentoestudio.agronodo.Agricola;
 
 
 import android.graphics.Bitmap;
@@ -25,7 +25,7 @@ import java.util.concurrent.ExecutionException;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class Mi_Usuario_Ingeniero extends Fragment {
+public class Mi_Usuario_Agricola extends Fragment {
 
     CircleImageView civPerfil;
 
@@ -37,7 +37,7 @@ public class Mi_Usuario_Ingeniero extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_mi_usuario_ingeniero, container, false);
+        View view = inflater.inflate(R.layout.fragment_mi_usuario_agricola, container, false);
 
         civPerfil = view.findViewById(R.id.civ_perfil);
         swipeRefreshLayout = view.findViewById(R.id.swiperefresh);

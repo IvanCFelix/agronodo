@@ -25,7 +25,8 @@
             android:configChanges="orientation|screenSize|keyboardHidden" />
         <activity
             android:name=".Intro"
-            android:theme="@style/AppTheme.FullScreen" />
+            android:theme="@style/AppTheme.FullScreen"
+            android:configChanges="orientation|screenSize|keyboardHidden"/>
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").

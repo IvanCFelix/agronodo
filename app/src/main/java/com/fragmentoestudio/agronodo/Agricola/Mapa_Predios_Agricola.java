@@ -1,4 +1,4 @@
-package com.fragmentoestudio.agronodo.Ingeniero;
+package com.fragmentoestudio.agronodo.Agricola;
 
 import android.Manifest;
 import android.content.Intent;
@@ -36,7 +36,7 @@ import org.json.JSONException;
 
 import java.util.ArrayList;
 
-public class Mapa_Predios_Ingeniero extends Fragment implements OnMapReadyCallback {
+public class Mapa_Predios_Agricola extends Fragment implements OnMapReadyCallback {
 
     private GoogleMap mMap;
     private FusedLocationProviderClient mFusedLocationClient;
@@ -52,7 +52,7 @@ public class Mapa_Predios_Ingeniero extends Fragment implements OnMapReadyCallba
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_mapa_predios_ingeniero, container, false);
+        View view = inflater.inflate(R.layout.fragment_mapa_predios_agricola, container, false);
 
         getActivity().setTitle(" Mis Predios");
 

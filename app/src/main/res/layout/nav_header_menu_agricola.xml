@@ -17,7 +17,7 @@
     <de.hdodenhof.circleimageview.CircleImageView
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:layout_marginTop="170dp"
+        android:layout_marginTop="180dp"
         android:id="@+id/navheader_civ"
         android:layout_marginBottom="10dp"
         android:src="@drawable/logoblanco"/>

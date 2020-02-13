@@ -56,13 +56,13 @@ public class Formulario_Agregar_SubPredio extends Fragment {
 
         txtFechaHoy.setText(getFecha());
 
-        listaCultivos.add("Seleccionar Cultivo");
-
         ArrayList<String> cultivos = SQLITE.obtenerCultivos(getContext());
 
         for(String nombre : cultivos){
             listaCultivos.add(nombre);
         }
+
+        listaCultivos.add("Seleccionar Cultivo");
 
         listaAgricultura.add("Seleccionar Agricultura");
         listaAgricultura.add("Tradicional");

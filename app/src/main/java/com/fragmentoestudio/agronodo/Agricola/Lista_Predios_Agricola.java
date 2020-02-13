@@ -1,4 +1,4 @@
-package com.fragmentoestudio.agronodo.Ingeniero;
+package com.fragmentoestudio.agronodo.Agricola;
 
 
 import android.Manifest;
@@ -26,7 +26,7 @@ import com.fragmentoestudio.agronodo.Utilidades.SQLITE;
 
 import java.util.ArrayList;
 
-public class Lista_Predios_Ingeniero extends Fragment {
+public class Lista_Predios_Agricola extends Fragment {
 
     RecyclerView recyclerView;
     SwipeRefreshLayout swipeRefreshLayout;
@@ -44,7 +44,7 @@ public class Lista_Predios_Ingeniero extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_lista_predios_ingeniero, container, false);
+        View view = inflater.inflate(R.layout.fragment_lista_predios_agricola, container, false);
 
         txtNoHay = view.findViewById(R.id.txtNoHay);
         recyclerView = view.findViewById(R.id.recyclerView);
