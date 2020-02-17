@@ -11,7 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.fragmentoestudio.agronodo.Menu_Ingeniero;
+import com.fragmentoestudio.agronodo.Menu_Agricola;
 import com.fragmentoestudio.agronodo.R;
 import com.fragmentoestudio.agronodo.Servicios.Authentification;
 import com.fragmentoestudio.agronodo.Utilidades.Datos;
@@ -139,11 +139,11 @@ public class Mi_Usuario_Agricola extends Fragment {
         try {
             Bitmap imagen = SQLITE.obtenerImagen(getContext());
             civPerfil.setImageBitmap(imagen);
-            Menu_Ingeniero.imagenPerfil.setImageBitmap(imagen);
+            Menu_Agricola.imagenPerfil.setImageBitmap(imagen);
             Usuario = SQLITE.obtenerUsuario(getContext());
             final JSONObject usuarioJSON = new JSONObject(Usuario);
-            Menu_Ingeniero.txtNombre.setText(usuarioJSON.getJSONObject("profile").getString("agricola"));
-            Menu_Ingeniero.txtCorreo.setText(usuarioJSON.getString("email"));
+            Menu_Agricola.txtNombre.setText(usuarioJSON.getJSONObject("profile").getString("agricola"));
+            Menu_Agricola.txtCorreo.setText(usuarioJSON.getString("email"));
             if (swipeRefreshLayout.isRefreshing())
                 swipeRefreshLayout.setRefreshing(false);
         } catch (JSONException e) {

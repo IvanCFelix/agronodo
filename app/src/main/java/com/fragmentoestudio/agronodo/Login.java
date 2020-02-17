@@ -128,7 +128,7 @@ public class Login extends AppCompatActivity {
         PedirPermisos();
 
         if (SQLITE.obtenerTamañoTabla(Login.this, SQLITE.tablaPerfil) == 1) {
-            startActivity(new Intent(Login.this, Menu_Ingeniero.class));
+            startActivity(new Intent(Login.this, Menu_Agricola.class));
             finish();
         }
 
@@ -181,7 +181,7 @@ public class Login extends AppCompatActivity {
                                                         runOnUiThread(new Runnable() {
                                                             public void run() {
                                                                 Toast.makeText(Login.this, "Sesión Iniciada", Toast.LENGTH_LONG).show();
-                                                                startActivity(new Intent(Login.this, Menu_Ingeniero.class));
+                                                                startActivity(new Intent(Login.this, Menu_Agricola.class));
                                                                 finish();
                                                             }
                                                         });

@@ -35,7 +35,7 @@ import org.json.JSONObject;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class Menu_Ingeniero extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class Menu_Agricola extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     public static Fragment fragment;
 
@@ -54,7 +54,7 @@ public class Menu_Ingeniero extends AppCompatActivity implements NavigationView.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_menu_ingeniero);
+        setContentView(R.layout.activity_menu_agricola);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -85,10 +85,10 @@ public class Menu_Ingeniero extends AppCompatActivity implements NavigationView.
         txtCorreo = headerView.findViewById(R.id.navheader_Correo);
         JSONObject usuario= null;
         try {
-            usuario = new JSONObject(SQLITE.obtenerUsuario(Menu_Ingeniero.this));
+            usuario = new JSONObject(SQLITE.obtenerUsuario(Menu_Agricola.this));
         } catch (JSONException e) {
-            SQLITE.eliminarBasedeDatos(Menu_Ingeniero.this);
-            startActivity(new Intent(Menu_Ingeniero.this, Login.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+            SQLITE.eliminarBasedeDatos(Menu_Agricola.this);
+            startActivity(new Intent(Menu_Agricola.this, Login.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
             finish();
             e.printStackTrace();
         } catch (Exception e){
@@ -110,7 +110,7 @@ public class Menu_Ingeniero extends AppCompatActivity implements NavigationView.
 
         }
 
-        Bitmap imagen = SQLITE.obtenerImagen(Menu_Ingeniero.this);
+        Bitmap imagen = SQLITE.obtenerImagen(Menu_Agricola.this);
         if(imagen!=null) {
             imagenPerfil.setImageBitmap(imagen);
         }
@@ -151,11 +151,11 @@ public class Menu_Ingeniero extends AppCompatActivity implements NavigationView.
                 break;
             case R.id.nav_Mapa_Predios:
                 try {
-                    if (ActivityCompat.checkSelfPermission(Menu_Ingeniero.this, permissions[0]) != PackageManager.PERMISSION_GRANTED ||
-                            ActivityCompat.checkSelfPermission(Menu_Ingeniero.this, permissions[1]) != PackageManager.PERMISSION_GRANTED) {
-                        ActivityCompat.requestPermissions(Menu_Ingeniero.this, permissions, MULTIPLE_PERMISSIONS_REQUEST_CODE);
-                        if (ActivityCompat.checkSelfPermission(Menu_Ingeniero.this, permissions[0]) == PackageManager.PERMISSION_GRANTED ||
-                                ActivityCompat.checkSelfPermission(Menu_Ingeniero.this, permissions[1]) == PackageManager.PERMISSION_GRANTED) {
+                    if (ActivityCompat.checkSelfPermission(Menu_Agricola.this, permissions[0]) != PackageManager.PERMISSION_GRANTED ||
+                            ActivityCompat.checkSelfPermission(Menu_Agricola.this, permissions[1]) != PackageManager.PERMISSION_GRANTED) {
+                        ActivityCompat.requestPermissions(Menu_Agricola.this, permissions, MULTIPLE_PERMISSIONS_REQUEST_CODE);
+                        if (ActivityCompat.checkSelfPermission(Menu_Agricola.this, permissions[0]) == PackageManager.PERMISSION_GRANTED ||
+                                ActivityCompat.checkSelfPermission(Menu_Agricola.this, permissions[1]) == PackageManager.PERMISSION_GRANTED) {
                             fragmentTransaction.replace(R.id.area_ventana, mapa_prediosAgronomo);
                             drawer.closeDrawer(GravityCompat.START);
                         }
@@ -190,16 +190,16 @@ public class Menu_Ingeniero extends AppCompatActivity implements NavigationView.
                 }
                 break;
             case R.id.nav_web:
-                Toast.makeText(Menu_Ingeniero.this, "Aun en Desarrollo", Toast.LENGTH_LONG).show();
+                Toast.makeText(Menu_Agricola.this, "Aun en Desarrollo", Toast.LENGTH_LONG).show();
                 break;
             case R.id.nav_salir:
-                AlertDialog.Builder dialogo1 = new AlertDialog.Builder(Menu_Ingeniero.this);
+                AlertDialog.Builder dialogo1 = new AlertDialog.Builder(Menu_Agricola.this);
                 dialogo1.setTitle("Cerrar Sesión");
                 dialogo1.setMessage("¿ Desea cerrar sesión ?");
                 dialogo1.setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialogo1, int id) {
-                        SQLITE.eliminarBasedeDatos(Menu_Ingeniero.this);
-                        startActivity(new Intent(Menu_Ingeniero.this, Login.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                        SQLITE.eliminarBasedeDatos(Menu_Agricola.this);
+                        startActivity(new Intent(Menu_Agricola.this, Login.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
                         finish();
                     }
                 });

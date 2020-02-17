@@ -279,8 +279,6 @@ public class Mapa_Agregar_SubPredio extends Fragment implements OnMapReadyCallba
                         polylineOptions.add(coordenadas_hijo.get(i));
                     }
                     mMap.addPolyline(polylineOptions);
-                    MarkerOptions options = new MarkerOptions().position(getPolygonLatLngBounds(coordenadas_hijo).getCenter()).icon(BitmapDescriptorFactory.fromBitmap(textoaBitmap(subCampo.getNombre())));
-                    mMap.addMarker(options);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 } catch (Exception e) {
@@ -351,18 +349,5 @@ public class Mapa_Agregar_SubPredio extends Fragment implements OnMapReadyCallba
         return x > pX;
     }
 
-    public Bitmap textoaBitmap(String text) {
-        Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        paint.setTextSize(50);
-        paint.setColor(Color.WHITE);
-        paint.setTextAlign(Paint.Align.CENTER);
-        float baseline = -paint.ascent(); // ascent() is negative
-        int width = (int) (paint.measureText(text) + 0.5f); // round
-        int height = (int) (baseline + paint.descent() + 0.5f);
-        Bitmap image = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(image);
-        canvas.drawText(text, 0, baseline, paint);
-        return image;
-    }
 
 }
