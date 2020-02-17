@@ -1,2 +1,28 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="app_name">AgroNodo</string>
+    <string name="title_activity_menu__agronomo">Menu Agronomo</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="bienvenido">Wellcome</string>
+    <string name="usuario">User</string>
+    <string name="nombre">Name</string>
+    <string name="correo">Email</string>
+    <string name="contrasena">Password</string>
+    <string name="iniciar_sesion">Sign-in</string>
+    <string name="olvido_contrasena">Forgot password?</string>
+
+    <string name="inicio">Main</string>
+    <string name="mis_predios">My Fields</string>
+    <string name="mi_mapa">My Map</string>
+    <string name="mi_usuario">My User</string>
+    <string name="notificaciones">Notifications</string>
+    <string name="acerca_agronodo">About Agronodo</string>
+    <string name="sitio_web">WEB Page</string>
+    <string name="cerrar_sesion">Log-out</string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_maps">Map</string>
+
+    <string name="version">v2.0</string>
+</resources>

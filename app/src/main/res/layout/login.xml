@@ -28,7 +28,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAlignment="center"
-            android:text="Bienvenido"
+            android:text="@string/bienvenido"
             android:textColor="@color/colorWhite"
             android:textSize="38sp"
             android:textStyle="bold" />
@@ -71,7 +71,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
-                            android:hint="Usuario"
+                            android:hint="@string/usuario"
                             android:textColorHint="@color/colorGreen"
                             app:counterEnabled="true"
                             app:counterMaxLength="50"
@@ -94,7 +94,7 @@
                         <android.support.design.widget.TextInputLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="Contraseña"
+                            android:hint="@string/contrasena"
                             android:textAlignment="center"
                             android:textColorHint="@color/colorGreen"
                             app:counterEnabled="true"
@@ -123,7 +123,7 @@
                             android:layout_marginTop="5dp"
                             android:background="@drawable/boton_grande"
                             android:paddingVertical="5dp"
-                            android:text="Iniciar Sesión"
+                            android:text="@string/iniciar_sesion"
                             android:textAllCaps="false"
                             android:textColor="@color/colorWhite"
                             android:textSize="30sp"
@@ -135,7 +135,7 @@
 
                 <Button
                     android:id="@+id/btnOlvideContraseña"
-                    android:text="¿Olvidó su Contraseña?"
+                    android:text="@string/olvido_contrasena"
                     android:textColor="@color/colorBlack"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

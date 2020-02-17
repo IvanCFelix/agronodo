@@ -1,23 +1,28 @@
 <resources>
     <string name="app_name">AgroNodo</string>
-    <string name="title_activity_menu__agronomo">Menu_Agronomo</string>
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Android Studio</string>
-    <string name="nav_header_subtitle">android.studio@android.com</string>
-    <string name="nav_header_desc">Navigation header</string>
-    <string name="action_settings">Settings</string>
+    <string name="title_activity_menu__agronomo">Menu Agronomo</string>
+    <string name="navigation_drawer_open">Abrir Navegador</string>
+    <string name="navigation_drawer_close">Cerrar Navegador</string>
 
-    <string name="menu_home">Home</string>
-    <string name="menu_gallery">Gallery</string>
-    <string name="menu_slideshow">Slideshow</string>
-    <string name="menu_tools">Tools</string>
-    <string name="menu_share">Share</string>
-    <string name="menu_send">Send</string>
+    <string name="bienvenido">Bienvenido</string>
+    <string name="usuario">Usuario</string>
+    <string name="nombre">Nombre</string>
+    <string name="correo">Correo</string>
+    <string name="contrasena">Contraseña</string>
+    <string name="iniciar_sesion">Iniciar Sesión</string>
+    <string name="olvido_contrasena">¿Olvidó su Contraseña?</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="title_activity_maps">Map</string>
+    <string name="inicio">Inicio</string>
+    <string name="mis_predios">Mis Predios</string>
+    <string name="mi_mapa">Mi Mapa</string>
+    <string name="mi_usuario">Mi Usuario</string>
+    <string name="notificaciones">Notificaciones</string>
+    <string name="acerca_agronodo">Acerca de Agronodo</string>
+    <string name="sitio_web">Sitio WEB</string>
+    <string name="cerrar_sesion">Cerrar Sesión</string>
 
-    <string name="version">v1.0</string>
+    <string name="hello_blank_fragment">Fragmento Nuevo</string>
+    <string name="title_activity_maps">Mapa</string>
+
+    <string name="version">v2.0</string>
 </resources>
