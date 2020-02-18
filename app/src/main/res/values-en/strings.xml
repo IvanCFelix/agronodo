@@ -12,7 +12,7 @@
     <string name="iniciar_sesion">Sign-in</string>
     <string name="olvido_contrasena">Forgot password?</string>
 
-    <string name="inicio">Main</string>
+    <string name="inicio">Home</string>
     <string name="mis_predios">My Fields</string>
     <string name="mi_mapa">My Map</string>
     <string name="mi_usuario">My User</string>
@@ -45,6 +45,32 @@
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_maps">Map</string>
+
+    <string name="datos_predio">Field Data</string>
+
+    <string name="seleccionar_fecha">Select Date</string>
+    <string name="fecha_inicio">Initial date</string>
+    <string name="fecha_final">End Date</string>
+
+    <string name="no_hay_predios_disponibles">No Fields Available</string>
+    <string name="no_hay_notificaciones_disponibles">No Notifications Available</string>
+
+    <string name="agregar_predio">Add Field</string>
+    <string name="editar_predio">Edit Field</string>
+    <string name="agregar_subpredio">Add Sub-Field</string>
+    <string name="campo_seleccionado_no_valido">The selected field is not valid</string>
+    <string name="atencion">Attention</string>
+    <string name="cancelar">Cancel</string>
+    <string name="subpredio_tomara_todo_espacio">The Sub-Field will take all the size</string>
+
+    <string name="predio_registrado">Field successfully registered</string>
+    <string name="no_se_pudo_registrar_predio">Could not add this Field</string>
+
+    <string name="cultivo_registrado">Crop successfully registered</string>
+    <string name="no_se_pudo_registrar_cultivo">Could not add this crop</string>
+
+    <string name="subpredio_registrado">Sub-Field successfully registered</string>
+    <string name="no_se_pudo_registrar_subpredio">Could not add this Sub-Field</string>
 
     <string name="version">v2.0</string>
 </resources>

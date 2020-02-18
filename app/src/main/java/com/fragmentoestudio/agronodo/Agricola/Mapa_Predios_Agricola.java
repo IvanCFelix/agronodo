@@ -54,7 +54,7 @@ public class Mapa_Predios_Agricola extends Fragment implements OnMapReadyCallbac
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_mapa_predios_agricola, container, false);
 
-        getActivity().setTitle(" Mis Predios");
+        getActivity().setTitle(" " + getString(R.string.mi_mapa));
 
         fabAgregar = view.findViewById(R.id.fab_agregar);
 

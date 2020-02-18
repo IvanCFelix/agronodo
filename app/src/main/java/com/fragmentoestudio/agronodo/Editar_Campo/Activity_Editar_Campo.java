@@ -46,7 +46,7 @@ public class Activity_Editar_Campo extends AppCompatActivity {
         this.getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_cerrar);
         this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         this.getSupportActionBar().setDisplayShowHomeEnabled(true);
-        setTitle("Editar Predio");
+        setTitle(getString(R.string.editar_predio));
 
         lista.add(mapa_editar_campo);
         lista.add(formulario_editar_campo);
@@ -64,8 +64,8 @@ public class Activity_Editar_Campo extends AppCompatActivity {
                     } else {
                         AlertDialog.Builder dialogo1 = new AlertDialog.Builder(Activity_Editar_Campo.this);
                         dialogo1.setTitle("Error");
-                        dialogo1.setMessage("El campo seleccionado no es valido");
-                        dialogo1.setPositiveButton("Enterado", new DialogInterface.OnClickListener() {
+                        dialogo1.setMessage(getString(R.string.campo_seleccionado_no_valido));
+                        dialogo1.setPositiveButton(getString(R.string.enterado), new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialogo1, int id) {
                                 dialogo1.dismiss();
                             }
@@ -91,8 +91,15 @@ public class Activity_Editar_Campo extends AppCompatActivity {
                         campo.setCoordenadas(coordenadas);
                         AlertDialog.Builder dialogo1 = new AlertDialog.Builder(Activity_Editar_Campo.this);
                         dialogo1.setCancelable(false);
-                        dialogo1.setMessage(SQLITE.editarCampo(Activity_Editar_Campo.this, campo));
-                        dialogo1.setPositiveButton("Enterado", new DialogInterface.OnClickListener() {
+                        switch (SQLITE.editarCampo(Activity_Editar_Campo.this, campo)){
+                            case 1:
+                                dialogo1.setMessage(getString(R.string.predio_registrado));
+                                break;
+                            case 2:
+                                dialogo1.setMessage(getString(R.string.no_se_pudo_registrar_predio));
+                                break;
+                        }
+                        dialogo1.setPositiveButton(getString(R.string.enterado), new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialogo1, int id) {
                                 finish();
                             }
@@ -147,9 +154,9 @@ public class Activity_Editar_Campo extends AppCompatActivity {
 
     void completarDatos() {
         AlertDialog.Builder dialogo1 = new AlertDialog.Builder(Activity_Editar_Campo.this);
-        dialogo1.setTitle("Datos Incompletos");
-        dialogo1.setMessage("Necesita completar todos los datos");
-        dialogo1.setPositiveButton("Enterado", new DialogInterface.OnClickListener() {
+        dialogo1.setTitle(getString(R.string.datos_incompletos));
+        dialogo1.setMessage(getString(R.string.complete_datos_correctamente));
+        dialogo1.setPositiveButton(getString(R.string.enterado), new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialogo1, int id) {
                 dialogo1.dismiss();
             }

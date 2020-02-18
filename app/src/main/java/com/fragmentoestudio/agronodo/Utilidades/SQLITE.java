@@ -109,7 +109,7 @@ public class SQLITE {
         context.deleteDatabase(Base_Datos.nombreBaseDatos);
     }
 
-    public static String agregarCampo(Context context, Campos campo){
+    public static int agregarCampo(Context context, Campos campo){
         Base_Datos bd = new Base_Datos(context);
         SQLiteDatabase db = bd.getWritableDatabase();
         if (db != null) {
@@ -119,12 +119,12 @@ public class SQLITE {
             registro.put("Coordenadas", campo.getCoordenadas());
             db.insert(SQLITE.tablaCampos, null, registro);
             db.close();
-            return "Predio registrado exitosamente";
+            return 1;
         }
-        return "No se pudo agregar este Lote";
+        return 2;
     }
 
-    public static String agregarCultivo(Context context, String cultivo){
+    public static int agregarCultivo(Context context, String cultivo){
         Base_Datos bd = new Base_Datos(context);
         SQLiteDatabase db = bd.getWritableDatabase();
         if (db != null) {
@@ -132,12 +132,12 @@ public class SQLITE {
             registro.put("Nombre", cultivo);
             db.insert(SQLITE.tablaCultivo, null, registro);
             db.close();
-            return "Cultivo registrado exitosamente";
+            return 1;
         }
-        return "No se pudo agregar este Cultivo";
+        return 2;
     }
 
-    public static String agregarSubCampo(Context context, SubCampos subCampos){
+    public static int agregarSubCampo(Context context, SubCampos subCampos){
         Base_Datos bd = new Base_Datos(context);
         SQLiteDatabase db = bd.getWritableDatabase();
         if (db != null) {
@@ -152,9 +152,9 @@ public class SQLITE {
             registro.put("Fecha_Final", subCampos.getFecha_Final());
             db.insert(SQLITE.tablaSubCampos, null, registro);
             db.close();
-            return "SubPredio registrado exitosamente";
+            return 1;
         }
-        return "No se pudo agregar este SubPredio";
+        return 2;
     }
 
     public static ArrayList<String> obtenerCultivos(Context contexto){
@@ -226,7 +226,7 @@ public class SQLITE {
         return null;
     }
 
-    public static String editarCampo(Context contexto, Campos campo) {
+    public static int editarCampo(Context contexto, Campos campo) {
         Base_Datos bd = new Base_Datos(contexto);
         SQLiteDatabase db = bd.getWritableDatabase();
         if (db != null) {
@@ -235,31 +235,31 @@ public class SQLITE {
             registro.put("Coordenadas", campo.getCoordenadas());
             db.update(SQLITE.tablaCampos, registro, "ID = '" + campo.getID() + "'", null);
             db.close();
-            return "Predio editado exitosamente";
+            return 1;
         }
-        return "No se pudo editar el Predio";
+        return 2;
     }
 
-    public static String borrarCampo(Context contexto, int id) {
+    public static int borrarCampo(Context contexto, int id) {
         Base_Datos bd = new Base_Datos(contexto);
         SQLiteDatabase db = bd.getWritableDatabase();
         if (db != null) {
             db.execSQL("DELETE FROM " + SQLITE.tablaCampos + " WHERE ID=" + id + ";");
             db.close();
-            return "Predio eliminado exitosamente";
+            return 1;
         }
-        return "No se pudo eliminar el Predio";
+        return 2;
     }
 
-    public static String borrarSubCampo(Context contexto, int id) {
+    public static int borrarSubCampo(Context contexto, int id) {
         Base_Datos bd = new Base_Datos(contexto);
         SQLiteDatabase db = bd.getWritableDatabase();
         if (db != null) {
             db.execSQL("DELETE FROM " + SQLITE.tablaSubCampos + " WHERE ID=" + id + ";");
             db.close();
-            return "SubPredio eliminado exitosamente";
+            return 1;
         }
-        return "No se pudo eliminar el SubPredio";
+        return 2;
     }
 
     public static void limpiarTabla(Context contexto, String tabla) {

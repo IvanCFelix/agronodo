@@ -55,7 +55,9 @@ public class Mi_Usuario_Agricola extends Fragment {
                 }
             }
         });
-        getActivity().setTitle(" Mi Usuario");
+
+
+        getActivity().setTitle(" " + getString(R.string.mi_usuario));
 
         return view;
     }

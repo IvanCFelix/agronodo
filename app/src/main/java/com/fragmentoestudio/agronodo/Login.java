@@ -274,7 +274,6 @@ public class Login extends AppCompatActivity {
         btnOlvido.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 dialogo_Recuperar.show();
             }
         });

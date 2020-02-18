@@ -19,7 +19,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Datos del Predio"
+                android:text="@string/datos_predio"
                 android:gravity="center"
                 android:textColor="@color/colorBlack"
                 android:textSize="30sp"
@@ -45,7 +45,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="5dp"
-                        android:hint="Nombre"
+                        android:hint="@string/nombre"
                         android:textColorHint="@color/colorGreen"
                         app:counterEnabled="true"
                         app:counterMaxLength="50"
@@ -145,7 +145,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
                             android:layout_marginRight="5dp"
-                            android:text="Fecha Inicial - "
+                            android:text="@string/fecha_inicio"
                             android:textColor="#000"/>
 
                         <EditText
@@ -170,7 +170,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Fecha a Finalizar - "
+                            android:text="@string/fecha_final"
                             android:layout_marginLeft="10dp"
                             android:layout_marginRight="5dp"
                             android:textColor="#000"/>
@@ -185,7 +185,7 @@
                             android:drawablePadding="5dp"
                             android:textSize="18sp"
                             android:editable="false"
-                            android:hint="Seleccionar Fecha"
+                            android:hint="@string/seleccionar_fecha"
                             android:textColor="#000"/>
 
                     </LinearLayout>

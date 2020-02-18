@@ -5,29 +5,47 @@
     android:layout_height="match_parent"
     tools:context=".Agricola.Notificaciones_Agricola">
 
-    <android.support.v4.widget.SwipeRefreshLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+    <android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/swiperefresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ScrollView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-            <LinearLayout
+            <TextView
+                android:id="@+id/txtNoHay"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:padding="30dp"
+                android:text="@string/no_hay_notificaciones_disponibles"
+                android:textColor="#57000000"
+                android:textSize="30sp"
+                android:textStyle="bold|italic"
+                android:visibility="visible" />
 
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/recyclerView"
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
-            </LinearLayout>
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/recyclerView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
 
-        </ScrollView>
+                </LinearLayout>
+
+            </ScrollView>
+
+        </LinearLayout>
 
     </android.support.v4.widget.SwipeRefreshLayout>
 

@@ -33,12 +33,14 @@ public class Predios_Encabezado extends RecyclerView.Adapter<Predios_Encabezado.
     ArrayList<Campos> campos_filtrados;
     Context context;
     RecyclerView rvEncabezado;
+    TextView txtNoHay;
 
-    public Predios_Encabezado(ArrayList<Campos> lista, Context context, RecyclerView rv) {
+    public Predios_Encabezado(ArrayList<Campos> lista, Context context, RecyclerView rv, TextView txtNoHay) {
         this.campos_source = lista;
         this.campos_filtrados = lista;
         this.context = context;
         rvEncabezado = rv;
+        this.txtNoHay = txtNoHay;
     }
 
     @NonNull
@@ -55,7 +57,7 @@ public class Predios_Encabezado extends RecyclerView.Adapter<Predios_Encabezado.
         ArrayList<SubCampos> subCampos = SQLITE.obtenerSubCampos(context, campo.getID());
         holder.txtContador.setText(subCampos.size() + "");
         holder.txtTitulo.setText(campo.getNombre());
-        Predios_Contenido prediosContenido = new Predios_Contenido(subCampos, context, rvEncabezado);
+        Predios_Contenido prediosContenido = new Predios_Contenido(subCampos, context, rvEncabezado, txtNoHay);
         holder.recyclerView.setLayoutManager(new LinearLayoutManager(context));
         holder.recyclerView.setAdapter(prediosContenido);
         boolean isExpanded = campos_filtrados.get(position).isExpanded();
@@ -74,13 +76,13 @@ public class Predios_Encabezado extends RecyclerView.Adapter<Predios_Encabezado.
             public void onClick(View view) {
                 AlertDialog.Builder dialogo1 = new AlertDialog.Builder(context);
                 dialogo1.setCancelable(false);
-                dialogo1.setMessage("¿Deseas editar el Campo " + campo.getNombre() + "?");
-                dialogo1.setPositiveButton("Editar", new DialogInterface.OnClickListener() {
+                dialogo1.setMessage(context.getString(R.string.deseas_editar_predio));
+                dialogo1.setPositiveButton(context.getString(R.string.editar), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialogo1, int id) {
                         context.startActivity(new Intent(context, Activity_Editar_Campo.class).putExtra("ID", campo.getID()));
                     }
                 });
-                dialogo1.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                dialogo1.setNegativeButton(context.getString(R.string.cancelar), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialogo1, int id) {
 
                     }
@@ -94,16 +96,21 @@ public class Predios_Encabezado extends RecyclerView.Adapter<Predios_Encabezado.
             public void onClick(View view) {
                 AlertDialog.Builder dialogo1 = new AlertDialog.Builder(context);
                 dialogo1.setCancelable(false);
-                dialogo1.setMessage("¿Deseas eliminar el Campo " + campo.getNombre() + "?");
-                dialogo1.setPositiveButton("Eliminar", new DialogInterface.OnClickListener() {
+                dialogo1.setMessage(context.getString(R.string.deseas_eliminar_predio));
+                dialogo1.setPositiveButton(context.getString(R.string.eliminar), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialogo1, int id) {
                         SQLITE.borrarCampo(context, campo.getID());
                         ArrayList<Campos> campos = SQLITE.obtenerCampos(context);
-                        Predios_Encabezado adapter = new Predios_Encabezado(campos, context, rvEncabezado);
+                        if(campos.isEmpty()){
+                            txtNoHay.setVisibility(View.VISIBLE);
+                        }else{
+                            txtNoHay.setVisibility(View.GONE);
+                        }
+                        Predios_Encabezado adapter = new Predios_Encabezado(campos, context, rvEncabezado, txtNoHay);
                         rvEncabezado.setAdapter(adapter);
                     }
                 });
-                dialogo1.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                dialogo1.setNegativeButton(context.getString(R.string.cancelar), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialogo1, int id) {
 
                     }
@@ -141,11 +148,6 @@ public class Predios_Encabezado extends RecyclerView.Adapter<Predios_Encabezado.
                     Campos campo = campos_filtrados.get(getAdapterPosition());
                     campo.setExpanded(!campo.isExpanded());
                     notifyItemChanged(getAdapterPosition());
-                   /*if(SQLITE.obtenerCantidadCamposCultivos(context, cultivo.getNombre())>0) {
-
-                    }else{
-
-                    }*/
                 }
             });
         }

@@ -22,7 +22,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="No hay predios disponibles"
+                android:text="@string/no_hay_predios_disponibles"
                 android:visibility="gone"
                 android:textColor="#57000000"
                 android:textStyle="bold|italic"

@@ -30,7 +30,7 @@ public class Notificaciones_Agricola extends Fragment {
             }
         });
 
-        getActivity().setTitle(" Notificaciones");
+        getActivity().setTitle(" " + getString(R.string.notificaciones));
 
         return view;
     }

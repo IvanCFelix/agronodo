@@ -46,5 +46,49 @@
     <string name="hello_blank_fragment">Fragmento Nuevo</string>
     <string name="title_activity_maps">Mapa</string>
 
+    <string name="datos_predio">Datos del Predio</string>
+
+    <string name="seleccionar_fecha">Seleccionar Fecha</string>
+    <string name="fecha_inicio">Fecha Inicial</string>
+    <string name="fecha_final">Fecha a Finalizar</string>
+
+    <string name="no_hay_predios_disponibles">No hay Predios Disponibles</string>
+    <string name="no_hay_notificaciones_disponibles">No hay Notificaciones Disponibles</string>
+
+    <string name="agregar_predio">Agregar Predio</string>
+    <string name="editar_predio">Editar Predio</string>
+    <string name="agregar_subpredio">Agregar SubPredio</string>
+    <string name="campo_seleccionado_no_valido">El campo seleccionado no es valido</string>
+    <string name="atencion">Atención</string>
+    <string name="cancelar">Cancelar</string>
+    <string name="subpredio_tomara_todo_espacio">El SubPredio tomará todo el tamaño</string>
+
+    <string name="predio_registrado">Predio registrado exitosamente</string>
+    <string name="no_se_pudo_registrar_predio">No se pudo agregar este Predio</string>
+
+    <string name="cultivo_registrado">Cultivo registrado exitosamente</string>
+    <string name="no_se_pudo_registrar_cultivo">No se pudo agregar este Cultivo</string>
+
+    <string name="subpredio_registrado">SubPredio registrado exitosamente</string>
+    <string name="no_se_pudo_registrar_subpredio">No se pudo agregar este SubPredio</string>
+
+    <string name="predio_editado">Predio editado exitosamente</string>
+    <string name="no_se_pudo_editar_predio">No se pudo editar este Predio</string>
+
+    <string name="predio_borrado">Predio eliminado exitosamente</string>
+    <string name="no_se_pudo_borrar_predio">No se pudo eliminar este Predio</string>
+
+    <string name="subpredio_editado">SubPredio editado exitosamente</string>
+    <string name="no_se_pudo_editar_subpredio">No se pudo editar este SubPredio</string>
+
+    <string name="eliminar">Eliminar</string>
+    <string name="editar">Editar</string>
+
+    <string name="deseas_editar_predio">¿Deseas editar este Predio?</string>
+    <string name="deseas_eliminar_predio">¿Deseas eliminar este Predio?</string>
+
+    <string name="deseas_editar_subpredio">¿Deseas editar este SubPredio?</string>
+    <string name="deseas_eliminar_subpredio">¿Deseas eliminar este SubPredio?</string>
+
     <string name="version">v2.0</string>
 </resources>

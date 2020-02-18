@@ -50,7 +50,7 @@ public class Lista_Predios_Agricola extends Fragment {
         recyclerView = view.findViewById(R.id.recyclerView);
         fabAgregar = view.findViewById(R.id.fab_agregar);
         swipeRefreshLayout = view.findViewById(R.id.swiperefresh);
-        getActivity().setTitle(" Mis Predios");
+        getActivity().setTitle(" " + getString(R.string.mis_predios));
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         cargando= new ProgressDialog(getContext());
@@ -103,7 +103,7 @@ public class Lista_Predios_Agricola extends Fragment {
         getActivity().runOnUiThread(new Runnable() {
             public void run() {
                 ArrayList<Campos> campos = SQLITE.obtenerCampos(getContext());
-                adapter = new Predios_Encabezado(campos, getContext(), recyclerView);
+                adapter = new Predios_Encabezado(campos, getContext(), recyclerView, txtNoHay);
                 recyclerView.setAdapter(adapter);
                 if(campos.isEmpty()){
                     txtNoHay.setVisibility(View.VISIBLE);

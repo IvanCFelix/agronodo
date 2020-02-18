@@ -41,7 +41,7 @@ public class Activity_Agregar_SubPredio extends AppCompatActivity {
         this.getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_cerrar);
         this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         this.getSupportActionBar().setDisplayShowHomeEnabled(true);
-        setTitle("Agregar SubPredio");
+        setTitle(getString(R.string.agregar_subpredio));
 
         fabSiguiente = findViewById(R.id.fab_siguiente);
         fabAtras = findViewById(R.id.fab_atras);
@@ -71,8 +71,8 @@ public class Activity_Agregar_SubPredio extends AppCompatActivity {
                     } else {
                         if (mapa_agregar_subPredio.coordenadas.size() == 0 && mapa_agregar_subPredio.subCampos.size()==0) {
                             AlertDialog.Builder dialogo1 = new AlertDialog.Builder(Activity_Agregar_SubPredio.this);
-                            dialogo1.setTitle("Atención");
-                            dialogo1.setMessage("El SubPredio tomará todo el tamaño");
+                            dialogo1.setTitle(getString(R.string.atencion));
+                            dialogo1.setMessage(getString(R.string.subpredio_tomara_todo_espacio));
                             dialogo1.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialogo1, int id) {
                                     for (LatLng coordenada : mapa_agregar_subPredio.coordenadas_padre) {
@@ -87,7 +87,7 @@ public class Activity_Agregar_SubPredio extends AppCompatActivity {
                                     paginas.setCurrentItem(1);
                                 }
                             });
-                            dialogo1.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                            dialogo1.setNegativeButton(getString(R.string.cancelar), new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialogo1, int id) {
                                     dialogo1.dismiss();
                                 }
@@ -96,8 +96,8 @@ public class Activity_Agregar_SubPredio extends AppCompatActivity {
                         }else{
                             AlertDialog.Builder dialogo1 = new AlertDialog.Builder(Activity_Agregar_SubPredio.this);
                             dialogo1.setTitle("Error");
-                            dialogo1.setMessage("El campo seleccionado no es valido");
-                            dialogo1.setPositiveButton("Enterado", new DialogInterface.OnClickListener() {
+                            dialogo1.setMessage(getString(R.string.campo_seleccionado_no_valido));
+                            dialogo1.setPositiveButton(getString(R.string.enterado), new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialogo1, int id) {
                                     dialogo1.dismiss();
                                 }
@@ -140,8 +140,15 @@ public class Activity_Agregar_SubPredio extends AppCompatActivity {
 
                             AlertDialog.Builder dialogo1 = new AlertDialog.Builder(Activity_Agregar_SubPredio.this);
                             dialogo1.setCancelable(false);
-                            dialogo1.setMessage(SQLITE.agregarSubCampo(Activity_Agregar_SubPredio.this, subCampo));
-                            dialogo1.setPositiveButton("Enterado", new DialogInterface.OnClickListener() {
+                            switch (SQLITE.agregarSubCampo(Activity_Agregar_SubPredio.this, subCampo)){
+                                case 1:
+                                    dialogo1.setMessage(getString(R.string.subpredio_registrado));
+                                    break;
+                                case 2:
+                                    dialogo1.setMessage(getString(R.string.no_se_pudo_registrar_subpredio));
+                                    break;
+                            }
+                            dialogo1.setPositiveButton(getString(R.string.enterado), new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialogo1, int id) {
                                     Formulario_Agregar_SubPredio.txtFechaHoy.setText("");
                                     Formulario_Agregar_SubPredio.txtFechaFin.setText("");
@@ -201,9 +208,9 @@ public class Activity_Agregar_SubPredio extends AppCompatActivity {
 
     void completarDatos() {
         AlertDialog.Builder dialogo1 = new AlertDialog.Builder(Activity_Agregar_SubPredio.this);
-        dialogo1.setTitle("Datos Incompletos");
-        dialogo1.setMessage("Necesita completar todos los datos");
-        dialogo1.setPositiveButton("Enterado", new DialogInterface.OnClickListener() {
+        dialogo1.setTitle(getString(R.string.datos_incompletos));
+        dialogo1.setMessage(getString(R.string.complete_datos_correctamente));
+        dialogo1.setPositiveButton(getString(R.string.enterado), new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialogo1, int id) {
                 dialogo1.dismiss();
             }
