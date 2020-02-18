@@ -21,7 +21,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Recuperar Contraseña"
+            android:text="@string/recuperar_contrasena"
             android:textSize="30sp"
             android:textAlignment="center"
             android:textColor="#000"
@@ -31,7 +31,7 @@
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Correo"
+            android:hint="@string/correo"
             android:textColorHint="@color/colorGreen"
             app:counterEnabled="true"
             app:counterMaxLength="50"
@@ -58,7 +58,7 @@
             android:layout_marginTop="5dp"
             android:background="@drawable/boton_redondo"
             android:paddingVertical="5dp"
-            android:text="Recuperar Contraseña"
+            android:text="@string/enviar_correo"
             android:textAllCaps="false"
             android:textColor="@color/colorWhite"
             android:textSize="25sp"

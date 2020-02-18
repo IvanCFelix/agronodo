@@ -4,7 +4,7 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
-    <string name="bienvenido">Wellcome</string>
+    <string name="bienvenido">Welcome</string>
     <string name="usuario">User</string>
     <string name="nombre">Name</string>
     <string name="correo">Email</string>
@@ -20,6 +20,28 @@
     <string name="acerca_agronodo">About Agronodo</string>
     <string name="sitio_web">WEB Page</string>
     <string name="cerrar_sesion">Log-out</string>
+
+    <string name="recuperar_contrasena">Password Recovery</string>
+    <string name="enviar_correo">Send Email</string>
+
+    <string name="verificando_correo">Checking Mail</string>
+    <string name="correo_enviado">Recovery Mail Sent Successfully</string>
+    <string name="correo_no_existe">The selected Mail does not exist</string>
+
+    <string name="enterado">OK</string>
+
+    <string name="datos_incompletos">Incomplete data</string>
+    <string name="complete_datos_correctamente">Complete the data correctly</string>
+
+    <string name="iniciando_sesion">Logging in</string>
+    <string name="sesion_iniciada">Session Started</string>
+
+    <string name="cuenta_no_soportada">Type of account not supported</string>
+    <string name="cuenta_de_tipo">Your type account (</string>
+    <string name="no_es_soportada">) is not supported in the application</string>
+
+    <string name="error_datos">Data Error</string>
+    <string name="cuenta_no_encontrada">Your account was not found</string>
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_maps">Map</string>

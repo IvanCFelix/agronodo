@@ -68,7 +68,7 @@ public class Login extends AppCompatActivity {
         desaparece = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.desaparecer);
         aparece = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.aparecer);
 
-        btnOlvido.setText(subrayarTexto("¿Olvidó su Contraseña?"));
+        btnOlvido.setText(subrayarTexto(getResources().getString(R.string.olvido_contrasena)));
 
         dialogo_Recuperar = new Dialog(Login.this);
         dialogo_Recuperar.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -90,7 +90,7 @@ public class Login extends AppCompatActivity {
                 if (!txtRecuperarCorreo.getText().toString().trim().isEmpty()) {
                     runOnUiThread(new Runnable() {
                         public void run() {
-                            iniciando = ProgressDialog.show(Login.this, "", "Verificando Correo", true);
+                            iniciando = ProgressDialog.show(Login.this, "", getString(R.string.verificando_correo), true);
                         }
                     });
                     new Thread(new Runnable() {
@@ -101,10 +101,17 @@ public class Login extends AppCompatActivity {
                                 postData.put("email", txtRecuperarCorreo.getText().toString().trim());
                                 final String resultado = new Authentification.RecuperarContraseña().execute(postData.toString()).get();
                                 final AlertDialog.Builder dialogo1 = new AlertDialog.Builder(Login.this);
-                                dialogo1.setMessage(resultado);
-                                dialogo1.setPositiveButton("Enterado", new DialogInterface.OnClickListener() {
+                                switch (resultado){
+                                    case "1":
+                                        dialogo1.setMessage(getResources().getString(R.string.correo_enviado));
+                                        break;
+                                    case "2":
+                                        dialogo1.setMessage(getResources().getString(R.string.correo_no_existe));
+                                        break;
+                                }
+                                dialogo1.setPositiveButton(getResources().getString(R.string.enterado), new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialogo1, int id) {
-                                        if (resultado.equals("Correo de Recuperación Enviado Exitosamente")) {
+                                        if (resultado.equals("1")) {
                                             txtRecuperarCorreo.setText("");
                                             dialogo_Recuperar.dismiss();
                                         }
@@ -118,9 +125,24 @@ public class Login extends AppCompatActivity {
                                     }
                                 });
                             } catch (Exception e) {
+                                runOnUiThread(new Runnable() {
+                                    public void run() {
+                                        if (iniciando.isShowing())
+                                            iniciando.dismiss();
+                                    }
+                                });
                             }
                         }
                     }).start();
+                }else{
+                    AlertDialog.Builder dialogo1 = new AlertDialog.Builder(Login.this);
+                    dialogo1.setTitle(getString(R.string.datos_incompletos));
+                    dialogo1.setMessage(getString(R.string.complete_datos_correctamente));
+                    dialogo1.setPositiveButton(getString(R.string.enterado), new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialogo1, int id) {
+                        }
+                    });
+                    dialogo1.show();
                 }
             }
         });
@@ -137,9 +159,9 @@ public class Login extends AppCompatActivity {
             public void onClick(View v) {
                 if (txtUsuario.getText().toString().isEmpty() || txtContraseña.getText().toString().isEmpty()) {
                     AlertDialog.Builder dialogo1 = new AlertDialog.Builder(Login.this);
-                    dialogo1.setTitle("Datos Incompletos");
-                    dialogo1.setMessage("Complete los datos correctamente");
-                    dialogo1.setPositiveButton("Enterado", new DialogInterface.OnClickListener() {
+                    dialogo1.setTitle(getResources().getString(R.string.datos_incompletos));
+                    dialogo1.setMessage(getResources().getString(R.string.complete_datos_correctamente));
+                    dialogo1.setPositiveButton(getString(R.string.enterado), new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialogo1, int id) {
                         }
                     });
@@ -151,7 +173,7 @@ public class Login extends AppCompatActivity {
                             if (Datos.existeInternet(Login.this, Login.this)) {
                                 runOnUiThread(new Runnable() {
                                     public void run() {
-                                        iniciando = ProgressDialog.show(Login.this, "", "Iniciando Sesión", true);
+                                        iniciando = ProgressDialog.show(Login.this, "", getResources().getString(R.string.iniciando_sesion), true);
                                     }
                                 });
 
@@ -180,7 +202,7 @@ public class Login extends AppCompatActivity {
                                                         SQLITE.ingresarSesion(Login.this, resultado, imagen, formato);
                                                         runOnUiThread(new Runnable() {
                                                             public void run() {
-                                                                Toast.makeText(Login.this, "Sesión Iniciada", Toast.LENGTH_LONG).show();
+                                                                Toast.makeText(Login.this, getResources().getString(R.string.sesion_iniciada), Toast.LENGTH_LONG).show();
                                                                 startActivity(new Intent(Login.this, Menu_Agricola.class));
                                                                 finish();
                                                             }
@@ -194,9 +216,9 @@ public class Login extends AppCompatActivity {
                                             }
                                         } else {
                                             final AlertDialog.Builder dialogo1 = new AlertDialog.Builder(Login.this);
-                                            dialogo1.setTitle("Tipo de cuenta no soportada");
-                                            dialogo1.setMessage("Su cuenta de tipo " + datos.getString("user_type_name") + " no es soportada en la aplicación");
-                                            dialogo1.setPositiveButton("Enterado", new DialogInterface.OnClickListener() {
+                                            dialogo1.setTitle(getString(R.string.cuenta_no_soportada));
+                                            dialogo1.setMessage(getString(R.string.cuenta_de_tipo) + datos.getString("user_type_name") + getString(R.string.no_es_soportada));
+                                            dialogo1.setPositiveButton(getString(R.string.enterado), new DialogInterface.OnClickListener() {
                                                 public void onClick(DialogInterface dialogo1, int id) {
                                                 }
                                             });
@@ -209,9 +231,9 @@ public class Login extends AppCompatActivity {
 
                                     } catch (final Exception e) {
                                         final AlertDialog.Builder dialogo1 = new AlertDialog.Builder(Login.this);
-                                        dialogo1.setTitle("Datos Incorrectos");
-                                        dialogo1.setMessage("Introduzca los datos correctamente");
-                                        dialogo1.setPositiveButton("Enterado", new DialogInterface.OnClickListener() {
+                                        dialogo1.setTitle(getString(R.string.error_datos));
+                                        dialogo1.setMessage(getString(R.string.cuenta_no_encontrada));
+                                        dialogo1.setPositiveButton(getString(R.string.enterado), new DialogInterface.OnClickListener() {
                                             public void onClick(DialogInterface dialogo1, int id) {
                                             }
                                         });
@@ -223,11 +245,6 @@ public class Login extends AppCompatActivity {
                                             }
                                         });
                                     }
-                                    /*runOnUiThread(new Runnable() {
-                                        public void run() {
-                                            Toast.makeText(Login.this, resultado, Toast.LENGTH_LONG).show();
-                                        }
-                                    });*/
                                 } catch (JSONException e) {
                                     //Toast.makeText(Login.this, e.toString(), Toast.LENGTH_LONG).show();
                                     e.printStackTrace();

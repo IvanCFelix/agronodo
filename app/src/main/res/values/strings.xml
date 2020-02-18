@@ -21,6 +21,28 @@
     <string name="sitio_web">Sitio WEB</string>
     <string name="cerrar_sesion">Cerrar Sesión</string>
 
+    <string name="recuperar_contrasena">Recuperar Contraseña</string>
+    <string name="enviar_correo">Enviar Correo</string>
+
+    <string name="verificando_correo">Verificando Correo</string>
+    <string name="correo_enviado">Correo de Recuperación Enviado Exitosamente</string>
+    <string name="correo_no_existe">El Correo seleccionado no existe</string>
+
+    <string name="enterado">Enterado</string>
+
+    <string name="datos_incompletos">Datos Incompletos</string>
+    <string name="complete_datos_correctamente">Complete los datos correctamente</string>
+
+    <string name="iniciando_sesion">Iniciando Sesión</string>
+    <string name="sesion_iniciada">Sesión Iniciada</string>
+
+    <string name="cuenta_no_soportada">Tipo de cuenta no soportada</string>
+    <string name="cuenta_de_tipo">Su cuenta de tipo </string>
+    <string name="no_es_soportada"> no es soportada en la aplicación</string>
+
+    <string name="error_datos">Error en los datos</string>
+    <string name="cuenta_no_encontrada">No se ha encontrado su cuenta</string>
+
     <string name="hello_blank_fragment">Fragmento Nuevo</string>
     <string name="title_activity_maps">Mapa</string>
 
