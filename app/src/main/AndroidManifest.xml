@@ -15,8 +15,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Editar_SubPredio.Activity_Editar_SubPredio"
-            android:configChanges="orientation|screenSize|keyboardHidden|layoutDirection"></activity>
+        <activity android:name=".Agregar_Tarea.Activity_Agregar_Tarea"></activity>
+        <activity
+            android:name=".Editar_SubPredio.Activity_Editar_SubPredio"
+            android:configChanges="orientation|screenSize|keyboardHidden|layoutDirection" />
         <activity
             android:name=".Agregar_SubPredio.Activity_Agregar_SubPredio"
             android:configChanges="orientation|screenSize|keyboardHidden|layoutDirection" />

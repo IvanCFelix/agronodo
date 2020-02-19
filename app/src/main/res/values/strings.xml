@@ -94,11 +94,20 @@
     <string name="conectese_internet">Conéctese a una red para continuar</string>
 
     <string name="seleccionar_cultivo">Seleccionar Cultivo</string>
-    <string name="seleccionar_agricultura">Seleccionar Agricultura</string>
+    <string name="seleccionar_agricultura">Tipo de Agricultura</string>
 
     <string name="nombre_cultivo_nuevo">Nombre del cultivo nuevo</string>
     <string name="tradicional">Tradicional</string>
     <string name="protegida">Protegida</string>
+
+    <string name="tareas">Tareas</string>
+    <string name="no_hay_tareas_pendientes">No hay Tareas Pendientes</string>
+    <string name="no_hay_tareas_realizadas">No hay Tareas Realizadas</string>
+
+    <string name="agregar_tareas">Agregar Tareas</string>
+
+    <string name="pendientes">Pendientes</string>
+    <string name="realizadas">Realizadas</string>
 
     <string name="version">v2.0</string>
 </resources>

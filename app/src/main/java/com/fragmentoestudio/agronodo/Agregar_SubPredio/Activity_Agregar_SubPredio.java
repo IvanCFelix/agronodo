@@ -38,7 +38,7 @@ public class Activity_Agregar_SubPredio extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_agregar_subpredio);
 
-        this.getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_cerrar);
+        this.getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_atras);
         this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         this.getSupportActionBar().setDisplayShowHomeEnabled(true);
         setTitle(getString(R.string.agregar_subpredio));

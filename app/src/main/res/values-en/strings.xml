@@ -94,11 +94,20 @@
     <string name="conectese_internet">Connect to a network to continue</string>
 
     <string name="seleccionar_cultivo">Select crop</string>
-    <string name="seleccionar_agricultura">Select Agriculture</string>
+    <string name="seleccionar_agricultura">Agriculture type</string>
 
     <string name="nombre_cultivo_nuevo">Name of the New Crop</string>
     <string name="tradicional">Traditional</string>
     <string name="protegida">Protected</string>
+
+    <string name="tareas">Tasks</string>
+    <string name="no_hay_tareas_pendientes">No Pending Tasks</string>
+    <string name="no_hay_tareas_realizadas">No Tasks Done</string>
+
+    <string name="agregar_tareas">Add Tasks</string>
+
+    <string name="pendientes">Slopes</string>
+    <string name="realizadas">Made</string>
 
     <string name="version">v2.0</string>
 </resources>

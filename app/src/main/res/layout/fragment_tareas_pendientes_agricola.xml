@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Agricola.Notificaciones_Agricola">
+    android:orientation="vertical"
+    tools:context=".Agricola.Tareas_Pendientes_Agricola">
 
     <android.support.v4.widget.SwipeRefreshLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -22,7 +23,7 @@
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:padding="30dp"
-                android:text="@string/no_hay_notificaciones_disponibles"
+                android:text="@string/no_hay_tareas_pendientes"
                 android:textColor="#57000000"
                 android:textSize="30sp"
                 android:textStyle="bold|italic"
@@ -30,17 +31,17 @@
 
             <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="match_parent">
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:orientation="vertical">
 
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/recyclerView"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="match_parent" />
 
                 </LinearLayout>
 
@@ -50,4 +51,4 @@
 
     </android.support.v4.widget.SwipeRefreshLayout>
 
-</FrameLayout>
+</LinearLayout>

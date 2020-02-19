@@ -1,4 +1,5 @@
 package com.fragmentoestudio.agronodo;
+
 import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -24,12 +25,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.fragmentoestudio.agronodo.Agricola.Intro_Agricola;
 import com.fragmentoestudio.agronodo.Agricola.Lista_Predios_Agricola;
 import com.fragmentoestudio.agronodo.Agricola.Mapa_Predios_Agricola;
 import com.fragmentoestudio.agronodo.Agricola.Mi_Usuario_Agricola;
 import com.fragmentoestudio.agronodo.Agricola.Notificaciones_Agricola;
+import com.fragmentoestudio.agronodo.Agricola.Tareas_Agricola;
 import com.fragmentoestudio.agronodo.Utilidades.SQLITE;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -39,11 +43,12 @@ public class Menu_Agricola extends AppCompatActivity implements NavigationView.O
 
     public static Fragment fragment;
 
-    public static Intro_Agricola intro = new Intro_Agricola();
-    public static Lista_Predios_Agricola lista_predios = new Lista_Predios_Agricola();
+    public Intro_Agricola intro = new Intro_Agricola();
+    public Lista_Predios_Agricola lista_predios = new Lista_Predios_Agricola();
     public static Mapa_Predios_Agricola mapa_prediosAgronomo = new Mapa_Predios_Agricola();
-    public static Mi_Usuario_Agricola mi_usuarioAgronomo = new Mi_Usuario_Agricola();
-    public static Notificaciones_Agricola notificaciones_agronomo = new Notificaciones_Agricola();
+    public Mi_Usuario_Agricola mi_usuarioAgronomo = new Mi_Usuario_Agricola();
+    public Tareas_Agricola tareas_agricola = new Tareas_Agricola();
+    public Notificaciones_Agricola notificaciones_agronomo = new Notificaciones_Agricola();
 
     public static CircleImageView imagenPerfil;
     public static TextView txtNombre, txtCorreo;
@@ -76,14 +81,14 @@ public class Menu_Agricola extends AppCompatActivity implements NavigationView.O
             @Override
             public void onClick(View v) {
                 cambiarFragmento(mi_usuarioAgronomo);
-                navigationView.getMenu().getItem(3).setChecked(true);
+                navigationView.getMenu().getItem(4).setChecked(true);
             }
         });
 
         imagenPerfil = headerView.findViewById(R.id.navheader_civ);
         txtNombre = headerView.findViewById(R.id.navheader_Nombre);
         txtCorreo = headerView.findViewById(R.id.navheader_Correo);
-        JSONObject usuario= null;
+        JSONObject usuario = null;
         try {
             usuario = new JSONObject(SQLITE.obtenerUsuario(Menu_Agricola.this));
         } catch (JSONException e) {
@@ -91,14 +96,14 @@ public class Menu_Agricola extends AppCompatActivity implements NavigationView.O
             startActivity(new Intent(Menu_Agricola.this, Login.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
             finish();
             e.printStackTrace();
-        } catch (Exception e){
+        } catch (Exception e) {
 
         }
         try {
             txtNombre.setText(usuario.getJSONObject("profile").getString("agricola"));
         } catch (JSONException e) {
             e.printStackTrace();
-        } catch (Exception e){
+        } catch (Exception e) {
 
         }
 
@@ -106,12 +111,12 @@ public class Menu_Agricola extends AppCompatActivity implements NavigationView.O
             txtCorreo.setText(usuario.getString("email"));
         } catch (JSONException e) {
             e.printStackTrace();
-        } catch (Exception e){
+        } catch (Exception e) {
 
         }
 
         Bitmap imagen = SQLITE.obtenerImagen(Menu_Agricola.this);
-        if(imagen!=null) {
+        if (imagen != null) {
             imagenPerfil.setImageBitmap(imagen);
         }
 
@@ -169,6 +174,16 @@ public class Menu_Agricola extends AppCompatActivity implements NavigationView.O
                 } catch (Exception e) {
                 }
                 break;
+            case R.id.nav_Lista_Tareas:
+                try {
+                    fragmentTransaction.replace(R.id.area_ventana, tareas_agricola);
+                    drawer.closeDrawer(GravityCompat.START);
+                    Drawable icono = getResources().getDrawable(R.drawable.ic_tareas);
+                    icono.setColorFilter(Color.parseColor("#FFFFFF"), PorterDuff.Mode.SRC_ATOP);
+                    getSupportActionBar().setIcon(icono);
+                } catch (Exception e) {
+                }
+                break;
             case R.id.nav_Mi_Usuario:
                 try {
                     fragmentTransaction.replace(R.id.area_ventana, mi_usuarioAgronomo);
@@ -215,7 +230,7 @@ public class Menu_Agricola extends AppCompatActivity implements NavigationView.O
         return true;
     }
 
-    public void cambiarFragmento(Fragment fragmento){
+    public void cambiarFragmento(Fragment fragmento) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         DrawerLayout drawer = findViewById(R.id.drawer_layout);

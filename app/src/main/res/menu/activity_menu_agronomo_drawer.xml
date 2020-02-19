@@ -20,6 +20,11 @@
             android:title="@string/mi_mapa" />
 
         <item
+            android:id="@+id/nav_Lista_Tareas"
+            android:icon="@drawable/ic_tareas"
+            android:title="@string/tareas" />
+
+        <item
             android:id="@+id/nav_Mi_Usuario"
             android:icon="@drawable/ic_persona"
             android:title="@string/mi_usuario" />

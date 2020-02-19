@@ -40,7 +40,7 @@ public class Activity_Agregar_Campo extends AppCompatActivity {
         setContentView(R.layout.activity_agregar_campo);
         fabSiguiente = findViewById(R.id.fab_siguiente);
         fabAtras = findViewById(R.id.fab_atras);
-        this.getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_cerrar);
+        this.getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_atras);
         this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         this.getSupportActionBar().setDisplayShowHomeEnabled(true);
         setTitle(getString(R.string.agregar_predio));

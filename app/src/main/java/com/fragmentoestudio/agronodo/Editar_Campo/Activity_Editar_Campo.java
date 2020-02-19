@@ -43,7 +43,7 @@ public class Activity_Editar_Campo extends AppCompatActivity {
         formulario_editar_campo.setArguments(bundle);
         fabSiguiente = findViewById(R.id.fab_siguiente);
         fabAtras = findViewById(R.id.fab_atras);
-        this.getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_cerrar);
+        this.getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_atras);
         this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         this.getSupportActionBar().setDisplayShowHomeEnabled(true);
         setTitle(getString(R.string.editar_predio));
