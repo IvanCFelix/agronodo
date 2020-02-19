@@ -97,7 +97,7 @@
                         app:counterMaxLength="20"
                         android:id="@+id/til_AgregarSubCampo_Cultivo"
                         app:errorEnabled="true"
-                        android:hint="Nombre del Cultivo Nuevo">
+                        android:hint="@string/nombre_cultivo_nuevo">
 
                         <EditText
                             android:id="@+id/txt_AgregarSubCampo_Cultivo"

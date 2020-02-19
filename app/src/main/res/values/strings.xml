@@ -96,5 +96,9 @@
     <string name="seleccionar_cultivo">Seleccionar Cultivo</string>
     <string name="seleccionar_agricultura">Seleccionar Agricultura</string>
 
+    <string name="nombre_cultivo_nuevo">Nombre del cultivo nuevo</string>
+    <string name="tradicional">Tradicional</string>
+    <string name="protegida">Protegida</string>
+
     <string name="version">v2.0</string>
 </resources>

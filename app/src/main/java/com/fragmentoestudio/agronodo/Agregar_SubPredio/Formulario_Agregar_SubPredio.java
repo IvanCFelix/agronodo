@@ -65,8 +65,8 @@ public class Formulario_Agregar_SubPredio extends Fragment {
         listaCultivos.add(getContext().getString(R.string.seleccionar_cultivo));
 
         listaAgricultura.add(getContext().getString(R.string.seleccionar_agricultura));
-        listaAgricultura.add("Tradicional");
-        listaAgricultura.add("Protegida");
+        listaAgricultura.add(getString(R.string.tradicional));
+        listaAgricultura.add(getString(R.string.protegida));
 
         spnCultivos.setAdapter(new ArrayAdapter<String>(getContext(), R.layout.spinner_item, listaCultivos));
         spnAgricultura.setAdapter(new ArrayAdapter<String>(getContext(), R.layout.spinner_item, listaAgricultura));
