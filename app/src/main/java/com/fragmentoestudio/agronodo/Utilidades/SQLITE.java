@@ -211,6 +211,24 @@ public class SQLITE {
         return null;
     }
 
+    public static SubCampos obtenerSubCampo(Context contexto, int id){
+        if(obtenerTamañoTabla(contexto, tablaSubCampos)==1) {
+            Base_Datos base_de_datos = new Base_Datos(contexto);
+            SQLiteDatabase db = base_de_datos.getWritableDatabase();
+            if (db != null) {
+                Cursor c = db.rawQuery("select * from " + tablaSubCampos + " where ID = " + id + " ;", null);
+                if(c.getCount()>0) {
+                    if(c.moveToFirst()){
+                        SubCampos subCampo = new SubCampos(c.getInt(0), c.getInt(1), c.getString(2), c.getString(3), c.getString(4), c.getString(5), c.getString(6), c.getString(7));
+                        db.close();
+                        return subCampo;
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
     public static Campos obtenerCampo(Context context, int id) {
         Base_Datos bd = new Base_Datos(context);
         SQLiteDatabase db = bd.getWritableDatabase();
@@ -234,6 +252,26 @@ public class SQLITE {
             registro.put("Nombre", campo.getNombre());
             registro.put("Coordenadas", campo.getCoordenadas());
             db.update(SQLITE.tablaCampos, registro, "ID = '" + campo.getID() + "'", null);
+            db.close();
+            return 1;
+        }
+        return 2;
+    }
+
+    public static int editarSubPredio(Context contexto, SubCampos subCampos) {
+        Base_Datos bd = new Base_Datos(contexto);
+        SQLiteDatabase db = bd.getWritableDatabase();
+        if (db != null) {
+            ContentValues registro = new ContentValues();
+            registro.put("ID", subCampos.getID());
+            registro.put("ID_Padre", subCampos.getID_Padre());
+            registro.put("Nombre", subCampos.getNombre());
+            registro.put("Tipo_Cultivo", subCampos.getTipo_Cultivo());
+            registro.put("Tipo_Agricultura", subCampos.getTipo_Agricultura());
+            registro.put("Coordenadas", subCampos.getCoordenadas());
+            registro.put("Fecha_Inicio", subCampos.getFecha_Inicio());
+            registro.put("Fecha_Final", subCampos.getFecha_Final());
+            db.update(SQLITE.tablaSubCampos, registro, "ID = '" + subCampos.getID() + "'", null);
             db.close();
             return 1;
         }

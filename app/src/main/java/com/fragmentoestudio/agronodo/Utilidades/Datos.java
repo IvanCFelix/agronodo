@@ -12,6 +12,7 @@ import android.support.v7.app.AlertDialog;
 import android.util.Base64;
 
 import com.fragmentoestudio.agronodo.Login;
+import com.fragmentoestudio.agronodo.R;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -55,9 +56,9 @@ public class Datos {
                 activity.runOnUiThread(new Runnable() {
                     public void run() {
                         AlertDialog.Builder dialogo1 = new AlertDialog.Builder(context);
-                        dialogo1.setTitle("Sin Conexión");
-                        dialogo1.setMessage("Compruebe su conexión a internet");
-                        dialogo1.setPositiveButton("Enterado", new DialogInterface.OnClickListener() {
+                        dialogo1.setTitle(context.getString(R.string.internet_no_disponible));
+                        dialogo1.setMessage(context.getString(R.string.conectese_internet));
+                        dialogo1.setPositiveButton(context.getString(R.string.enterado), new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialogo1, int id) {
                             }
                         });

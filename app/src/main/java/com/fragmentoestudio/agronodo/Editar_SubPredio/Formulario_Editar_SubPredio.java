@@ -1,7 +1,6 @@
-package com.fragmentoestudio.agronodo.Agregar_SubPredio;
+package com.fragmentoestudio.agronodo.Editar_SubPredio;
 
 
-import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.os.Bundle;
@@ -17,6 +16,8 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import com.fragmentoestudio.agronodo.Agregar_SubPredio.Formulario_Agregar_SubPredio;
+import com.fragmentoestudio.agronodo.Clases.SubCampos;
 import com.fragmentoestudio.agronodo.R;
 import com.fragmentoestudio.agronodo.Utilidades.SQLITE;
 
@@ -27,7 +28,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-public class Formulario_Agregar_SubPredio extends Fragment {
+public class Formulario_Editar_SubPredio extends Fragment {
 
     List<String> listaAgricultura = new ArrayList<>();
     List<String> listaCultivos = new ArrayList<>();
@@ -39,11 +40,17 @@ public class Formulario_Agregar_SubPredio extends Fragment {
 
     EditText txtNombre, txtCultivo;
 
+    SubCampos subCampo;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_formulario_agregar_sub_predio, container, false);
+        View view = inflater.inflate(R.layout.fragment_formulario_editar_sub_predio, container, false);
+
+        int ID = getArguments().getInt("ID");
+
+        subCampo = SQLITE.obtenerSubCampo(getContext(), ID);
 
         spnCultivos = view.findViewById(R.id.spn_AgregarCampo_Cultivo);
         spnAgricultura = view.findViewById(R.id.spn_AgregarCampo_Agricultura);
@@ -70,6 +77,12 @@ public class Formulario_Agregar_SubPredio extends Fragment {
 
         spnCultivos.setAdapter(new ArrayAdapter<String>(getContext(), R.layout.spinner_item, listaCultivos));
         spnAgricultura.setAdapter(new ArrayAdapter<String>(getContext(), R.layout.spinner_item, listaAgricultura));
+
+        txtNombre.setText(subCampo.getNombre());
+        txtFechaHoy.setText(subCampo.getFecha_Inicio());
+        txtFechaFin.setText(subCampo.getFecha_Final());
+        spnCultivos.setSelection(listaCultivos.indexOf(subCampo.getTipo_Cultivo()));
+        spnAgricultura.setSelection(listaAgricultura.indexOf(subCampo.getTipo_Agricultura()));
 
         spnCultivos.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -144,12 +157,12 @@ public class Formulario_Agregar_SubPredio extends Fragment {
     }
 
     public void abrirfechaInicio(View v) {
-        DialogFragment newFragment = new DatePickerFragment();
+        DialogFragment newFragment = new Formulario_Editar_SubPredio.DatePickerFragment();
         newFragment.show(getFragmentManager(), "Inicio");
     }
 
     public void abrirfechaFin(View v) {
-        DialogFragment newFragment = new DatePickerFragment();
+        DialogFragment newFragment = new Formulario_Editar_SubPredio.DatePickerFragment();
         newFragment.show(getFragmentManager(), "Fin");
     }
 

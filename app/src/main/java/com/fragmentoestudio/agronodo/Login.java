@@ -87,62 +87,64 @@ public class Login extends AppCompatActivity {
         btnRecuperar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!txtRecuperarCorreo.getText().toString().trim().isEmpty()) {
-                    runOnUiThread(new Runnable() {
-                        public void run() {
-                            iniciando = ProgressDialog.show(Login.this, "", getString(R.string.verificando_correo), true);
-                        }
-                    });
-                    new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                            JSONObject postData = new JSONObject();
-                            try {
-                                postData.put("email", txtRecuperarCorreo.getText().toString().trim());
-                                final String resultado = new Authentification.RecuperarContraseña().execute(postData.toString()).get();
-                                final AlertDialog.Builder dialogo1 = new AlertDialog.Builder(Login.this);
-                                switch (resultado){
-                                    case "1":
-                                        dialogo1.setMessage(getResources().getString(R.string.correo_enviado));
-                                        break;
-                                    case "2":
-                                        dialogo1.setMessage(getResources().getString(R.string.correo_no_existe));
-                                        break;
-                                }
-                                dialogo1.setPositiveButton(getResources().getString(R.string.enterado), new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialogo1, int id) {
-                                        if (resultado.equals("1")) {
-                                            txtRecuperarCorreo.setText("");
-                                            dialogo_Recuperar.dismiss();
-                                        }
-                                    }
-                                });
-                                runOnUiThread(new Runnable() {
-                                    public void run() {
-                                        if (iniciando.isShowing())
-                                            iniciando.dismiss();
-                                        dialogo1.show();
-                                    }
-                                });
-                            } catch (Exception e) {
-                                runOnUiThread(new Runnable() {
-                                    public void run() {
-                                        if (iniciando.isShowing())
-                                            iniciando.dismiss();
-                                    }
-                                });
+                if (Datos.existeInternet(Login.this, Login.this)) {
+                    if (!txtRecuperarCorreo.getText().toString().trim().isEmpty()) {
+                        runOnUiThread(new Runnable() {
+                            public void run() {
+                                iniciando = ProgressDialog.show(Login.this, "", getString(R.string.verificando_correo), true);
                             }
-                        }
-                    }).start();
-                }else{
-                    AlertDialog.Builder dialogo1 = new AlertDialog.Builder(Login.this);
-                    dialogo1.setTitle(getString(R.string.datos_incompletos));
-                    dialogo1.setMessage(getString(R.string.complete_datos_correctamente));
-                    dialogo1.setPositiveButton(getString(R.string.enterado), new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialogo1, int id) {
-                        }
-                    });
-                    dialogo1.show();
+                        });
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                JSONObject postData = new JSONObject();
+                                try {
+                                    postData.put("email", txtRecuperarCorreo.getText().toString().trim());
+                                    final String resultado = new Authentification.RecuperarContraseña().execute(postData.toString()).get();
+                                    final AlertDialog.Builder dialogo1 = new AlertDialog.Builder(Login.this);
+                                    switch (resultado) {
+                                        case "1":
+                                            dialogo1.setMessage(getResources().getString(R.string.correo_enviado));
+                                            break;
+                                        case "2":
+                                            dialogo1.setMessage(getResources().getString(R.string.correo_no_existe));
+                                            break;
+                                    }
+                                    dialogo1.setPositiveButton(getResources().getString(R.string.enterado), new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialogo1, int id) {
+                                            if (resultado.equals("1")) {
+                                                txtRecuperarCorreo.setText("");
+                                                dialogo_Recuperar.dismiss();
+                                            }
+                                        }
+                                    });
+                                    runOnUiThread(new Runnable() {
+                                        public void run() {
+                                            if (iniciando.isShowing())
+                                                iniciando.dismiss();
+                                            dialogo1.show();
+                                        }
+                                    });
+                                } catch (Exception e) {
+                                    runOnUiThread(new Runnable() {
+                                        public void run() {
+                                            if (iniciando.isShowing())
+                                                iniciando.dismiss();
+                                        }
+                                    });
+                                }
+                            }
+                        }).start();
+                    } else {
+                        AlertDialog.Builder dialogo1 = new AlertDialog.Builder(Login.this);
+                        dialogo1.setTitle(getString(R.string.datos_incompletos));
+                        dialogo1.setMessage(getString(R.string.complete_datos_correctamente));
+                        dialogo1.setPositiveButton(getString(R.string.enterado), new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialogo1, int id) {
+                            }
+                        });
+                        dialogo1.show();
+                    }
                 }
             }
         });
@@ -188,7 +190,7 @@ public class Login extends AppCompatActivity {
 
                                     try {
                                         if (datos.getString("token").length() > 0 && (datos.getInt("user_type") == 4 || datos.getInt("user_type") == 5 || datos.getInt("user_type") == 6 || datos.getInt("user_type") == 7)) {
-                                            switch (datos.getInt("user_type")){
+                                            switch (datos.getInt("user_type")) {
                                                 case 4:
                                                     String url = datos.getJSONObject("profile").getString("photo");
                                                     try {

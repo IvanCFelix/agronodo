@@ -15,8 +15,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Agregar_SubPredio.Activity_Agregar_SubPredio"
+        <activity android:name=".Editar_SubPredio.Activity_Editar_SubPredio"
             android:configChanges="orientation|screenSize|keyboardHidden|layoutDirection"></activity>
+        <activity
+            android:name=".Agregar_SubPredio.Activity_Agregar_SubPredio"
+            android:configChanges="orientation|screenSize|keyboardHidden|layoutDirection" />
         <activity
             android:name=".Editar_Campo.Activity_Editar_Campo"
             android:configChanges="orientation|screenSize|keyboardHidden" />
@@ -25,8 +28,8 @@
             android:configChanges="orientation|screenSize|keyboardHidden" />
         <activity
             android:name=".Intro"
-            android:theme="@style/AppTheme.FullScreen"
-            android:configChanges="orientation|screenSize|keyboardHidden"/>
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:theme="@style/AppTheme.FullScreen" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").

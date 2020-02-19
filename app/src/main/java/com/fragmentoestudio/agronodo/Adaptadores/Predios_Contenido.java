@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.fragmentoestudio.agronodo.Clases.Campos;
 import com.fragmentoestudio.agronodo.Clases.SubCampos;
 import com.fragmentoestudio.agronodo.Editar_Campo.Activity_Editar_Campo;
+import com.fragmentoestudio.agronodo.Editar_SubPredio.Activity_Editar_SubPredio;
 import com.fragmentoestudio.agronodo.R;
 import com.fragmentoestudio.agronodo.Utilidades.SQLITE;
 
@@ -68,7 +69,7 @@ public class Predios_Contenido extends RecyclerView.Adapter<Predios_Contenido.Mo
                 dialogo1.setMessage(context.getString(R.string.deseas_editar_subpredio));
                 dialogo1.setPositiveButton(context.getString(R.string.editar), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialogo1, int id) {
-                        //context.startActivity(new Intent(context, Activity_Editar_Campo.class).putExtra("ID", campo.getID()));
+                        context.startActivity(new Intent(context, Activity_Editar_SubPredio.class).putExtra("ID", subCampo.getID()));
                     }
                 });
                 dialogo1.setNegativeButton(context.getString(R.string.cancelar), new DialogInterface.OnClickListener() {

@@ -90,5 +90,11 @@
     <string name="deseas_editar_subpredio">¿Deseas editar este SubPredio?</string>
     <string name="deseas_eliminar_subpredio">¿Deseas eliminar este SubPredio?</string>
 
+    <string name="internet_no_disponible">Internet no disponible</string>
+    <string name="conectese_internet">Conéctese a una red para continuar</string>
+
+    <string name="seleccionar_cultivo">Seleccionar Cultivo</string>
+    <string name="seleccionar_agricultura">Seleccionar Agricultura</string>
+
     <string name="version">v2.0</string>
 </resources>
