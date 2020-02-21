@@ -163,8 +163,8 @@ public class Mapa_Agregar_SubPredio extends Fragment implements OnMapReadyCallba
                         mMap.animateCamera(CameraUpdateFactory.newLatLng(marker.getPosition()));
                     } else {
                         AlertDialog.Builder dialogo1 = new AlertDialog.Builder(getContext());
-                        dialogo1.setMessage("El Marcador no puede estar dentro de otros SubCampos");
-                        dialogo1.setPositiveButton("Enterado", new DialogInterface.OnClickListener() {
+                        dialogo1.setMessage(getString(R.string.marcador_no_dentro_de_sublotes));
+                        dialogo1.setPositiveButton(getString(R.string.enterado), new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialogo1, int id) {
                                 mMap.clear();
                                 dibujarCampo();
@@ -174,8 +174,8 @@ public class Mapa_Agregar_SubPredio extends Fragment implements OnMapReadyCallba
                     }
                 } else {
                     AlertDialog.Builder dialogo1 = new AlertDialog.Builder(getContext());
-                    dialogo1.setMessage("El Marcador debe estar dentro del Predio");
-                    dialogo1.setPositiveButton("Enterado", new DialogInterface.OnClickListener() {
+                    dialogo1.setMessage(getString(R.string.marcador_estar_dentro_predio));
+                    dialogo1.setPositiveButton(getString(R.string.enterado), new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialogo1, int id) {
                             mMap.clear();
                             dibujarCampo();
@@ -229,8 +229,8 @@ public class Mapa_Agregar_SubPredio extends Fragment implements OnMapReadyCallba
                         dibujarCampo();
                     } else {
                         AlertDialog.Builder dialogo1 = new AlertDialog.Builder(getContext());
-                        dialogo1.setMessage("El Marcador no puede estar dentro de otros SubCampos");
-                        dialogo1.setPositiveButton("Enterado", new DialogInterface.OnClickListener() {
+                        dialogo1.setMessage(getString(R.string.marcador_no_dentro_de_sublotes));
+                        dialogo1.setPositiveButton(getString(R.string.enterado), new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialogo1, int id) {
 
                             }
@@ -239,8 +239,8 @@ public class Mapa_Agregar_SubPredio extends Fragment implements OnMapReadyCallba
                     }
                 } else {
                     AlertDialog.Builder dialogo1 = new AlertDialog.Builder(getContext());
-                    dialogo1.setMessage("El Marcador debe estar dentro del Predio");
-                    dialogo1.setPositiveButton("Enterado", new DialogInterface.OnClickListener() {
+                    dialogo1.setMessage(getString(R.string.marcador_estar_dentro_predio));
+                    dialogo1.setPositiveButton(getString(R.string.enterado), new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialogo1, int id) {
 
                         }
@@ -295,7 +295,7 @@ public class Mapa_Agregar_SubPredio extends Fragment implements OnMapReadyCallba
                 Marker marcador = mMap.addMarker(new MarkerOptions()
                         .position(coordenadas.get(i))
                         .draggable(true)
-                        .title("Marcador #" + (i + 1)));
+                        .title("#" + (i + 1)));
                 marcador.setTag(String.valueOf(i));
                 polylineOptions.add(coordenadas.get(i));
             }

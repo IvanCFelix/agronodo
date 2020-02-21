@@ -107,7 +107,10 @@
     <string name="agregar_tareas">Add Tasks</string>
 
     <string name="pendientes">Slopes</string>
-    <string name="realizadas">Made</string>
+    <string name="realizadas">Done</string>
+
+    <string name="marcador_no_dentro_de_sublotes">The Marker cannot be inside other Sub-Fields</string>
+    <string name="marcador_estar_dentro_predio">The Marker must be within the Field</string>
 
     <string name="version">v2.0</string>
 </resources>

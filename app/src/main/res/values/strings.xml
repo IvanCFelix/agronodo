@@ -109,5 +109,8 @@
     <string name="pendientes">Pendientes</string>
     <string name="realizadas">Realizadas</string>
 
+    <string name="marcador_no_dentro_de_sublotes">El Marcador no puede estar dentro de otros SubPredios</string>
+    <string name="marcador_estar_dentro_predio">El Marcador debe estar dentro del Predio</string>
+
     <string name="version">v2.0</string>
 </resources>
