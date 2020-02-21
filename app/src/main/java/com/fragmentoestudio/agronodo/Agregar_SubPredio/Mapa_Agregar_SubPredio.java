@@ -136,8 +136,8 @@ public class Mapa_Agregar_SubPredio extends Fragment implements OnMapReadyCallba
                     mMap.animateCamera(CameraUpdateFactory.newLatLng(marker.getPosition()));
                 }else{
                     AlertDialog.Builder dialogo1 = new AlertDialog.Builder(getContext());
-                    dialogo1.setMessage("El Marcador debe estar dentro del Predio");
-                    dialogo1.setPositiveButton("Enterado", new DialogInterface.OnClickListener() {
+                    dialogo1.setMessage(getString(R.string.marcador_estar_dentro_predio));
+                    dialogo1.setPositiveButton(getString(R.string.enterado), new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialogo1, int id) {
                             mMap.clear();
                             dibujarCampo();
@@ -174,8 +174,8 @@ public class Mapa_Agregar_SubPredio extends Fragment implements OnMapReadyCallba
                     dibujarCampo();
                 }else{
                     AlertDialog.Builder dialogo1 = new AlertDialog.Builder(getContext());
-                    dialogo1.setMessage("El Marcador debe estar dentro del Predio");
-                    dialogo1.setPositiveButton("Enterado", new DialogInterface.OnClickListener() {
+                    dialogo1.setMessage(getString(R.string.marcador_estar_dentro_predio));
+                    dialogo1.setPositiveButton(getString(R.string.enterado), new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialogo1, int id) {
 
                         }
