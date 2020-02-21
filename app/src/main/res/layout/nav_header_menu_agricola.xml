@@ -10,14 +10,14 @@
     android:layout_marginLeft="-50dp"
     android:layout_marginRight="-50dp"
     android:orientation="vertical"
-    android:paddingBottom="30dp"
+    android:paddingBottom="20dp"
     android:foreground="?attr/selectableItemBackground"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:layout_marginTop="170dp"
+        android:layout_marginTop="180dp"
         android:id="@+id/navheader_civ"
         android:layout_marginBottom="10dp"
         android:src="@drawable/logoblanco"/>
@@ -26,7 +26,7 @@
         android:id="@+id/navheader_Nombre"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Nombre"
+        android:text="@string/nombre"
         android:textAlignment="center"
         android:textColor="@color/colorWhite"
         android:textStyle="bold"
@@ -42,7 +42,8 @@
         android:textAlignment="center"
         android:layout_marginHorizontal="70dp"
         android:layout_marginBottom="10dp"
-        android:text="Correo" />
+        android:text="@string/correo" />
+
 
 
 </LinearLayout>

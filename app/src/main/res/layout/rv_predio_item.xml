@@ -20,7 +20,7 @@
             android:paddingVertical="7dp"
             android:background="?attr/selectableItemBackground"
             android:padding="20sp"
-            android:text="Nombre"
+            android:text="@string/nombre"
             android:textSize="17sp" />
 
         <ImageView

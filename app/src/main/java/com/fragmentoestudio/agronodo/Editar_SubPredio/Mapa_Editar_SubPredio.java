@@ -1,17 +1,10 @@
-package com.fragmentoestudio.agronodo.Agregar_SubPredio;
+package com.fragmentoestudio.agronodo.Editar_SubPredio;
 
 
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.LayerDrawable;
-import android.location.Location;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
@@ -21,15 +14,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import com.fragmentoestudio.agronodo.Clases.Campos;
 import com.fragmentoestudio.agronodo.Clases.SubCampos;
-import com.fragmentoestudio.agronodo.Login;
 import com.fragmentoestudio.agronodo.R;
 import com.fragmentoestudio.agronodo.Utilidades.SQLITE;
 import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -37,14 +27,11 @@ import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.GroundOverlayOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
-import com.google.android.gms.maps.model.TileOverlayOptions;
-import com.google.android.gms.tasks.OnSuccessListener;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -52,7 +39,7 @@ import org.json.JSONException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Mapa_Agregar_SubPredio extends Fragment implements OnMapReadyCallback {
+public class Mapa_Editar_SubPredio extends Fragment implements OnMapReadyCallback {
 
     private GoogleMap mMap;
     private FusedLocationProviderClient mFusedLocationClient;
@@ -65,11 +52,13 @@ public class Mapa_Agregar_SubPredio extends Fragment implements OnMapReadyCallba
 
     ArrayList<SubCampos> subCampos = new ArrayList<>();
 
+    SubCampos subCampo;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_mapa_agregar_sub_predio, container, false);
+        View view = inflater.inflate(R.layout.fragment_mapa_editar_sub_predio, container, false);
 
         fabVolver = view.findViewById(R.id.fab_volver);
         mapView = view.findViewById(R.id.mapview);
@@ -93,15 +82,23 @@ public class Mapa_Agregar_SubPredio extends Fragment implements OnMapReadyCallba
         moveMarker();
         setMapLongClick(mMap);
 
-        int ID = getArguments().getInt("ID_Padre");
-        Campos campo = SQLITE.obtenerCampo(getContext(), ID);
-        subCampos = SQLITE.obtenerSubCampos(getContext(), ID);
+        int ID = getArguments().getInt("ID");
+        subCampo = SQLITE.obtenerSubCampo(getContext(), ID);
+
+        Campos campo = SQLITE.obtenerCampo(getContext(), subCampo.getID_Padre());
+        subCampos = SQLITE.obtenerSubCampos(getContext(), subCampo.getID_Padre());
 
         try {
             JSONArray JSONcoordenadas = new JSONArray("[" + campo.getCoordenadas() + "]");
             for (int i = 0; i < JSONcoordenadas.length(); i++) {
                 coordenadas_padre.add(new LatLng(Double.parseDouble(JSONcoordenadas.getJSONObject(i).getString("Latitud")), Double.parseDouble(JSONcoordenadas.getJSONObject(i).getString("Longitud"))));
             }
+
+            JSONArray JSONcoordenadas_edit = new JSONArray("[" + subCampo.getCoordenadas() + "]");
+            for (int i = 0; i < JSONcoordenadas.length(); i++) {
+                coordenadas.add(new LatLng(Double.parseDouble(JSONcoordenadas_edit.getJSONObject(i).getString("Latitud")), Double.parseDouble(JSONcoordenadas_edit.getJSONObject(i).getString("Longitud"))));
+            }
+
             dibujarCampo();
             LatLngBounds latLngBounds = getPolygonLatLngBounds(coordenadas_padre);
             mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(latLngBounds, 50));
@@ -163,8 +160,8 @@ public class Mapa_Agregar_SubPredio extends Fragment implements OnMapReadyCallba
                         mMap.animateCamera(CameraUpdateFactory.newLatLng(marker.getPosition()));
                     } else {
                         AlertDialog.Builder dialogo1 = new AlertDialog.Builder(getContext());
-                        dialogo1.setMessage(getString(R.string.marcador_no_dentro_de_sublotes));
-                        dialogo1.setPositiveButton(getString(R.string.enterado), new DialogInterface.OnClickListener() {
+                        dialogo1.setMessage("El Marcador no puede estar dentro de otros SubCampos");
+                        dialogo1.setPositiveButton("Enterado", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialogo1, int id) {
                                 mMap.clear();
                                 dibujarCampo();
@@ -174,8 +171,8 @@ public class Mapa_Agregar_SubPredio extends Fragment implements OnMapReadyCallba
                     }
                 } else {
                     AlertDialog.Builder dialogo1 = new AlertDialog.Builder(getContext());
-                    dialogo1.setMessage(getString(R.string.marcador_estar_dentro_predio));
-                    dialogo1.setPositiveButton(getString(R.string.enterado), new DialogInterface.OnClickListener() {
+                    dialogo1.setMessage("El Marcador debe estar dentro del Predio");
+                    dialogo1.setPositiveButton("Enterado", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialogo1, int id) {
                             mMap.clear();
                             dibujarCampo();
@@ -229,8 +226,8 @@ public class Mapa_Agregar_SubPredio extends Fragment implements OnMapReadyCallba
                         dibujarCampo();
                     } else {
                         AlertDialog.Builder dialogo1 = new AlertDialog.Builder(getContext());
-                        dialogo1.setMessage(getString(R.string.marcador_no_dentro_de_sublotes));
-                        dialogo1.setPositiveButton(getString(R.string.enterado), new DialogInterface.OnClickListener() {
+                        dialogo1.setMessage("El Marcador no puede estar dentro de otros SubCampos");
+                        dialogo1.setPositiveButton("Enterado", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialogo1, int id) {
 
                             }
@@ -239,8 +236,8 @@ public class Mapa_Agregar_SubPredio extends Fragment implements OnMapReadyCallba
                     }
                 } else {
                     AlertDialog.Builder dialogo1 = new AlertDialog.Builder(getContext());
-                    dialogo1.setMessage(getString(R.string.marcador_estar_dentro_predio));
-                    dialogo1.setPositiveButton(getString(R.string.enterado), new DialogInterface.OnClickListener() {
+                    dialogo1.setMessage("El Marcador debe estar dentro del Predio");
+                    dialogo1.setPositiveButton("Enterado", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialogo1, int id) {
 
                         }
@@ -295,7 +292,7 @@ public class Mapa_Agregar_SubPredio extends Fragment implements OnMapReadyCallba
                 Marker marcador = mMap.addMarker(new MarkerOptions()
                         .position(coordenadas.get(i))
                         .draggable(true)
-                        .title("#" + (i + 1)));
+                        .title("Marcador #" + (i + 1)));
                 marcador.setTag(String.valueOf(i));
                 polylineOptions.add(coordenadas.get(i));
             }
@@ -348,5 +345,4 @@ public class Mapa_Agregar_SubPredio extends Fragment implements OnMapReadyCallba
 
         return x > pX;
     }
-
 }

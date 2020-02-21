@@ -1,4 +1,4 @@
-package com.fragmentoestudio.agronodo.Ingeniero;
+package com.fragmentoestudio.agronodo.Agricola;
 
 
 import android.graphics.Bitmap;
@@ -9,8 +9,9 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
-import com.fragmentoestudio.agronodo.Menu_Ingeniero;
+import com.fragmentoestudio.agronodo.Menu_Agricola;
 import com.fragmentoestudio.agronodo.R;
 import com.fragmentoestudio.agronodo.Servicios.Authentification;
 import com.fragmentoestudio.agronodo.Utilidades.Datos;
@@ -24,7 +25,7 @@ import java.util.concurrent.ExecutionException;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class Mi_Usuario_Ingeniero extends Fragment {
+public class Mi_Usuario_Agricola extends Fragment {
 
     CircleImageView civPerfil;
 
@@ -36,7 +37,7 @@ public class Mi_Usuario_Ingeniero extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_mi_usuario_ingeniero, container, false);
+        View view = inflater.inflate(R.layout.fragment_mi_usuario_agricola, container, false);
 
         civPerfil = view.findViewById(R.id.civ_perfil);
         swipeRefreshLayout = view.findViewById(R.id.swiperefresh);
@@ -54,7 +55,9 @@ public class Mi_Usuario_Ingeniero extends Fragment {
                 }
             }
         });
-        getActivity().setTitle(" Mi Usuario");
+
+
+        getActivity().setTitle(" " + getString(R.string.mi_usuario));
 
         return view;
     }
@@ -80,7 +83,7 @@ public class Mi_Usuario_Ingeniero extends Fragment {
                     String token = usuarioJSON.getString("token");
                     final String resultado = new Authentification.RefrescarPerfil().execute(token).get();
                     final JSONObject datos = new JSONObject(resultado);
-                    String url = datos.getJSONObject("profile").getString("logo");
+                    String url = datos.getJSONObject("profile").getString("photo");
                     String formato = url.substring(url.indexOf(".") + 1);
                     Bitmap imagen = new Datos.imagendeWEB().execute(Uris.ENDPOINT_AGRONODO + url).get();
                     if (imagen == null) {
@@ -95,12 +98,33 @@ public class Mi_Usuario_Ingeniero extends Fragment {
                     });
                 } catch (
                         JSONException e) {
+                    getActivity().runOnUiThread(new Runnable() {
+                        public void run() {
+                            Toast.makeText(getContext(), "Ha ocurrido un error con los datos", Toast.LENGTH_SHORT).show();
+                            if (swipeRefreshLayout.isRefreshing())
+                                swipeRefreshLayout.setRefreshing(false);
+                        }
+                    });
                     e.printStackTrace();
                 } catch (
                         InterruptedException e) {
+                    getActivity().runOnUiThread(new Runnable() {
+                        public void run() {
+                            Toast.makeText(getContext(), "Ha ocurrido un error con los datos", Toast.LENGTH_SHORT).show();
+                            if (swipeRefreshLayout.isRefreshing())
+                                swipeRefreshLayout.setRefreshing(false);
+                        }
+                    });
                     e.printStackTrace();
                 } catch (
                         ExecutionException e) {
+                    getActivity().runOnUiThread(new Runnable() {
+                        public void run() {
+                            Toast.makeText(getContext(), "Ha ocurrido un error con los datos", Toast.LENGTH_SHORT).show();
+                            if (swipeRefreshLayout.isRefreshing())
+                                swipeRefreshLayout.setRefreshing(false);
+                        }
+                    });
                     e.printStackTrace();
                 }
             }
@@ -117,16 +141,16 @@ public class Mi_Usuario_Ingeniero extends Fragment {
         try {
             Bitmap imagen = SQLITE.obtenerImagen(getContext());
             civPerfil.setImageBitmap(imagen);
-            Menu_Ingeniero.imagenPerfil.setImageBitmap(imagen);
+            Menu_Agricola.imagenPerfil.setImageBitmap(imagen);
             Usuario = SQLITE.obtenerUsuario(getContext());
             final JSONObject usuarioJSON = new JSONObject(Usuario);
-            Menu_Ingeniero.txtNombre.setText(usuarioJSON.getJSONObject("profile").getString("agricola"));
-            Menu_Ingeniero.txtCorreo.setText(usuarioJSON.getString("email"));
+            Menu_Agricola.txtNombre.setText(usuarioJSON.getJSONObject("profile").getString("agricola"));
+            Menu_Agricola.txtCorreo.setText(usuarioJSON.getString("email"));
             if (swipeRefreshLayout.isRefreshing())
                 swipeRefreshLayout.setRefreshing(false);
         } catch (JSONException e) {
             e.printStackTrace();
-        } catch (Exception e){
+        } catch (Exception e) {
             if (swipeRefreshLayout.isRefreshing())
                 swipeRefreshLayout.setRefreshing(false);
         }

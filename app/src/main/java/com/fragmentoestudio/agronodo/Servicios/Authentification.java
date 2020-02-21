@@ -4,6 +4,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
+import com.fragmentoestudio.agronodo.R;
 import com.fragmentoestudio.agronodo.Utilidades.SQLITE;
 import com.fragmentoestudio.agronodo.Utilidades.Uris;
 
@@ -66,15 +67,15 @@ public class Authentification {
                 writer.write(params[0]);
                 writer.close();
                 if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
-                    return "Correo de Recuperación Enviado Exitosamente";
+                    return "1";
                 } else if (connection.getResponseCode() == HttpURLConnection.HTTP_BAD_REQUEST) {
-                    return "El email seleccionado no existe";
+                    return "2";
                 }
                 connection.disconnect();
             } catch (Exception e) {
-                return "Error";
+                return "3";
             }
-            return null;
+            return "4";
         }
         @Override
         protected void onPostExecute(String result) {

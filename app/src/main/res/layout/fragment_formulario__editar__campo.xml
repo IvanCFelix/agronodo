@@ -13,12 +13,13 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingBottom="70dp"
             android:orientation="vertical">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Datos del Predio"
+                android:text="@string/datos_predio"
                 android:gravity="center"
                 android:textColor="@color/colorBlack"
                 android:textSize="30sp"
@@ -37,13 +38,14 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
                     android:orientation="vertical">
 
                     <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="5dp"
-                        android:hint="Nombre"
+                        android:hint="@string/nombre"
                         android:textColorHint="@color/colorGreen"
                         app:counterEnabled="true"
                         app:counterMaxLength="50"

@@ -1,21 +1,116 @@
 <resources>
     <string name="app_name">AgroNodo</string>
-    <string name="title_activity_menu__agronomo">Menu_Agronomo</string>
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Android Studio</string>
-    <string name="nav_header_subtitle">android.studio@android.com</string>
-    <string name="nav_header_desc">Navigation header</string>
-    <string name="action_settings">Settings</string>
+    <string name="title_activity_menu__agronomo">Menu Agronomo</string>
+    <string name="navigation_drawer_open">Abrir Navegador</string>
+    <string name="navigation_drawer_close">Cerrar Navegador</string>
 
-    <string name="menu_home">Home</string>
-    <string name="menu_gallery">Gallery</string>
-    <string name="menu_slideshow">Slideshow</string>
-    <string name="menu_tools">Tools</string>
-    <string name="menu_share">Share</string>
-    <string name="menu_send">Send</string>
+    <string name="bienvenido">Bienvenido</string>
+    <string name="usuario">Usuario</string>
+    <string name="nombre">Nombre</string>
+    <string name="correo">Correo</string>
+    <string name="contrasena">Contraseña</string>
+    <string name="iniciar_sesion">Iniciar Sesión</string>
+    <string name="olvido_contrasena">¿Olvidó su Contraseña?</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="title_activity_maps">Map</string>
+    <string name="inicio">Inicio</string>
+    <string name="mis_predios">Mis Predios</string>
+    <string name="mi_mapa">Mi Mapa</string>
+    <string name="mi_usuario">Mi Usuario</string>
+    <string name="notificaciones">Notificaciones</string>
+    <string name="acerca_agronodo">Acerca de Agronodo</string>
+    <string name="sitio_web">Sitio WEB</string>
+    <string name="cerrar_sesion">Cerrar Sesión</string>
+
+    <string name="recuperar_contrasena">Recuperar Contraseña</string>
+    <string name="enviar_correo">Enviar Correo</string>
+
+    <string name="verificando_correo">Verificando Correo</string>
+    <string name="correo_enviado">Correo de Recuperación Enviado Exitosamente</string>
+    <string name="correo_no_existe">El Correo seleccionado no existe</string>
+
+    <string name="enterado">Enterado</string>
+
+    <string name="datos_incompletos">Datos Incompletos</string>
+    <string name="complete_datos_correctamente">Complete los datos correctamente</string>
+
+    <string name="iniciando_sesion">Iniciando Sesión</string>
+    <string name="sesion_iniciada">Sesión Iniciada</string>
+
+    <string name="cuenta_no_soportada">Tipo de cuenta no soportada</string>
+    <string name="cuenta_de_tipo">Su cuenta de tipo </string>
+    <string name="no_es_soportada"> no es soportada en la aplicación</string>
+
+    <string name="error_datos">Error en los datos</string>
+    <string name="cuenta_no_encontrada">No se ha encontrado su cuenta</string>
+
+    <string name="hello_blank_fragment">Fragmento Nuevo</string>
+    <string name="title_activity_maps">Mapa</string>
+
+    <string name="datos_predio">Datos del Predio</string>
+
+    <string name="seleccionar_fecha">Seleccionar Fecha</string>
+    <string name="fecha_inicio">Fecha Inicial</string>
+    <string name="fecha_final">Fecha a Finalizar</string>
+
+    <string name="no_hay_predios_disponibles">No hay Predios Disponibles</string>
+    <string name="no_hay_notificaciones_disponibles">No hay Notificaciones Disponibles</string>
+
+    <string name="agregar_predio">Agregar Predio</string>
+    <string name="editar_predio">Editar Predio</string>
+    <string name="agregar_subpredio">Agregar SubPredio</string>
+    <string name="campo_seleccionado_no_valido">El campo seleccionado no es valido</string>
+    <string name="atencion">Atención</string>
+    <string name="cancelar">Cancelar</string>
+    <string name="subpredio_tomara_todo_espacio">El SubPredio tomará todo el tamaño</string>
+
+    <string name="predio_registrado">Predio registrado exitosamente</string>
+    <string name="no_se_pudo_registrar_predio">No se pudo agregar este Predio</string>
+
+    <string name="cultivo_registrado">Cultivo registrado exitosamente</string>
+    <string name="no_se_pudo_registrar_cultivo">No se pudo agregar este Cultivo</string>
+
+    <string name="subpredio_registrado">SubPredio registrado exitosamente</string>
+    <string name="no_se_pudo_registrar_subpredio">No se pudo agregar este SubPredio</string>
+
+    <string name="predio_editado">Predio editado exitosamente</string>
+    <string name="no_se_pudo_editar_predio">No se pudo editar este Predio</string>
+
+    <string name="predio_borrado">Predio eliminado exitosamente</string>
+    <string name="no_se_pudo_borrar_predio">No se pudo eliminar este Predio</string>
+
+    <string name="subpredio_editado">SubPredio editado exitosamente</string>
+    <string name="no_se_pudo_editar_subpredio">No se pudo editar este SubPredio</string>
+
+    <string name="eliminar">Eliminar</string>
+    <string name="editar">Editar</string>
+
+    <string name="deseas_editar_predio">¿Deseas editar este Predio?</string>
+    <string name="deseas_eliminar_predio">¿Deseas eliminar este Predio?</string>
+
+    <string name="deseas_editar_subpredio">¿Deseas editar este SubPredio?</string>
+    <string name="deseas_eliminar_subpredio">¿Deseas eliminar este SubPredio?</string>
+
+    <string name="internet_no_disponible">Internet no disponible</string>
+    <string name="conectese_internet">Conéctese a una red para continuar</string>
+
+    <string name="seleccionar_cultivo">Seleccionar Cultivo</string>
+    <string name="seleccionar_agricultura">Tipo de Agricultura</string>
+
+    <string name="nombre_cultivo_nuevo">Nombre del cultivo nuevo</string>
+    <string name="tradicional">Tradicional</string>
+    <string name="protegida">Protegida</string>
+
+    <string name="tareas">Tareas</string>
+    <string name="no_hay_tareas_pendientes">No hay Tareas Pendientes</string>
+    <string name="no_hay_tareas_realizadas">No hay Tareas Realizadas</string>
+
+    <string name="agregar_tareas">Agregar Tareas</string>
+
+    <string name="pendientes">Pendientes</string>
+    <string name="realizadas">Realizadas</string>
+
+    <string name="marcador_no_dentro_de_sublotes">El Marcador no puede estar dentro de otros SubPredios</string>
+    <string name="marcador_estar_dentro_predio">El Marcador debe estar dentro del Predio</string>
+
+    <string name="version">v2.0</string>
 </resources>

@@ -87,6 +87,7 @@ public class Mapa_Editar_Campo extends Fragment implements OnMapReadyCallback {
             for(int i=0; i<JSONcoordenadas.length(); i++){
                 coordenadas.add(new LatLng(Double.parseDouble(JSONcoordenadas.getJSONObject(i).getString("Latitud")), Double.parseDouble(JSONcoordenadas.getJSONObject(i).getString("Longitud"))));
             }
+            coordenadas.remove(coordenadas.size()-1);
             dibujarCampo();
             LatLngBounds latLngBounds = getPolygonLatLngBounds(coordenadas);
             mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(latLngBounds, 50));

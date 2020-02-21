@@ -7,39 +7,44 @@
         <item
             android:id="@+id/nav_Intro"
             android:icon="@drawable/ic_casa"
-            android:title="Inicio" />
+            android:title="@string/inicio" />
 
         <item
             android:id="@+id/nav_Lista_Predios"
             android:icon="@drawable/ic_campo"
-            android:title="Mis Predios" />
+            android:title="@string/mis_predios" />
 
         <item
             android:id="@+id/nav_Mapa_Predios"
             android:icon="@drawable/ic_mapa"
-            android:title="Mi Mapa" />
+            android:title="@string/mi_mapa" />
+
+        <item
+            android:id="@+id/nav_Lista_Tareas"
+            android:icon="@drawable/ic_tareas"
+            android:title="@string/tareas" />
 
         <item
             android:id="@+id/nav_Mi_Usuario"
             android:icon="@drawable/ic_persona"
-            android:title="Mi Usuario" />
+            android:title="@string/mi_usuario" />
 
         <item
             android:id="@+id/nav_Mis_Notificaciones"
             android:icon="@drawable/ic_notificacion"
-            android:title="Notificaciones" />
+            android:title="@string/notificaciones" />
     </group>
 
-    <item android:title="Acerca de AgroNodo">
+    <item android:title="@string/acerca_agronodo">
         <menu>
             <item
                 android:id="@+id/nav_web"
                 android:icon="@drawable/ic_internet"
-                android:title="Sitio WEB" />
+                android:title="@string/sitio_web" />
             <item
                 android:id="@+id/nav_salir"
                 android:icon="@drawable/ic_salir"
-                android:title="Cerrar Sesión" />
+                android:title="@string/cerrar_sesion" />
         </menu>
     </item>
 

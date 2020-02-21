@@ -1,4 +1,4 @@
-package com.fragmentoestudio.agronodo.Ingeniero;
+package com.fragmentoestudio.agronodo.Agricola;
 
 import android.Manifest;
 import android.content.Intent;
@@ -17,7 +17,7 @@ import android.widget.Toast;
 
 import com.fragmentoestudio.agronodo.Agregar_Campo.Activity_Agregar_Campo;
 import com.fragmentoestudio.agronodo.Clases.Campos;
-import com.fragmentoestudio.agronodo.Menu_Ingeniero;
+import com.fragmentoestudio.agronodo.Menu_Agricola;
 import com.fragmentoestudio.agronodo.R;
 import com.fragmentoestudio.agronodo.Utilidades.SQLITE;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -36,7 +36,7 @@ import org.json.JSONException;
 
 import java.util.ArrayList;
 
-public class Mapa_Predios_Ingeniero extends Fragment implements OnMapReadyCallback {
+public class Mapa_Predios_Agricola extends Fragment implements OnMapReadyCallback {
 
     private GoogleMap mMap;
     private FusedLocationProviderClient mFusedLocationClient;
@@ -52,9 +52,9 @@ public class Mapa_Predios_Ingeniero extends Fragment implements OnMapReadyCallba
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_mapa_predios_ingeniero, container, false);
+        View view = inflater.inflate(R.layout.fragment_mapa_predios_agricola, container, false);
 
-        getActivity().setTitle(" Mis Predios");
+        getActivity().setTitle(" " + getString(R.string.mi_mapa));
 
         fabAgregar = view.findViewById(R.id.fab_agregar);
 
@@ -126,8 +126,8 @@ public class Mapa_Predios_Ingeniero extends Fragment implements OnMapReadyCallba
             ActivityCompat.requestPermissions(getActivity(), permissions, MULTIPLE_PERMISSIONS_REQUEST_CODE);
 
             getActivity().getSupportFragmentManager().beginTransaction()
-                    .detach(Menu_Ingeniero.mapa_prediosAgronomo)
-                    .attach(Menu_Ingeniero.mapa_prediosAgronomo)
+                    .detach(Menu_Agricola.mapa_prediosAgronomo)
+                    .attach(Menu_Agricola.mapa_prediosAgronomo)
                     .commit();
         }
     }

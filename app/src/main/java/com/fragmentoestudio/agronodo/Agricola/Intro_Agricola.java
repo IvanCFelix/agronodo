@@ -1,4 +1,4 @@
-package com.fragmentoestudio.agronodo.Ingeniero;
+package com.fragmentoestudio.agronodo.Agricola;
 
 
 import android.os.Bundle;
@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 
 import com.fragmentoestudio.agronodo.R;
 
-public class Notificaciones_Ingeniero extends Fragment {
+public class Intro_Agricola extends Fragment {
 
     SwipeRefreshLayout swipeRefreshLayout;
 
@@ -18,10 +18,12 @@ public class Notificaciones_Ingeniero extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_notificaciones_ingeniero, container, false);
+        View view = inflater.inflate(R.layout.fragment_intro_agricola, container, false);
 
         swipeRefreshLayout = view.findViewById(R.id.swiperefresh);
+        getActivity().setTitle(" AgroNodo");
         swipeRefreshLayout.setColorSchemeResources(R.color.colorGreen);
+
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -29,8 +31,6 @@ public class Notificaciones_Ingeniero extends Fragment {
                 swipeRefreshLayout.setRefreshing(false);
             }
         });
-
-        getActivity().setTitle(" Notificaciones");
 
         return view;
     }

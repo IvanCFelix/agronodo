@@ -26,14 +26,13 @@
                 android:layout_height="wrap_content"
                 android:background="@color/primary_dark"
                 android:orientation="horizontal"
-                android:weightSum="5"
                 tools:ignore="MissingConstraints">
 
                 <LinearLayout
                     android:id="@+id/rv_lyTitulo"
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="4.3"
+                    android:layout_marginRight="150dp"
                     android:foreground="?attr/selectableItemBackground"
                     android:orientation="horizontal"
                     android:padding="16dp">
@@ -45,7 +44,6 @@
                         android:background="@drawable/textview_redondo"
                         android:backgroundTint="@color/colorWhite"
                         android:gravity="center"
-                        android:paddingRight="1dp"
                         android:text="0"
                         android:textColor="@color/colorGreen"
                         android:textSize="15sp"
@@ -68,14 +66,34 @@
 
                 <ImageView
                     android:id="@+id/rv_ivFlecha"
-                    android:layout_width="0dp"
+                    android:layout_width="50dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="0.7"
+                    android:layout_marginLeft="-150dp"
                     android:foreground="?attr/selectableItemBackground"
-                    android:padding="18dp"
+                    android:padding="15dp"
                     android:scaleType="fitCenter"
                     android:src="@drawable/ic_agregar"
                     android:tint="@color/colorWhite" />
+
+                <ImageView
+                    android:id="@+id/rvEditar"
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent"
+                    android:scaleType="fitCenter"
+                    android:padding="15dp"
+                    android:src="@drawable/ic_editar"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:tint="@color/colorWhite"/>
+
+                <ImageView
+                    android:id="@+id/rvEliminar"
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent"
+                    android:scaleType="fitCenter"
+                    android:padding="15dp"
+                    android:src="@drawable/ic_eliminar"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:tint="@color/colorWhite"/>
 
             </LinearLayout>
 

@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".Ingeniero.Lista_Predios_Ingeniero">
+    tools:context=".Agricola.Lista_Predios_Agricola">
 
     <android.support.v4.widget.SwipeRefreshLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -22,7 +22,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="No hay predios disponibles"
+                android:text="@string/no_hay_predios_disponibles"
                 android:visibility="gone"
                 android:textColor="#57000000"
                 android:textStyle="bold|italic"
@@ -56,7 +56,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
-        app:backgroundTint="@color/colorBlue"
+        app:backgroundTint="@color/colorOrange"
         android:src="@drawable/ic_agregar"
         app:fabCustomSize="45dp"
         app:maxImageSize="16dp"

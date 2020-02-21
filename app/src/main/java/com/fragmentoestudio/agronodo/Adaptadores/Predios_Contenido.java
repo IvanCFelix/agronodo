@@ -15,8 +15,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.fragmentoestudio.agronodo.Clases.Campos;
 import com.fragmentoestudio.agronodo.Clases.SubCampos;
 import com.fragmentoestudio.agronodo.Editar_Campo.Activity_Editar_Campo;
+import com.fragmentoestudio.agronodo.Editar_SubPredio.Activity_Editar_SubPredio;
 import com.fragmentoestudio.agronodo.R;
 import com.fragmentoestudio.agronodo.Utilidades.SQLITE;
 
@@ -29,12 +32,14 @@ public class Predios_Contenido extends RecyclerView.Adapter<Predios_Contenido.Mo
     ArrayList<SubCampos> subCampos_filtrados;
     Context context;
     RecyclerView rvEncabezados;
+    TextView txtNoHay;
 
-    public Predios_Contenido(ArrayList<SubCampos> lista, Context context, RecyclerView rv) {
+    public Predios_Contenido(ArrayList<SubCampos> lista, Context context, RecyclerView rv, TextView txtNoHay) {
         this.subCampos_filtrados = lista;
         this.subCampos_source = lista;
         this.context = context;
         rvEncabezados = rv;
+        this.txtNoHay = txtNoHay;
     }
 
     @NonNull
@@ -61,13 +66,13 @@ public class Predios_Contenido extends RecyclerView.Adapter<Predios_Contenido.Mo
             public void onClick(View view) {
                 AlertDialog.Builder dialogo1 = new AlertDialog.Builder(context);
                 dialogo1.setCancelable(false);
-                dialogo1.setMessage("¿Deseas editar el SubCampo " + subCampo.getNombre() + "?");
-                dialogo1.setPositiveButton("Editar", new DialogInterface.OnClickListener() {
+                dialogo1.setMessage(context.getString(R.string.deseas_editar_subpredio));
+                dialogo1.setPositiveButton(context.getString(R.string.editar), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialogo1, int id) {
-                        //context.startActivity(new Intent(context, Activity_Editar_Campo.class).putExtra("ID", campo.getID()));
+                        context.startActivity(new Intent(context, Activity_Editar_SubPredio.class).putExtra("ID", subCampo.getID()));
                     }
                 });
-                dialogo1.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                dialogo1.setNegativeButton(context.getString(R.string.cancelar), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialogo1, int id) {
 
                     }
@@ -81,16 +86,21 @@ public class Predios_Contenido extends RecyclerView.Adapter<Predios_Contenido.Mo
             public void onClick(View view) {
                 AlertDialog.Builder dialogo1 = new AlertDialog.Builder(context);
                 dialogo1.setCancelable(false);
-                dialogo1.setMessage("¿Deseas eliminar el SubCampo " + subCampo.getNombre() + "?");
-                dialogo1.setPositiveButton("Eliminar", new DialogInterface.OnClickListener() {
+                dialogo1.setMessage(context.getString(R.string.deseas_eliminar_subpredio));
+                dialogo1.setPositiveButton(context.getString(R.string.eliminar), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialogo1, int id) {
-                        /*SQLITE.borrarCampo(context, campo.getID());
-                        ArrayList<Cultivos> cultivos = SQLITE.obtenerCultivosLista(context);
-                        Predios_Encabezado adapter = new Predios_Encabezado(cultivos, context, rvEncabezados);
-                        rvEncabezados.setAdapter(adapter);*/
+                        SQLITE.borrarSubCampo(context, subCampo.getID());
+                        ArrayList<Campos> campos = SQLITE.obtenerCampos(context);
+                        if(campos.isEmpty()){
+                            txtNoHay.setVisibility(View.VISIBLE);
+                        }else{
+                            txtNoHay.setVisibility(View.GONE);
+                        }
+                        Predios_Encabezado adapter = new Predios_Encabezado(campos, context, rvEncabezados, txtNoHay);
+                        rvEncabezados.setAdapter(adapter);
                     }
                 });
-                dialogo1.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                dialogo1.setNegativeButton(context.getString(R.string.cancelar), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialogo1, int id) {
 
                     }
